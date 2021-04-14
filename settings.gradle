@@ -1,0 +1,4 @@
+rootProject.name = 'gaonna'
+include 'core'
+include 'api'
+include 'admin'
