@@ -1,0 +1,29 @@
+#!groovy
+
+pipeline {
+    agent any
+    stages{
+        stage('Git Checkout'){
+            steps{
+                checkout scm
+            }
+        }
+        stage('Gradlew Build'){
+            steps{
+                script{
+                    sh """
+                    chmod +x ./gradlew
+                    ./gradlew build
+                    """
+                }
+            }
+        }
+        stage('Test'){
+            steps{
+                script{
+                    sh "./gradlew test"
+                }
+            }
+        }
+    }
+}
