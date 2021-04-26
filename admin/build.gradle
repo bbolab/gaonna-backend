@@ -1,3 +1,13 @@
+plugins {
+    id 'com.google.cloud.tools.jib'
+}
+jib {
+    container {
+        mainClass = 'com.bbolab.gaonna.admin.AdminApplication'
+    }
+}
+
+
 group = 'com.bbolab.gaonna.admin'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

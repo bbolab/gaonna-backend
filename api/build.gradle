@@ -1,3 +1,11 @@
+plugins{
+    id 'com.google.cloud.tools.jib'
+}
+jib {
+    container {
+        mainClass = 'com.bbolab.gaonna.api.ApiApplication'
+    }
+}
 group = 'com.bbolab.gaonna.api'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
