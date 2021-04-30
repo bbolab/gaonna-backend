@@ -26,15 +26,14 @@ public class Member {
 
     private String lastname;
 
+    @Column(unique = true)
     private String nickname;
 
     private LocalDateTime birthDate;
 
-    @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    @Column(updatable = false)
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 

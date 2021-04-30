@@ -32,7 +32,6 @@ public class Article {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    // TODO : Use @Temporal annotation
     @Column
     private LocalDateTime deadline;
 
