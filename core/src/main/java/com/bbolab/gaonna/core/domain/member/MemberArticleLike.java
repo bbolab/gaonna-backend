@@ -1,9 +1,7 @@
 package com.bbolab.gaonna.core.domain.member;
 
 import com.bbolab.gaonna.core.domain.article.Article;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
@@ -12,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.UUID;
 
+@Builder
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class MemberArticleLike {
     @Id

@@ -1,17 +1,16 @@
 package com.bbolab.gaonna.core.domain.tag;
 
 import com.bbolab.gaonna.core.domain.member.Profile;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+@Builder
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class ProfileTag {
     @Id

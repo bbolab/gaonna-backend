@@ -47,4 +47,19 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<MemberArticleLike> articleLikeMembers;
 
+    public boolean addMemberArticleComment(MemberArticleComment memberArticleComment) {
+        if (comments.contains(memberArticleComment)) {
+            return false;
+        }
+        memberArticleComment.setArticle(this);
+        return comments.add(memberArticleComment);
+    }
+
+    public boolean addMemberArticleLike(MemberArticleLike memberArticleLike) {
+        if (articleLikeMembers.contains(memberArticleLike)) {
+            return false;
+        }
+        memberArticleLike.setArticle(this);
+        return articleLikeMembers.add(memberArticleLike);
+    }
 }

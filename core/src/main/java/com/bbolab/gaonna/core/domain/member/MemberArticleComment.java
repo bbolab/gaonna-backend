@@ -1,9 +1,7 @@
 package com.bbolab.gaonna.core.domain.member;
 
 import com.bbolab.gaonna.core.domain.article.Article;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,12 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Builder
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "content"})
 public class MemberArticleComment {
-    // TODO : Should consider soft delete
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")

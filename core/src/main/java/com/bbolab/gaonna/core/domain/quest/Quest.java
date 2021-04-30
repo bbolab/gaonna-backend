@@ -44,12 +44,38 @@ public class Quest {
     @Column(nullable = false)
     private Integer price;
 
+    // TODO : List vs Set // 예외처리 관점에서
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
-    private List<MemberQuest> questMember = new LinkedList<>(); // TODO : List vs Set // 예외처리 관점에서
+    private List<MemberQuest> memberQuest = new LinkedList<>();
 
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<QuestTag> questTags = new LinkedList<>();
 
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<QuestRegionL3> questRegionL3s = new LinkedList<>();
+
+    public boolean addMemberQuest(MemberQuest memberQuest) {
+        if(this.memberQuest.contains(memberQuest)){
+            return false;
+        }
+        memberQuest.setQuest(this);
+        return this.memberQuest.add(memberQuest);
+    }
+
+    public boolean addQuestTag(QuestTag questTag) {
+        if (this.questTags.contains(questTag)) {
+            return false;
+        }
+        questTag.setQuest(this);
+        return this.questTags.add(questTag);
+    }
+
+    public boolean addQuestRegionL3(QuestRegionL3 regionL3) {
+        if (this.questRegionL3s.contains(regionL3)) {
+            return false;
+        }
+        regionL3.setQuest(this);
+        return this.questRegionL3s.add(regionL3);
+    }
+
 }
