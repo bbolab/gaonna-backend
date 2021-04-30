@@ -1,13 +1,32 @@
+codecov:
+  require_ci_to_pass: yes
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "reach,diff,flags,files,footer"
+  behavior: default
+  require_changes: no
+
 comment:                  # this is a top-level key
   layout: "reach, diff, flags, files"
   behavior: default
-  require_changes: false  # if true: only post the comment if coverage changes
-  require_base: no        # [yes :: must have a base report to post]
+  require_changes: true  # if true: only post the comment if coverage changes
+  require_base: yes        # [yes :: must have a base report to post]
   require_head: yes       # [yes :: must have a head report to post]
   branches:               # branch names that can post comment
     - "master"
 
 coverage:
+  precision: 2
+  round: down
+  range: "70...100"
   status:
     project:
       default:
@@ -18,10 +37,26 @@ coverage:
         flags:
           - unit
         paths:
-          - "src"
+          - "api/src"
+          - "core/src"
+          - "admin/src
         # advanced settings
         branches:
           - master
         if_ci_failed: error #success, failure, error, ignore
         informational: false
         only_pulls: false
+  notify:
+    slack:
+      default:
+        url: secret:gtaAlIGCxw7leGPaPMDq+1xW+dMQ/isYb+5jwdQ6i57CwAfY6QlvBS4XU2fmKEwq22gNle2GlqfPxsQICNAEQgg33s8+SZPHLkAx8l8svkyjojQrC5mjAHWjbIaHNQ8aWgDu65IhxiaLmSw2WDcsSOHxoiba7ECfBP6hZlMXMGI=
+        threshold: 1%
+        only_pulls: false
+        branches: 
+          - "master"
+        flags: 
+          - "unit"
+        paths: 
+          - "api/src"
+          - "core/src"
+          - "admin/src"
