@@ -3,18 +3,31 @@ package com.bbolab.gaonna.core.domain.article;
 import com.bbolab.gaonna.core.domain.member.MemberArticleComment;
 import com.bbolab.gaonna.core.domain.member.MemberArticleLike;
 import com.bbolab.gaonna.core.domain.quest.Quest;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Builder
 @Entity
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "title", "content"})
 public class Article {
     @Id
