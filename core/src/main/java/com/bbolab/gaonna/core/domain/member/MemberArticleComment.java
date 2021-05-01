@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "content"})
 public class MemberArticleComment {
     @Id

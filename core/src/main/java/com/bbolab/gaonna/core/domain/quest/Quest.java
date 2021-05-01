@@ -2,9 +2,7 @@ package com.bbolab.gaonna.core.domain.quest;
 
 import com.bbolab.gaonna.core.domain.article.Article;
 import com.bbolab.gaonna.core.domain.tag.QuestTag;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,9 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+@Builder
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "price"})
 public class Quest {
 

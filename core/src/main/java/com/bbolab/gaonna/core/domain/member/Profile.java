@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "name"})
 public class Profile {
     @Id

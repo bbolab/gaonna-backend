@@ -13,7 +13,7 @@ import java.util.*;
 @Builder
 @Entity
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "firstname", "lastname", "nickname"})
 public class Member {
     @Id
