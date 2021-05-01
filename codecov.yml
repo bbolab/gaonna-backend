@@ -49,7 +49,7 @@ coverage:
   notify:
     slack:
       default:
-        url: secret:gtaAlIGCxw7leGPaPMDq+1xW+dMQ/isYb+5jwdQ6i57CwAfY6QlvBS4XU2fmKEwq22gNle2GlqfPxsQICNAEQgg33s8+SZPHLkAx8l8svkyjojQrC5mjAHWjbIaHNQ8aWgDu65IhxiaLmSw2WDcsSOHxoiba7ECfBP6hZlMXMGI=
+        url: secret:GHCw96lMvGW8IUwkrnNJyhNaUbmT2jZMvalmEibVBe+EPokNYSvMAPzwk9hO7MVpd7w9GH1GUXbe7hEk5xNDT+4mDlP1lOs76J+uUuW4TVVkAyCEXZDI3HzjWBbKmqKk1zspq484LZvJOvYMm1lj64PfW5kvkGrTumYS7XuJmmc=
         threshold: 1%
         only_pulls: false
         branches: 
