@@ -17,6 +17,7 @@ pipeline {
                     sh """
                     chmod +x ./gradlew
                     ./gradlew build
+										echo prtest
                     """
                 }
             }
