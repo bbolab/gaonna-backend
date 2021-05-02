@@ -43,18 +43,15 @@ public class Quest {
 
     // TODO : Should add gpsCoordinates field with MySQL's Geometry supports.
 
-    @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    @Column(updatable = false)
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 
     @Column(nullable = false)
     private Integer price;
 
-    // TODO : List vs Set // 예외처리 관점에서
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<MemberQuest> memberQuest = new LinkedList<>();
 

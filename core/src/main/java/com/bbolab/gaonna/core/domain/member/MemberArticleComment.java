@@ -43,11 +43,9 @@ public class MemberArticleComment {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdTime;
 
-    @Column(updatable = false)
     @UpdateTimestamp
     private LocalDateTime updatedTime;
 }
