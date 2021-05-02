@@ -39,7 +39,7 @@ coverage:
         paths:
           - "api/src"
           - "core/src"
-          - "admin/src
+          - "admin/src"
         # advanced settings
         branches:
           - master
