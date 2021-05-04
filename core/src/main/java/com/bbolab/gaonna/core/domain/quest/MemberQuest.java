@@ -23,7 +23,7 @@ import java.util.UUID;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-@EqualsAndHashCode(of = "id") // TODO : Side effect?
+@EqualsAndHashCode(of = "id")
 public class MemberQuest {
     @Id
     @GeneratedValue
@@ -40,8 +40,4 @@ public class MemberQuest {
 
     @Enumerated(EnumType.STRING)
     private QuestRoleType roleType;
-
-    // TODO : equals & hashCode
-
-
 }

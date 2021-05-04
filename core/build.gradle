@@ -6,6 +6,7 @@ dependencies {
 
     // database
     runtimeOnly 'mysql:mysql-connector-java'
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.4.31.Final'
 
     // lombok
     implementation 'org.projectlombok:lombok'

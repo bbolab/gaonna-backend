@@ -11,12 +11,14 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
@@ -39,9 +41,11 @@ public class Quest {
     @OneToOne(mappedBy = "quest")
     private Article article;
 
-    // TODO : Should add Categories relationship.. maybe @ManyToMany
+    @ManyToOne
+    private Category category;
 
-    // TODO : Should add gpsCoordinates field with MySQL's Geometry supports.
+    @Column
+    private Point location;
 
     @CreationTimestamp
     private LocalDateTime createdTime;

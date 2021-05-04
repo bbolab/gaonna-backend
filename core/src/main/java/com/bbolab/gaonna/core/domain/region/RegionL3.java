@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,9 +35,9 @@ public class RegionL3 {
 
     private String name;
 
-    private String geoPolygon; // TODO : type?
+    private Polygon geoPolygon;
 
-    private String centerPosition;  // TODO : type?
+    private Point centerPosition;
 
     private String version;
 }
