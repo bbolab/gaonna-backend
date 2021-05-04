@@ -25,17 +25,19 @@ class QuestTest {
         questRepository.deleteAll();
     }
 
-    @DisplayName("hibernate-spatial Point 테스트")
+    @DisplayName("hibernate-spatial Point Test")
     @Test
-    void pointTest() throws ParseException {
+    void pointTest() {
         String PointWKT = "POINT (37.516455 126.721757)";
-        Point point = (Point) new WKTReader().read(PointWKT);
+        try {
+            Point point = (Point) new WKTReader().read(PointWKT);
+            Quest quest = Quest.builder().price(1000).location(point).build();
+            questRepository.save(quest);
 
-        Quest quest = Quest.builder().price(1000).location(point).build();
-        questRepository.save(quest);
-
-        Quest quest1 = questRepository.findAll().get(0);
-        Assertions.assertEquals(quest1.getLocation().toString(), PointWKT);
-
+            Quest quest1 = questRepository.findAll().get(0);
+            Assertions.assertEquals(quest1.getLocation().toString(), PointWKT);
+        } catch (ParseException e) {
+            Assertions.fail("parse exception is not expected");
+        }
     }
 }
