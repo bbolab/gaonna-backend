@@ -27,7 +27,7 @@ class QuestTest {
 
     @DisplayName("hibernate-spatial Point 테스트")
     @Test
-    void point_test() throws ParseException {
+    void pointTest() throws ParseException {
         String PointWKT = "POINT (37.516455 126.721757)";
         Point point = (Point) new WKTReader().read(PointWKT);
 
@@ -36,5 +36,6 @@ class QuestTest {
 
         Quest quest1 = questRepository.findAll().get(0);
         Assertions.assertEquals(quest1.getLocation().toString(), PointWKT);
+
     }
 }
