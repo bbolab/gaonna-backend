@@ -44,6 +44,9 @@ public class Quest {
     @Column
     private Point location;
 
+    @Column
+    private LocalDateTime deadline;
+
     @CreationTimestamp
     private LocalDateTime createdTime;
 

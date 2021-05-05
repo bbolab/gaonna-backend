@@ -46,9 +46,6 @@ public class Article {
     private String content;
 
     @Column
-    private LocalDateTime deadline;
-
-    @Column
     private long linkCount;
 
     @Column
