@@ -9,9 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.CascadeType;
@@ -46,12 +44,6 @@ public class Quest {
 
     @Column
     private LocalDateTime deadline;
-
-    @CreationTimestamp
-    private LocalDateTime createdTime;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedTime;
 
     @Column(nullable = false)
     private Integer price;
