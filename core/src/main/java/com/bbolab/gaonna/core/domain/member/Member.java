@@ -45,6 +45,7 @@ public class Member {
 
     private LocalDateTime birthDate;
 
+    @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdTime;
 
