@@ -1,6 +1,7 @@
 package com.bbolab.gaonna.core.domain.quest;
 
 import com.bbolab.gaonna.core.domain.article.Article;
+import com.bbolab.gaonna.core.domain.category.CategoryValue;
 import com.bbolab.gaonna.core.domain.tag.QuestTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,9 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.CascadeType;
@@ -18,7 +17,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
@@ -41,17 +39,11 @@ public class Quest {
     @OneToOne(mappedBy = "quest")
     private Article article;
 
-    @ManyToOne
-    private Category category;
-
     @Column
     private Point location;
 
-    @CreationTimestamp
-    private LocalDateTime createdTime;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedTime;
+    @Column
+    private LocalDateTime deadline;
 
     @Column(nullable = false)
     private Integer price;
@@ -64,6 +56,9 @@ public class Quest {
 
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<QuestRegionL3> questRegionL3s = new LinkedList<>();
+
+    @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
+    private List<CategoryValue> categoryValueList = new LinkedList<>();
 
     public boolean addMemberQuest(MemberQuest memberQuest) {
         if(this.memberQuest.contains(memberQuest)){
@@ -89,4 +84,11 @@ public class Quest {
         return this.questRegionL3s.add(regionL3);
     }
 
+    public boolean addCategoryValue(CategoryValue categoryValue) {
+        if (this.categoryValueList.contains(categoryValue)) {
+            return false;
+        }
+        categoryValue.setQuest(this);
+        return categoryValueList.add(categoryValue);
+    }
 }
