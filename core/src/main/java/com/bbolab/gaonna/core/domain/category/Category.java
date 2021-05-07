@@ -20,7 +20,7 @@ import java.util.UUID;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "key"})
+@EqualsAndHashCode(of = {"id", "title"})
 public class Category {
     @Id
     @GeneratedValue
@@ -28,7 +28,7 @@ public class Category {
     private UUID id;
 
     @Column(nullable = false)
-    private String key;
+    private String title;
 
     @OneToMany(mappedBy = "category")
     private List<CategoryValue> categoryValues;

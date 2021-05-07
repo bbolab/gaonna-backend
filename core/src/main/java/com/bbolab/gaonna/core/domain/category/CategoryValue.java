@@ -38,6 +38,6 @@ public class CategoryValue {
 
     @Override
     public String toString() {
-        return category.getKey() + " : " + this.value;
+        return category.getTitle() + " : " + this.value;
     }
 }
