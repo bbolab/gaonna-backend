@@ -11,4 +11,4 @@ spring:
         ddl-auto: create-drop
     generate-ddl: true
     database: mysql
-    database-platform: rg.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
