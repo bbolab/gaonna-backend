@@ -20,15 +20,15 @@ import java.util.UUID;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "title"})
+@EqualsAndHashCode(of = {"id", "key"})
 public class Category {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(nullable = false)
-    private String title;
+    @Column(name = "category_key", nullable = false)
+    private String key;
 
     @OneToMany(mappedBy = "category")
     private List<CategoryValue> categoryValues;
