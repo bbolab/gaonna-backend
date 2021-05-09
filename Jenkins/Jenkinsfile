@@ -18,8 +18,8 @@ pipeline {
             steps{
                 when{
                     allOf {
-                        ${env.CHANGE_ID} == null
-                        branch 'master'
+                        branch 'master';
+                        environment name: CHANGE_ID, value: null
                     }
                 }
                 sh "echo deploy"
@@ -57,7 +57,7 @@ pipeline {
             when{
                 allOf {
                     branch 'master';
-                    environment CHANGE_ID: null
+                    environment name: CHANGE_ID, value: null
                 }
             }
             steps{
