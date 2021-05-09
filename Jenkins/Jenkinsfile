@@ -37,18 +37,15 @@ pipeline {
             }
         }
         stage('Push image to Harbor'){
-            when{
-                allOf {
-                    branch 'master';
-                    expression { env.CHANGE_ID == null }
-                }
-            }
             steps{
-                script {
-                    sh """
-                    echo 'push image to Harbor..'
-                    ./gradlew jib -PHARBOR_USERNAME='${HARBOR_USERNAME}' -PHARBOR_PASSWORD='${HARBOR_PASSWORD}' -PDOCKER_IMG_BASE_REPOSITORY='${DOCKER_IMG_BASE_REPOSITORY}' -PHARBOR_REPOSITORY='${HARBOR_REPOSITORY}' -PIMG_TAG='${env.GIT_COMMIT}'
-                    """
+                withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
+                    script{
+                        sh """
+                        ./gradlew jibDockerBuild
+                        """
+                    }
+                    docker.imge('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
+                    docker.imge('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
                 }
             }
         }
