@@ -38,14 +38,16 @@ pipeline {
         }
         stage('Push image to Harbor'){
             steps{
-                withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
-                    script{
-                        sh """
+                script{
+                    docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
+                        script{
+                            sh """
                         ./gradlew jibDockerBuild
                         """
+                        }
+                        docker.Image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
+                        docker.Image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
                     }
-                    Image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
-                    Image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
                 }
             }
         }
