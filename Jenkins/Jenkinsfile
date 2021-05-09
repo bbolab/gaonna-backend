@@ -16,7 +16,7 @@ pipeline {
                 script{
                     sh """
                     echo ${env.CHANGE_TARGET}
-                    echo ${GITHUB_PR_STATE}
+                    echo ${env.GITHUB_PR_STATE}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
