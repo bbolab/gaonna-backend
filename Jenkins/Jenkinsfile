@@ -19,7 +19,7 @@ pipeline {
                 changeRequest target: 'master'
             }
             steps{
-                sh "changeRequest target: master"
+                sh "echo 'changeRequest target: master'"
             }
         }
         stage('Gradlew Build'){
