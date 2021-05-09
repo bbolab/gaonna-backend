@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:tc:mysql:8.0.23://localhost:3306/test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    dbcp2:
+      driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+
