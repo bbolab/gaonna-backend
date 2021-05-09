@@ -8,7 +8,10 @@ pipeline {
     stages{
         stage('Git Checkout'){
             steps{
-                checkout scm
+                script{
+                    env.GIT_COMMIT = checkout scm
+                    sh "echo ${env.GIT_COMMIT}"
+                }
             }
         }
         stage('Gradlew Build'){
@@ -30,6 +33,21 @@ pipeline {
                     sh "./gradlew codeCoverageReport"
                     sh "echo 'send it to codecov'"
                     sh "curl -s https://codecov.io/bash | bash"
+                }
+            }
+        }
+        stage('Push image to Harbor'){
+            when{
+                allOf {
+                    branch 'master';
+                    expression{ ${env.CHANGE_ID} == null}
+                }
+            }
+            steps{
+                script {
+                    sh """
+                    ./gradlew jib -PHARBOR_USERNAME='${HARBOR_USERNAME}' -PHARBOR_PASSWORD='${HARBOR_PASSWORD}' -PDOCKER_IMG_BASE_REPOSITORY='${DOCKER_IMG_BASE_REPOSITORY}' -PHARBOR_REPOSITORY='${HARBOR_REPOSITORY}' -PIMG_TAG='${env.GIT_COMMIT}'
+                    """
                 }
             }
         }
