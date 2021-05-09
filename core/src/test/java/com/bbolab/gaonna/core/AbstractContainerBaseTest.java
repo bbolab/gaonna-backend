@@ -4,8 +4,8 @@ import org.testcontainers.containers.MySQLContainer;
 
 public abstract class AbstractContainerBaseTest {
 
-    static final String containerName = "mysql:8.0.23";
-    static final MySQLContainer MY_SQL_CONTAINER;
+    private static final String containerName = "mysql:8.0.23";
+    private static final MySQLContainer MY_SQL_CONTAINER;
 
     static {
         MY_SQL_CONTAINER = new MySQLContainer(containerName);
