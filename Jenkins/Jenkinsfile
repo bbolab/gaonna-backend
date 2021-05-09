@@ -37,12 +37,6 @@ pipeline {
             }
         }
         stage('Push image to Harbor'){
-            when{
-                allOf {
-                    branch 'master';
-                    expression{ ${env.CHANGE_ID} == null}
-                }
-            }
             steps{
                 script {
                     sh """
