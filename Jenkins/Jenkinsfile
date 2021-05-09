@@ -26,7 +26,9 @@ pipeline {
                     echo ${currentBuild.id}
                     echo ${env.CHANGE_ID}
                     echo ${env.JOB_NAME}
+                    echo "git_commit"
                     echo ${env.GIT_COMMIT}
+                    echo ${env.CHANGE_ID}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
@@ -48,7 +50,7 @@ pipeline {
         stage('Push image to Harbor'){
             when{
                 allOf {
-                    expression { env.GITHUB_PR_STATE == "CLOSE"};
+                    expression { env.CHANGE_ID == null};
                     branch 'master';
                 }
             }
