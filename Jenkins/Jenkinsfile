@@ -10,25 +10,31 @@ pipeline {
             steps{
                 script{
                     env.GIT_COMMIT = checkout scm
+                    sh "echo ${env.GIT_COMMIT}"
                 }
             }
         }
+        stage('Get Status'){
+            steps{
+                when{
+                    allOf {
+                        ${env.CHANGE_ID} == null
+                        branch 'master'
+                    }
+                }
+                sh "echo deploy"
+            }
+            steps{
+                when{
+                    changeRequest target: 'master'
+                }
+                sh "changeRequest target: master"
+            }
+        }
         stage('Gradlew Build'){
-
             steps{
                 script{
                     sh """
-                    echo ${env.CHANGE_TARGET}
-                    echo ${env.GITHUB_PR_STATE}
-                    echo ${env.GITHUB_PR_STATE == "open"}
-                    echo ${env.GITHUB_PR_STATE == 'close'}
-                    echo ${env.BUILD_NUMBER}
-                    echo ${currentBuild.id}
-                    echo ${env.CHANGE_ID}
-                    echo ${env.JOB_NAME}
-                    echo "git_commit"
-                    echo ${env.GIT_COMMIT}
-                    echo ${env.CHANGE_ID}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
@@ -50,8 +56,8 @@ pipeline {
         stage('Push image to Harbor'){
             when{
                 allOf {
-                    expression { env.CHANGE_ID == null};
-                    branch 'master';
+                    ${env.CHANGE_ID} == null
+                    branch 'master'
                 }
             }
             steps{
