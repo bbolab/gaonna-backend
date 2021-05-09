@@ -39,9 +39,7 @@ pipeline {
         stage('Push image to Harbor'){
             steps{
                 when{
-                    script {
-                        allOf { branch 'master'; expression { $ { env.CHANGE_ID } == null } }
-                    }
+                    allOf { branch 'master'; expression { env.CHANGE_ID == null } }
                 }
                 script {
                     sh "echo 'push image to Harbor.."
