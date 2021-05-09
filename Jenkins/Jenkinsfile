@@ -44,8 +44,8 @@ pipeline {
                         ./gradlew jibDockerBuild
                         """
                     }
-                    docker.imge('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
-                    docker.imge('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
+                    docker.image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
+                    docker.image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
                 }
             }
         }
