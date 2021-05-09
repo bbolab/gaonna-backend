@@ -19,7 +19,6 @@ pipeline {
                 changeRequest target: 'master'
             }
             steps{
-
                 sh "changeRequest target: master"
             }
         }
@@ -49,7 +48,7 @@ pipeline {
             when{
                 allOf {
                     branch 'master';
-                    environment name: CHANGE_ID, value: null
+                    expression{ ${env.CHANGE_ID} == null}
                 }
             }
             steps{
