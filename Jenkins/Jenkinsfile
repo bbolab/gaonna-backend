@@ -15,19 +15,11 @@ pipeline {
             }
         }
         stage('Get Status'){
-            step{
-                when{
-                    allOf {
-                        branch 'master';
-                        environment name: CHANGE_ID, value: null
-                    }
-                }
-                sh "echo deploy"
+            when{
+                changeRequest target: 'master'
             }
-            step{
-                when{
-                    changeRequest target: 'master'
-                }
+            steps{
+
                 sh "changeRequest target: master"
             }
         }
