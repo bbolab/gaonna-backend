@@ -55,7 +55,7 @@ public class Article {
     private LocalDateTime updatedTime;
 
     @Column
-    private long linkCount;
+    private long likeCount;
 
     @Column
     private long commentCount;
