@@ -20,6 +20,8 @@ pipeline {
                     sh """
                     echo ${env.CHANGE_TARGET}
                     echo ${env.GITHUB_PR_STATE}
+                    echo ${env.GITHUB_PR_STATE == "open"}
+                    echo ${env.GITHUB_PR_STATE == 'close'}
                     echo ${env.BUILD_NUMBER}
                     echo ${currentBuild.id}
                     echo ${env.CHANGE_ID}
@@ -52,7 +54,7 @@ pipeline {
             }
             steps{
                 sh """
-                ./gradlew jib -PHARBOR_USERNAME="${HARBOR_USERNAME}" -PHARBOR_PASSWORD="${HARBOR_PASSWORD}" -PDOCKER_IMG_BASE_REPOSITORY="${DOCKER_IMG_BASE_REPOSITORY}" -PHARBOR_REPOSITORY="${HARBOR_REPOSITORY}" -PIMG_TAG="${BUILD_NUMBER}"
+                ./gradlew jib -PHARBOR_USERNAME="${HARBOR_USERNAME}" -PHARBOR_PASSWORD="${HARBOR_PASSWORD}" -PDOCKER_IMG_BASE_REPOSITORY="${DOCKER_IMG_BASE_REPOSITORY}" -PHARBOR_REPOSITORY="${HARBOR_REPOSITORY}" -PIMG_TAG="${env.GIT_COMMIT}"
                 """
             }
         }
