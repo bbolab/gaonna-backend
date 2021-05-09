@@ -56,8 +56,8 @@ pipeline {
         stage('Push image to Harbor'){
             when{
                 allOf {
-                    ${env.CHANGE_ID} == null
-                    branch 'master'
+                    branch 'master';
+                    environment CHANGE_ID: null
                 }
             }
             steps{
