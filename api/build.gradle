@@ -2,6 +2,20 @@ plugins{
     id 'com.google.cloud.tools.jib'
 }
 jib {
+    from {
+        image = "${DOCKER_IMG_BASE_REPOSITORY}/openjdk:11"
+        auth {
+            username = HARBOR_USERNAME
+            password = HARBOR_PASSWORD
+        }
+    }
+    to {
+        image = "${HARBOR_REPOSITORY}/${MODULE}:${IMG_TAG}"
+        auth {
+            username = HARBOR_USERNAME
+            password = HARBOR_PASSWORD
+        }
+    }
     container {
         mainClass = 'com.bbolab.gaonna.api.ApiApplication'
     }

@@ -33,5 +33,18 @@ pipeline {
                 }
             }
         }
+        stage('Push image to Harbor'){
+            when{
+                allof {
+                    expression { env.GITHUB_PR_STATE == "CLOSE"}
+                    branch "master"
+                }
+            }
+            steps{
+                sh """
+                ./gradlew jib -PHARBOR_USERNAME="${HARBOR_USERNAME}" -PHARBOR_PASSWORD="${HARBOR_PASSWORD}" -PDOCKER_IMG_BASE_REPOSITORY="${DOCKER_IMG_BASE_REPOSITORY}" -PHARBOR_REPOSITORY="${HARBOR_REPOSITORY}" -PIMG_TAG="${BUILD_NUMBER}"
+                """
+            }
+        }
     }
 }
