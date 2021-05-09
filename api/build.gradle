@@ -2,6 +2,7 @@ plugins{
     id 'com.google.cloud.tools.jib'
 }
 jib {
+    allowInsecureRegistries = true
     from {
         image = "${DOCKER_IMG_BASE_REPOSITORY}/openjdk:11"
         auth {
