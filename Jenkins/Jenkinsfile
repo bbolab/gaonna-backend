@@ -15,6 +15,7 @@ pipeline {
             steps{
                 script{
                     sh """
+                    echo ${env.GITHUB_PR_STATE}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
@@ -37,7 +38,7 @@ pipeline {
             when{
                 allOf {
                     expression { env.GITHUB_PR_STATE == "CLOSE"};
-                    branch "master";
+                    branch 'master';
                 }
             }
             steps{
