@@ -15,7 +15,7 @@ pipeline {
             }
         }
         stage('Get Status'){
-            steps{
+            step{
                 when{
                     allOf {
                         branch 'master';
@@ -24,7 +24,7 @@ pipeline {
                 }
                 sh "echo deploy"
             }
-            steps{
+            step{
                 when{
                     changeRequest target: 'master'
                 }
