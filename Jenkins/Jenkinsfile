@@ -37,15 +37,15 @@ pipeline {
             }
         }
         stage('Push image to Harbor'){
-            steps{
-                when{
-                    allOf {
-                        branch 'master';
-                        expression{ ${env.CHANGE_ID} == null}
-                    }
+            when{
+                allOf {
+                    branch 'master';
+                    expression { env.CHANGE_ID == null }
                 }
+            }
+            steps{
                 script {
-                    sh "echo 'push image to Harbor"
+                    sh "echo 'push image to Harbor.."
                     sh """
                     ./gradlew jib -PHARBOR_USERNAME='${HARBOR_USERNAME}' -PHARBOR_PASSWORD='${HARBOR_PASSWORD}' -PDOCKER_IMG_BASE_REPOSITORY='${DOCKER_IMG_BASE_REPOSITORY}' -PHARBOR_REPOSITORY='${HARBOR_REPOSITORY}' -PIMG_TAG='${env.GIT_COMMIT}'
                     """
