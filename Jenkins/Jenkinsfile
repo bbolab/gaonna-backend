@@ -24,6 +24,7 @@ pipeline {
                     echo ${currentBuild.id}
                     echo ${env.CHANGE_ID}
                     echo ${env.JOB_NAME}
+                    echo ${env.GIT_COMMIT}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
