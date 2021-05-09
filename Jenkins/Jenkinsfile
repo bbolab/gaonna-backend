@@ -19,6 +19,9 @@ pipeline {
                     echo ${env.CHANGE_TARGET}
                     echo ${env.GITHUB_PR_STATE}
                     echo ${env.BUILD_NUMBER}
+                    echo ${currentBuild.id}
+                    echo ${env.CHANGE_ID}
+                    echo ${env.JOB_NAME}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
