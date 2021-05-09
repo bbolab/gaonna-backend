@@ -12,11 +12,13 @@ pipeline {
             }
         }
         stage('Gradlew Build'){
+            script{
+                echo ${env.CHANGE_TARGET}
+                echo ${env.GITHUB_PR_STATE}
+            }
             steps{
                 script{
                     sh """
-                    echo ${env.CHANGE_TARGET}
-                    echo ${env.GITHUB_PR_STATE}
                     chmod +x ./gradlew
                     ./gradlew build
                     """
