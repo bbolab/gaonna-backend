@@ -14,14 +14,6 @@ pipeline {
                 }
             }
         }
-        stage('Get Status'){
-            when{
-                changeRequest target: 'master'
-            }
-            steps{
-                sh "echo 'changeRequest target: master'"
-            }
-        }
         stage('Gradlew Build'){
             steps{
                 script{
@@ -52,9 +44,11 @@ pipeline {
                 }
             }
             steps{
-                sh """
-                ./gradlew jib -PHARBOR_USERNAME="${HARBOR_USERNAME}" -PHARBOR_PASSWORD="${HARBOR_PASSWORD}" -PDOCKER_IMG_BASE_REPOSITORY="${DOCKER_IMG_BASE_REPOSITORY}" -PHARBOR_REPOSITORY="${HARBOR_REPOSITORY}" -PIMG_TAG="${env.GIT_COMMIT}"
-                """
+                script {
+                    sh """
+                    ./gradlew jib -PHARBOR_USERNAME="${HARBOR_USERNAME}" -PHARBOR_PASSWORD="${HARBOR_PASSWORD}" -PDOCKER_IMG_BASE_REPOSITORY="${DOCKER_IMG_BASE_REPOSITORY}" -PHARBOR_REPOSITORY="${HARBOR_REPOSITORY}" -PIMG_TAG="${env.GIT_COMMIT}"
+                    """
+                }
             }
         }
     }
