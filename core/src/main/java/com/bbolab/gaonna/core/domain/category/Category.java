@@ -27,7 +27,7 @@ public class Category {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "category_key", nullable = false)
     private String key;
 
     @OneToMany(mappedBy = "category")
