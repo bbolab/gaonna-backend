@@ -35,9 +35,9 @@ pipeline {
         }
         stage('Push image to Harbor'){
             when{
-                allof {
-                    expression { env.GITHUB_PR_STATE == "CLOSE"}
-                    branch "master"
+                allOf {
+                    expression { env.GITHUB_PR_STATE == "CLOSE"};
+                    branch "master";
                 }
             }
             steps{
