@@ -1,7 +1,6 @@
 package com.bbolab.gaonna.core.domain.quest;
 
 import com.bbolab.gaonna.core.AbstractContainerBaseTest;
-import com.bbolab.gaonna.core.domain.article.Article;
 import com.bbolab.gaonna.core.repository.QuestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
