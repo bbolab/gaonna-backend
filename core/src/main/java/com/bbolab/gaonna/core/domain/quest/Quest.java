@@ -48,15 +48,19 @@ public class Quest {
     @Column(nullable = false)
     private Integer price;
 
+    @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<MemberQuest> memberQuest = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<QuestTag> questTags = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<QuestRegionL3> questRegionL3s = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<CategoryValue> categoryValueList = new LinkedList<>();
 

@@ -21,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,11 +61,13 @@ public class Article {
     @Column
     private long commentCount;
 
+    @Builder.Default
     @OneToMany(mappedBy = "article")
-    private List<MemberArticleComment> comments;
+    private List<MemberArticleComment> comments = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "article")
-    private List<MemberArticleLike> articleLikeMembers;
+    private List<MemberArticleLike> articleLikeMembers = new LinkedList<>();
 
     public boolean addMemberArticleComment(MemberArticleComment memberArticleComment) {
         if (comments.contains(memberArticleComment)) {
