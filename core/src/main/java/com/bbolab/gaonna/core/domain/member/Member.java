@@ -56,15 +56,19 @@ public class Member {
     @Basic(fetch = FetchType.EAGER)  // TODO : Should link data source
     private String profileImage;
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberQuest> memberQuest = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Profile> profiles = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberArticleComment> memberArticleComments = new LinkedList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberArticleLike> memberArticleLikes = new LinkedList<>();
 
