@@ -70,6 +70,7 @@ public class Article {
         if (comments.contains(memberArticleComment)) {
             return false;
         }
+        // TODO : add commentCount increment
         memberArticleComment.setArticle(this);
         return comments.add(memberArticleComment);
     }
@@ -78,7 +79,15 @@ public class Article {
         if (articleLikeMembers.contains(memberArticleLike)) {
             return false;
         }
+        this.likeCount++;
         memberArticleLike.setArticle(this);
         return articleLikeMembers.add(memberArticleLike);
+    }
+
+    public void removeMemberArticleLike(MemberArticleLike memberArticleLike) {
+        if (this.articleLikeMembers.contains(memberArticleLike)) {
+            this.likeCount--;
+            this.articleLikeMembers.remove(memberArticleLike);
+        }
     }
 }
