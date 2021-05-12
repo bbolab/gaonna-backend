@@ -13,7 +13,7 @@ pipeline {
             steps{
                 script{
                     env.GIT_COMMIT = checkout scm
-                    sh "echo GIT_COMMIT : ${env.GIT_COMMIT}"
+                    sh "echo ${env.GIT_STATE} GIT_COMMIT : ${env.GIT_COMMIT}"
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
         }
         stage('JIB Docker images'){
             when{
-                env.GIT_STATE == 'deploy'
+                expression{ env.GIT_STATE == 'deploy' }
             }
             steps{
                 script{
@@ -55,7 +55,7 @@ pipeline {
         }
         stage('Push image to Harbor'){
             when{
-                env.GIT_STATE == 'deploy'
+                expression{ env.GIT_STATE == 'deploy' }
             }
             steps{
                 script{
