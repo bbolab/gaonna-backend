@@ -2,6 +2,9 @@
 
 pipeline {
     agent any
+    envrionment {
+        GIT_STATE = env.GIT_BRANCH == 'master' && env.CHANGE_ID == null ? 'deploy' : 'else'
+    }
     tools {
         jdk 'openjdk-11'
     }
@@ -37,6 +40,9 @@ pipeline {
             }
         }
         stage('JIB Docker images'){
+            when{
+                GIT_STATE == 'deploy'
+            }
             steps{
                 script{
                     docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
@@ -48,6 +54,9 @@ pipeline {
             }
         }
         stage('Push image to Harbor'){
+            when{
+                GIT_STATE == 'deploy'
+            }
             steps{
                 script{
                     docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
