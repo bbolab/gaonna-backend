@@ -10,7 +10,7 @@ pipeline {
             steps{
                 script{
                     env.GIT_COMMIT = checkout scm
-                    sh "echo ${env.GIT_COMMIT}"
+                    sh "echo GIT_COMMIT : ${env.GIT_COMMIT}"
                 }
             }
         }
@@ -42,11 +42,11 @@ pipeline {
                     docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
                         sh """
                         ./gradlew jibDockerBuild
-                        echo '${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}'
-                        echo '${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}'
+                        echo 'gaonna_platform/api:${env.GIT_COMMIT}'
+                        echo 'gaonna_platform/admin:${env.GIT_COMMIT}'
                         """
-                        docker.image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
-                        docker.image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
+                        docker.image('api:latest').push("gaonna_platform/api:${env.GIT_COMMIT}")
+                        docker.image('admin:latest').push("gaonna_platform/admin:${env.GIT_COMMIT}")
                     }
                 }
             }
