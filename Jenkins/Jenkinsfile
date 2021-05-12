@@ -36,17 +36,27 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Harbor'){
+        stage('JIB Docker images'){
             steps{
                 script{
                     docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
                         sh """
                         ./gradlew jibDockerBuild
-                        echo 'gaonna_platform/api:${env.GIT_COMMIT}'
-                        echo 'gaonna_platform/admin:${env.GIT_COMMIT}'
                         """
-                        docker.image('api:latest').push("gaonna_platform/api:${env.GIT_COMMIT}")
-                        docker.image('admin:latest').push("gaonna_platform/admin:${env.GIT_COMMIT}")
+                    }
+                }
+            }
+        }
+        stage('Push image to Harbor'){
+            steps{
+                script{
+                    docker.withRegistry("${HARBOR_REPOSITORY}/gaonna_platform", HARBOR_CREDENTIAL){
+                        sh """
+                        echo push 'gaonna_platform/admin:${env.GIT_COMMIT}'
+                        echo push 'gaonna_platform/api:${env.GIT_COMMIT}'
+                        """
+                        docker.image('admin:latest').push("${env.GIT_COMMIT}")
+                        docker.image('api:latest').push("${env.GIT_COMMIT}")
                     }
                 }
             }
