@@ -40,13 +40,13 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
-                        script{
-                            sh """
-                            ./gradlew jibDockerBuild
-                            """
-                        }
-                        docker.Image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
-                        docker.Image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
+                        sh """
+                        ./gradlew jibDockerBuild
+                        echo '${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}'
+                        echo '${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}'
+                        """
+                        docker.image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
+                        docker.image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
                     }
                 }
             }
