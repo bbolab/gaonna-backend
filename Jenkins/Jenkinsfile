@@ -2,7 +2,7 @@
 
 pipeline {
     agent any
-    envrionment {
+    environment {
         GIT_STATE = env.GIT_BRANCH == 'master' && env.CHANGE_ID == null ? 'deploy' : 'else'
     }
     tools {
