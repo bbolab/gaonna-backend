@@ -41,7 +41,7 @@ pipeline {
         }
         stage('JIB Docker images'){
             when{
-                GIT_STATE == 'deploy'
+                env.GIT_STATE == 'deploy'
             }
             steps{
                 script{
@@ -55,7 +55,7 @@ pipeline {
         }
         stage('Push image to Harbor'){
             when{
-                GIT_STATE == 'deploy'
+                env.GIT_STATE == 'deploy'
             }
             steps{
                 script{
