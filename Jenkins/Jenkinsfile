@@ -2,6 +2,9 @@
 
 pipeline {
     agent any
+    environment {
+        GIT_STATE = "${env.GIT_BRANCH == 'master' && env.CHANGE_ID == null ? 'deploy' : 'else'}"
+    }
     tools {
         jdk 'openjdk-11'
     }
@@ -10,7 +13,7 @@ pipeline {
             steps{
                 script{
                     env.GIT_COMMIT = checkout scm
-                    sh "echo ${env.GIT_COMMIT}"
+                    sh "echo ${env.GIT_STATE} GIT_COMMIT : ${env.GIT_COMMIT}"
                 }
             }
         }
@@ -36,19 +39,31 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Harbor'){
+        stage('JIB Docker images'){
             when{
-                allOf {
-                    branch 'master';
-                    expression { env.CHANGE_ID == null }
-                }
+                expression{ env.GIT_STATE == 'deploy' }
             }
             steps{
-                script {
-                    sh """
-                    echo 'push image to Harbor..'
-                    ./gradlew jib -PHARBOR_USERNAME='${HARBOR_USERNAME}' -PHARBOR_PASSWORD='${HARBOR_PASSWORD}' -PDOCKER_IMG_BASE_REPOSITORY='${DOCKER_IMG_BASE_REPOSITORY}' -PHARBOR_REPOSITORY='${HARBOR_REPOSITORY}' -PIMG_TAG='${env.GIT_COMMIT}'
-                    """
+                script{
+                    docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
+                        sh """
+                        ./gradlew jibDockerBuild
+                        """
+                    }
+
+                }
+            }
+        }
+        stage('Push image to Harbor'){
+            when{
+                expression{ env.GIT_STATE == 'deploy' }
+            }
+            steps{
+                script{
+                    docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
+                        docker.image('gaonna_platform/admin:latest').push("${env.GIT_COMMIT}")
+                        docker.image('gaonna_platform/api:latest').push("${env.GIT_COMMIT}")
+                    }
                 }
             }
         }
