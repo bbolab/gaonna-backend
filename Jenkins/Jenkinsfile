@@ -42,8 +42,8 @@ pipeline {
                     docker.withRegistry(HARBOR_REPOSITORY, HARBOR_CREDENTIAL){
                         script{
                             sh """
-                        ./gradlew jibDockerBuild
-                        """
+                            ./gradlew jibDockerBuild
+                            """
                         }
                         docker.Image('api:latest').push("${HARBOR_REPOSITORY}/api:${env.GIT_COMMIT}")
                         docker.Image('admin:latest').push("${HARBOR_REPOSITORY}/admin:${env.GIT_COMMIT}")
