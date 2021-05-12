@@ -7,7 +7,7 @@ jib {
         image = "harbor.gaonna.tech/base_docker_images/openjdk:11"
     }
     to {
-        image = "admin:latest"
+        image = "gaonna_platform/admin:latest"
     }
     container {
         mainClass = 'com.bbolab.gaonna.admin.AdminApplication'
