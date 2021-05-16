@@ -4,18 +4,10 @@ plugins{
 jib {
     allowInsecureRegistries = true
     from {
-        image = "${DOCKER_IMG_BASE_REPOSITORY}/openjdk:11"
-        auth {
-            username = HARBOR_USERNAME
-            password = HARBOR_PASSWORD
-        }
+        image = "harbor.gaonna.tech/base_docker_images/openjdk:11"
     }
     to {
-        image = "${HARBOR_REPOSITORY}/${MODULE}:${IMG_TAG}"
-        auth {
-            username = HARBOR_USERNAME
-            password = HARBOR_PASSWORD
-        }
+        image = "gaonna_platform/api:latest"
     }
     container {
         mainClass = 'com.bbolab.gaonna.api.ApiApplication'
