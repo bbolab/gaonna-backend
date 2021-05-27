@@ -47,9 +47,13 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // model mapper
+    implementation 'org.modelmapper:modelmapper:2.4.3'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testCompile "org.testcontainers:mysql:1.15.3"
 
     // project dependency
     implementation project(":core")
