@@ -42,7 +42,10 @@ dependencies {
     // spring cloud
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.2'
     implementation 'org.springframework.cloud:spring-cloud-starter-config:3.0.3'
-    
+
+    // for Geometry type
+    compile group: 'org.locationtech.jts', name: 'jts-core', version: '1.15.1'
+
     // lombok
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
