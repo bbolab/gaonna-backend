@@ -3,7 +3,9 @@ package com.bbolab.gaonna.api.v1.controller;
 import com.bbolab.gaonna.api.v1.dto.article.CommentDto;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateRequestDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestResponseDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,7 +24,6 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -35,7 +36,7 @@ public class QuestController {
     @GetMapping("{questId}")
     public ResponseEntity<?> get(@PathVariable String questId) {
         // find Quest by questId
-        QuestResponseDto dto = createDummyQuestResponseDto();
+        QuestDetailResponseDto dto = createDummyQuestResponseDto();
         dto.setQuestId(questId);
         return ResponseEntity.ok().body(dto);
     }
@@ -43,19 +44,22 @@ public class QuestController {
     @GetMapping
     public ResponseEntity<?> list(@RequestParam double topLongitude, @RequestParam double topLatitude,
                                   @RequestParam double bottomLongitude, @RequestParam double bottomLatitude) {
-        List<QuestResponseDto> dtos = Collections.singletonList(createDummyQuestResponseDto());
-        for (QuestResponseDto dto : dtos) {
-            dto.setLongitude(Math.abs(topLongitude - bottomLongitude) / 2);
-            dto.setLatitude(Math.abs(topLatitude - bottomLatitude) / 2);
-        }
-        return ResponseEntity.ok().body(dtos);
+        QuestListResponseItemDto info = modelMapper.map(createDummyQuestResponseDto(), QuestListResponseItemDto.class);
+
+        QuestListResponseDto dto = QuestListResponseDto.builder().build();
+        dto.setQuests(Collections.singletonList(info));
+        dto.getQuests().forEach(d -> {
+            d.setLongitude(Math.abs(topLongitude - bottomLongitude) / 2);
+            d.setLatitude(Math.abs(topLatitude - bottomLatitude) / 2);
+        });
+        return ResponseEntity.ok().body(dto);
     }
 
     // TODO : Create 성공 이후 반환 데이터 정의 필요 : created(201)랑 URI만 반환할지, 생성된 데이터 DTO도 함께 반환할지
     @PostMapping
     public ResponseEntity<?> create(@RequestBody QuestCreateRequestDto requestDto) {
 //        QuestResponseDto dto = questService.createQuest(requestDto);
-        QuestResponseDto dto = createDummyQuestResponseDto();
+        QuestDetailResponseDto dto = createDummyQuestResponseDto();
         modelMapper.map(requestDto, dto);
         return ResponseEntity.created(URI.create("/v1/quest/" + dto.getQuestId())).body(dto);
     }
@@ -64,9 +68,9 @@ public class QuestController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody QuestUpdateRequestDto requestDto) {
         // TODO : need quest owner checking
-        QuestResponseDto questResponseDto = createDummyQuestResponseDto();
-        modelMapper.map(requestDto, questResponseDto);
-        return ResponseEntity.ok().body(questResponseDto);
+        QuestDetailResponseDto questDetailResponseDto = createDummyQuestResponseDto();
+        modelMapper.map(requestDto, questDetailResponseDto);
+        return ResponseEntity.ok().body(questDetailResponseDto);
     }
 
     @DeleteMapping("{questId}")
@@ -74,8 +78,8 @@ public class QuestController {
         return ResponseEntity.ok().build();
     }
 
-    public static QuestResponseDto createDummyQuestResponseDto() {
-        return QuestResponseDto.builder()
+    public static QuestDetailResponseDto createDummyQuestResponseDto() {
+        return QuestDetailResponseDto.builder()
                 .articleId(UUID.randomUUID().toString())
                 .title("test-title")
                 .content("test-content-with-html-format")

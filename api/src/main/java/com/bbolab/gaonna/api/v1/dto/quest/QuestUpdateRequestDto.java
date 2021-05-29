@@ -1,12 +1,18 @@
 package com.bbolab.gaonna.api.v1.dto.quest;
 
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuestUpdateRequestDto {
 
     // Article information

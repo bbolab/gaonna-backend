@@ -3,9 +3,8 @@ package com.bbolab.gaonna.api.controller;
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateRequestDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestResponseDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +49,7 @@ public class QuestControllerTest {
 
         // then
         String content = mvcResult.getResponse().getContentAsString();
-        QuestResponseDto responseDto = objectMapper.readValue(content, QuestResponseDto.class);
+        QuestDetailResponseDto responseDto = objectMapper.readValue(content, QuestDetailResponseDto.class);
 
         assertEquals(responseDto.getTitle(), requestDto.getTitle());
         assertEquals(responseDto.getContent(), requestDto.getContent());
@@ -78,7 +76,7 @@ public class QuestControllerTest {
 
         // then
         String content = result.getResponse().getContentAsString();
-        QuestResponseDto dto = objectMapper.readValue(content, QuestResponseDto.class);
+        QuestDetailResponseDto dto = objectMapper.readValue(content, QuestDetailResponseDto.class);
 
         assertEquals(dto.getQuestId().toString(), uuid);
     }
@@ -100,10 +98,10 @@ public class QuestControllerTest {
                 .andReturn();
         // then
         String content = result.getResponse().getContentAsString();
-        List<QuestResponseDto> dtos = objectMapper.readValue(content, new TypeReference<List<QuestResponseDto>>() {});
-        assertEquals(dtos.size(), 1);
-        assertEquals(dtos.get(0).getLongitude(), Math.abs(topLongitude - bottomLongitude) / 2);
-        assertEquals(dtos.get(0).getLatitude(), Math.abs(topLatitude - bottomLatitude) / 2);
+        QuestListResponseDto dto = objectMapper.readValue(content, QuestListResponseDto.class);
+        assertEquals(dto.getQuests().size(), 1);
+        assertEquals(dto.getQuests().get(0).getLongitude(), Math.abs(topLongitude - bottomLongitude) / 2);
+        assertEquals(dto.getQuests().get(0).getLatitude(), Math.abs(topLatitude - bottomLatitude) / 2);
     }
 
     @Test
@@ -122,7 +120,7 @@ public class QuestControllerTest {
 
         // then
         String content = result.getResponse().getContentAsString();
-        QuestResponseDto responseDto = objectMapper.readValue(content, QuestResponseDto.class);
+        QuestDetailResponseDto responseDto = objectMapper.readValue(content, QuestDetailResponseDto.class);
 
         assertEquals(responseDto.getTitle(), requestDto.getTitle());
         assertEquals(responseDto.getContent(), requestDto.getContent());
