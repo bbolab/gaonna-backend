@@ -2,7 +2,7 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateRequestDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,15 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
@@ -29,16 +30,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class QuestControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("[Create] 퀘스트 생성 - 성공")
     void createQuestSuccess() throws Exception {
         // given
-        QuestCreateRequestDto requestDto = createDummyQuestRequestDto();
+        QuestCreateUpdateRequestDto requestDto = createDummyQuestRequestDto();
         // when
         MvcResult mvcResult = mockMvc.perform(post("/v1/quest")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -78,7 +79,7 @@ public class QuestControllerTest {
         String content = result.getResponse().getContentAsString();
         QuestDetailResponseDto dto = objectMapper.readValue(content, QuestDetailResponseDto.class);
 
-        assertEquals(dto.getQuestId().toString(), uuid);
+        assertEquals(dto.getQuestId(), uuid);
     }
 
     @Test
@@ -108,10 +109,11 @@ public class QuestControllerTest {
     @DisplayName("[Update] 퀘스트 수정 - 성공")
     public void updateQuestTest() throws Exception {
         // given
-        QuestCreateRequestDto requestDto = createDummyQuestRequestDto();
+        String questId = UUID.randomUUID().toString();
+        QuestCreateUpdateRequestDto requestDto = createDummyQuestRequestDto();
 
         // when
-        MvcResult result = mockMvc.perform(put("/v1/quest")
+        MvcResult result = mockMvc.perform(put("/v1/quest/" + questId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .with(csrf()))
@@ -122,6 +124,7 @@ public class QuestControllerTest {
         String content = result.getResponse().getContentAsString();
         QuestDetailResponseDto responseDto = objectMapper.readValue(content, QuestDetailResponseDto.class);
 
+        assertEquals(responseDto.getQuestId(), questId);
         assertEquals(responseDto.getTitle(), requestDto.getTitle());
         assertEquals(responseDto.getContent(), requestDto.getContent());
         assertEquals(responseDto.getLatitude(), requestDto.getLatitude());
@@ -139,7 +142,7 @@ public class QuestControllerTest {
         String uuid = UUID.randomUUID().toString();
 
         // when & then
-        MvcResult result = mockMvc.perform(delete(String.format("/v1/quest/%s", uuid))
+        mockMvc.perform(delete(String.format("/v1/quest/%s", uuid))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())
@@ -148,8 +151,8 @@ public class QuestControllerTest {
 
         // TODO : Validator test
 
-    public static QuestCreateRequestDto createDummyQuestRequestDto() {
-        return QuestCreateRequestDto.builder()
+    public static QuestCreateUpdateRequestDto createDummyQuestRequestDto() {
+        return QuestCreateUpdateRequestDto.builder()
                 .title("test-title")
                 .content("test-content")
                 .latitude(35.332211)
