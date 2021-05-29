@@ -102,6 +102,31 @@ public class ArticleControllerTest {
         mockMvc.perform(delete("/v1/article/" + articleId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("[Create] 좋아요 추가 - 성공")
+    void createLikeSuccess() throws Exception {
+        // given
+        String articleId = UUID.randomUUID().toString();
+
+        // when & then
+        mockMvc.perform(post("/v1/article/like/" + articleId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+    @Test
+    @DisplayName("[Delete] 좋아요 삭제 - 성공")
+    void deleteLikeSuccess() throws Exception {
+        // given
+        String articleId = UUID.randomUUID().toString();
+
+        // when & then
+        mockMvc.perform(delete("/v1/article/like/" + articleId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()))
                 .andExpect(status().isOk())
                 .andReturn();
     }

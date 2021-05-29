@@ -64,12 +64,13 @@ public class ArticleController {
 
     @PostMapping("/like/{articleId}")
     public ResponseEntity<?> addLike(@PathVariable String articleId) {
-
+        // TODO : 해당 요청을 한 유저가 Article에 좋아요를 이미 눌렀을 경우는 예외
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/like/{likeId}}")
-    public ResponseEntity<?> deleteLike(@PathVariable String likeId) {
+    @DeleteMapping("/like/{articleId}")
+    public ResponseEntity<?> deleteLike(@PathVariable String articleId) {
+        // TODO : 해당 요청을 한 유저가 Article에 좋아요를 누르지 않았을 경우는 예외
         return ResponseEntity.ok().build();
     }
 
