@@ -1,12 +1,11 @@
 package com.bbolab.gaonna.api.v1.controller;
 
-import com.bbolab.gaonna.api.v1.dto.article.CommentDto;
+import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateRequestDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +56,7 @@ public class QuestController {
 
     // TODO : Create 성공 이후 반환 데이터 정의 필요 : created(201)랑 URI만 반환할지, 생성된 데이터 DTO도 함께 반환할지
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody QuestCreateRequestDto requestDto) {
+    public ResponseEntity<?> create(@RequestBody QuestCreateUpdateRequestDto requestDto) {
 //        QuestResponseDto dto = questService.createQuest(requestDto);
         QuestDetailResponseDto dto = createDummyQuestResponseDto();
         modelMapper.map(requestDto, dto);
@@ -65,11 +64,12 @@ public class QuestController {
     }
 
     // TODO : Update 성공 이후 반환 데이터 정의 필요 : ok(200)만 반환할지, 수정된 데이터 DTO도 함께 반환할지
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody QuestUpdateRequestDto requestDto) {
+    @PutMapping("{questId}")
+    public ResponseEntity<?> update(@PathVariable String questId, @RequestBody QuestCreateUpdateRequestDto requestDto) {
         // TODO : need quest owner checking
         QuestDetailResponseDto questDetailResponseDto = createDummyQuestResponseDto();
         modelMapper.map(requestDto, questDetailResponseDto);
+        questDetailResponseDto.setQuestId(questId);
         return ResponseEntity.ok().body(questDetailResponseDto);
     }
 
@@ -85,7 +85,8 @@ public class QuestController {
                 .content("test-content-with-html-format")
                 .updatedTime(LocalDateTime.now())
                 .likeCount(3)
-                .comments(Collections.singletonList(CommentDto.builder()
+                .comments(Collections.singletonList(CommentResponseDto.builder()
+                        .commentId(UUID.randomUUID().toString())
                         .memberId(UUID.randomUUID().toString())
                         .memberName("test-member-name")
                         .content("test-comment-content")
