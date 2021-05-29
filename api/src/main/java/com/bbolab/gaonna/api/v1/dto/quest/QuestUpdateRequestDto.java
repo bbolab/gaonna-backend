@@ -16,13 +16,15 @@ import java.util.List;
 public class QuestUpdateRequestDto {
 
     // Article information
-    private String questId;
+    String articleId;
 
-    private String title;
+    String title;
 
-    private String content;
+    String content;
 
     // Quest information
+    String questId;
+
     double longitude;
 
     double latitude;
