@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @MockMvcTest
-public class ArticleControllerTest {
+public class MockArticleControllerTest {
     @Autowired
     MockMvc mockMvc;
 

@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @MockMvcTest
-public class CommentControllerTest {
+public class MockCommentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

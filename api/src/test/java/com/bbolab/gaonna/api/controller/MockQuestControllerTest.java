@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @MockMvcTest
-public class QuestControllerTest {
+public class MockQuestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
