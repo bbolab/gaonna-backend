@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -86,8 +88,10 @@ public class MockQuestControllerTest {
     @DisplayName("[Read] 리스트 퀘스트 조회 - 성공")
     public void readQuestListTest() throws Exception {
         // given
-        double topLongitude = 33.222211, topLatitude = 121.22313;
-        double bottomLongitude = 30.112123, bottomLatitude = 100.121232;
+        double topLongitude = 33.222211;
+        double topLatitude = 121.22313;
+        double bottomLongitude = 30.112123;
+        double bottomLatitude = 100.121232;
 
         // when
         MvcResult result = mockMvc.perform(get(
@@ -141,12 +145,15 @@ public class MockQuestControllerTest {
         // given
         String uuid = UUID.randomUUID().toString();
 
-        // when & then
-        mockMvc.perform(delete(String.format("/v1/quest/%s", uuid))
+        // when
+        MvcResult result = mockMvc.perform(delete(String.format("/v1/quest/%s", uuid))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andReturn();
+
+        // then
+        assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
         // TODO : Validator test

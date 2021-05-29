@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -25,10 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockMvcTest
 public class MockArticleControllerTest {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("[Create] 게시물 생성 - 성공")
@@ -98,11 +100,15 @@ public class MockArticleControllerTest {
         // given
         String articleId = UUID.randomUUID().toString();
 
-        // when & then
-        mockMvc.perform(delete("/v1/article/" + articleId)
+        // when
+        MvcResult result = mockMvc.perform(delete("/v1/article/" + articleId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
     @Test
@@ -111,11 +117,15 @@ public class MockArticleControllerTest {
         // given
         String articleId = UUID.randomUUID().toString();
 
-        // when & then
-        mockMvc.perform(post("/v1/article/like/" + articleId)
+        // when
+        MvcResult result = mockMvc.perform(post("/v1/article/like/" + articleId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
     @Test
     @DisplayName("[Delete] 좋아요 삭제 - 성공")
@@ -123,12 +133,15 @@ public class MockArticleControllerTest {
         // given
         String articleId = UUID.randomUUID().toString();
 
-        // when & then
-        mockMvc.perform(delete("/v1/article/like/" + articleId)
+        // when
+        MvcResult result = mockMvc.perform(delete("/v1/article/like/" + articleId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andReturn();
+
+        // then
+        assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
     public static ArticleCreateRequestDto createDummyArticleCreateQuestDto() {

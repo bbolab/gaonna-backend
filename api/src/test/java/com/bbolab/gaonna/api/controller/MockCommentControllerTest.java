@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -80,11 +81,14 @@ public class MockCommentControllerTest {
         String commentId = UUID.randomUUID().toString();
 
         // when & then
-        mockMvc.perform(delete("/v1/comment/" + commentId)
+        MvcResult result = mockMvc.perform(delete("/v1/comment/" + commentId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andReturn();
+
+        // then
+        assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
     public static CommentCreateUpdateRequestDto createCommentCreateRequestDto() {
