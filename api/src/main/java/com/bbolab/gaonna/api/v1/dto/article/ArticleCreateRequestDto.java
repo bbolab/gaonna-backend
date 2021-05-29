@@ -5,18 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
-    String memberId;
-
-    String memberName;
-
+public class ArticleCreateRequestDto {
+    String title;
     String content;
-
-    LocalDateTime updatedTime;
 }
