@@ -15,22 +15,22 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestCreateUpdateRequestDto {
     // Article information
-    String title;
+    private String title;
 
-    String content;
+    private String content;
 
     // Quest information
-    double latitude;
+    private double latitude;
 
-    double longitude;
+    private double longitude;
 
-    int price;
+    private int price;
 
-    LocalDateTime deadline;
+    private LocalDateTime deadline;
 
-    List<String> tags;
+    private List<String> tags;
 
-    List<CategoryDto> categories; // Category 필드는 key-value 형태여야 함(e.g. 노동타입 : 운전)
+    private List<CategoryDto> categories; // Category 필드는 key-value 형태여야 함(e.g. 노동타입 : 운전)
 
     // TODO : 지역 정보를 입력으로 받을지(e.g. 하동, 광교동 등), 아니면 전달받은 좌표값 기준으로 서버에서 알아서 생성할지 고민 필요
 }

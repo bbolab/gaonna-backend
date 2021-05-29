@@ -16,24 +16,24 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestListResponseItemDto {
     // Article information
-    String articleId;
+    private String articleId;
 
-    String title;
+    private String title;
 
     // Quest infromation
-    String questId;
+    private String questId;
 
-    double longitude;
+    private double longitude;
 
-    double latitude;
+    private double latitude;
 
-    int price;
+    private int price;
 
-    LocalDateTime deadline;
+    private LocalDateTime deadline;
 
-    List<String> tags;
+    private List<String> tags;
 
-    List<CategoryDto> categories;
+    private List<CategoryDto> categories;
 
-    List<RegionDto> regions;
+    private List<RegionDto> regions;
 }

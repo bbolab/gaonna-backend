@@ -11,17 +11,17 @@ import java.util.List;
 @Builder
 public class ArticleResponseDto {
     // Article information
-    String articleId;
+    private String articleId;
 
-    String title;
+    private String title;
 
-    String content;
+    private String content;
 
-    LocalDateTime updatedTime;
+    private LocalDateTime updatedTime;
 
-    long likeCount;
+    private long likeCount;
 
-    long commentCount;
+    private long commentCount;
 
-    List<CommentResponseDto> comments;
+    private List<CommentResponseDto> comments;
 }

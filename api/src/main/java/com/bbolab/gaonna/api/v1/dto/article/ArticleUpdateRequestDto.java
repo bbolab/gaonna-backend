@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArticleUpdateRequestDto {
-    String title;
-    String content;
+    private String title;
+    private String content;
 }

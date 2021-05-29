@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
-    String key;
+    private String key;
 
-    String value;
+    private String value;
 
     @Override
     public String toString() {

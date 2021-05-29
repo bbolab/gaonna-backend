@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RegionDto {
 
-    String id;
+    private String id;
 
     // TODO : shold add region data field
-
-
 }

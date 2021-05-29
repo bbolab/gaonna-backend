@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestListResponseDto {
-    List<QuestListResponseItemDto> quests;
+    private List<QuestListResponseItemDto> quests;
 }

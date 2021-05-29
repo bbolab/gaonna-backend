@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentResponseDto {
-    String commentId;
+    private String commentId;
 
-    String memberId;
+    private String memberId;
 
-    String memberName;
+    private String memberName;
 
-    String content;
+    private String content;
 
-    LocalDateTime updatedTime;
+    private LocalDateTime updatedTime;
 }
