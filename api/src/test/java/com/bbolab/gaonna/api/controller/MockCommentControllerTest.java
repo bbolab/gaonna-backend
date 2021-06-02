@@ -38,9 +38,10 @@ public class MockCommentControllerTest {
         // given
         String articleId = UUID.randomUUID().toString();
         CommentCreateUpdateRequestDto requestDto = createCommentCreateRequestDto();
+        String url = String.format("/v1/article/%s/comment", articleId);
 
         // when
-        MvcResult result = mockMvc.perform(post("/v1/comment/" + articleId)
+        MvcResult result = mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .with(csrf()))
@@ -57,11 +58,13 @@ public class MockCommentControllerTest {
     @DisplayName("[Update] 댓글 수정 - 성공")
     void updateCommentSuccess() throws Exception {
         // given
+        String articleId = UUID.randomUUID().toString();
         String commentId = UUID.randomUUID().toString();
         CommentCreateUpdateRequestDto requestDto = createCommentCreateRequestDto();
+        String url = String.format("/v1/article/%s/comment/%s", articleId, commentId);
 
         // when
-        MvcResult result = mockMvc.perform(put("/v1/comment/" + commentId)
+        MvcResult result = mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto))
                 .with(csrf()))
@@ -78,10 +81,12 @@ public class MockCommentControllerTest {
     @DisplayName("[Delete] 댓글 삭제 - 성공")
     void deleteCommentSuccess() throws Exception {
         // given
+        String articleId = UUID.randomUUID().toString();
         String commentId = UUID.randomUUID().toString();
+        String url = String.format("/v1/article/%s/comment/%s", articleId, commentId);
 
         // when & then
-        MvcResult result = mockMvc.perform(delete("/v1/comment/" + commentId)
+        MvcResult result = mockMvc.perform(delete(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())

@@ -18,12 +18,12 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/v1/comment")
+@RequestMapping("/v1/article/{articleId}/comment")
 public class CommentController {
 
     private final ModelMapper modelMapper;
 
-    @PostMapping("{articleId}")
+    @PostMapping
     public ResponseEntity<?> createComment(@PathVariable String articleId, @RequestBody CommentCreateUpdateRequestDto requestDto) {
         CommentResponseDto dto = createDummyCommentResponseDto();
         modelMapper.map(requestDto, dto);
@@ -31,7 +31,7 @@ public class CommentController {
     }
 
     @PutMapping("{commentId}")
-    public ResponseEntity<?>  updateComment(@PathVariable String commentId, @RequestBody CommentCreateUpdateRequestDto requestDto) {
+    public ResponseEntity<?>  updateComment(@PathVariable String articleId, @PathVariable String commentId, @RequestBody CommentCreateUpdateRequestDto requestDto) {
         CommentResponseDto dto = createDummyComment();
         modelMapper.map(requestDto, dto);
         dto.setCommentId(commentId);
@@ -39,7 +39,7 @@ public class CommentController {
     }
 
     @DeleteMapping("{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable String commentId) {
+    public ResponseEntity<?> deleteComment(@PathVariable String articleId, @PathVariable String commentId) {
         return ResponseEntity.ok().build();
     }
 
