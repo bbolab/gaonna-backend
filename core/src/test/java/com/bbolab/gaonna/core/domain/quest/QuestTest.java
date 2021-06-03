@@ -1,6 +1,8 @@
 package com.bbolab.gaonna.core.domain.quest;
 
 import com.bbolab.gaonna.core.AbstractContainerBaseTest;
+import com.bbolab.gaonna.core.domain.category.Category;
+import com.bbolab.gaonna.core.domain.category.CategoryValue;
 import com.bbolab.gaonna.core.repository.QuestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,6 +48,22 @@ public class QuestTest extends AbstractContainerBaseTest {
         }
     }
 
+    @DisplayName("QuestCategoryValue test")
+    @Test
+    void questCategoryValueTest() {
+        Quest quest = Quest.builder().build();
+        Category category = Category.builder().key("testkey").build();
+        CategoryValue categoryValue = CategoryValue.builder().category(category).value("teststring").build();
+        QuestCategoryValue questCategoryValue = QuestCategoryValue.builder().categoryValue(categoryValue).quest(quest).build();
+
+        questCategoryValue.setQuestAndCategoryValue(quest, categoryValue);
+
+        assertNotNull(quest.getQuestCategoryValues().get(0));
+        assertNotNull(categoryValue.getQuestCategoryValueList().get(0));
+        assertEquals(quest.getQuestCategoryValues().get(0), questCategoryValue);
+        assertEquals(categoryValue.getQuestCategoryValueList().get(0), questCategoryValue);
+    }
+
     @DisplayName("Builder.default test")
     @Test
     void builderDefault() {
@@ -53,8 +71,7 @@ public class QuestTest extends AbstractContainerBaseTest {
         assertNotNull(quest.getQuestTags());
         assertNotNull(quest.getMemberQuest());
         assertNotNull(quest.getQuestRegionL3s());
-        assertNotNull(quest.getCategoryValueList());
+        assertNotNull(quest.getQuestCategoryValues());
     }
-
 }
 
