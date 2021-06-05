@@ -20,7 +20,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()
-                .pathMapping("/");
+                .pathMapping("/")
+                .useDefaultResponseMessages(false);
     }
 
 }

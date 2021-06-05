@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ArticleCreateRequestDto {
     private String title;
+
     private String content;
 }

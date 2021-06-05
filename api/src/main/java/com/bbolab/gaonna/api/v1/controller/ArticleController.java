@@ -4,6 +4,11 @@ import com.bbolab.gaonna.api.v1.dto.article.ArticleCreateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.article.ArticleResponseDto;
 import com.bbolab.gaonna.api.v1.dto.article.ArticleUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -21,22 +26,25 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
 
+@Api(value = "article")
 @RestController
 @RequestMapping("/v1/article")
 @RequiredArgsConstructor
 public class ArticleController {
     // Quest가 없는 일반 게시물을 조회하는 경우
-    // Quest가 있는 경우 Quest Controller 통해서 조회해야 함
     private final ModelMapper modelMapper;
 
+    @ApiOperation(value = "Searching article")
+    @ApiResponses({@ApiResponse(code = 200, message = "Success", response = ArticleResponseDto.class)})
     @GetMapping("{articleId}")
-    public ResponseEntity<?> get(@PathVariable String articleId) {
-        // TODO : Quest가 있는 Article에 대해서 articleId로 조회를 할 경우 어떻게 할 것인지?
+    public ResponseEntity<?> get(@ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String articleId) {
         ArticleResponseDto dto = createDummyArticleResponseDto();
         dto.setArticleId(articleId);
         return ResponseEntity.ok(dto);
     }
 
+    @ApiOperation(value = "Create new article")
+    @ApiResponses({@ApiResponse(code = 201, message = "Success", response = ArticleResponseDto.class)})
     @PostMapping
     public ResponseEntity<?> create(@RequestBody ArticleCreateRequestDto requestDto) {
         ArticleResponseDto dto = createDummyArticleResponseDto();
@@ -45,6 +53,8 @@ public class ArticleController {
         return ResponseEntity.created(URI.create("/v1/article/" + dto.getArticleId())).body(dto);
     }
 
+    @ApiOperation(value = "Update article")
+    @ApiResponses({@ApiResponse(code = 200, message = "Success", response = ArticleResponseDto.class)})
     @PutMapping("{articleId}")
     public ResponseEntity<?> update(@PathVariable String articleId, @RequestBody ArticleUpdateRequestDto requestDto) {
         // TODO : need article owner checking
@@ -57,17 +67,23 @@ public class ArticleController {
     // TODO : Article 리스트 조회는 어떤 기준으로? 지역?
     // TODO : Article은 어떤 종류? 자유게시판? 공지사항?
 
+    @ApiOperation(value = "Delete article")
+    @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @DeleteMapping("{articleId}")
     public ResponseEntity<?> delete(@PathVariable String articleId){
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "User add like to article")
+    @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @PostMapping("/like/{articleId}")
     public ResponseEntity<?> addLike(@PathVariable String articleId) {
         // TODO : 해당 요청을 한 유저가 Article에 좋아요를 이미 눌렀을 경우는 예외
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "User cancel like to article")
+    @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @DeleteMapping("/like/{articleId}")
     public ResponseEntity<?> deleteLike(@PathVariable String articleId) {
         // TODO : 해당 요청을 한 유저가 Article에 좋아요를 누르지 않았을 경우는 예외
@@ -81,6 +97,7 @@ public class ArticleController {
                 .content("test-content-with-html-format")
                 .updatedTime(LocalDateTime.now())
                 .likeCount(3)
+                .commentCount(1)
                 .comments(Collections.singletonList(CommentResponseDto.builder()
                         .memberId(UUID.randomUUID().toString())
                         .memberName("test-member-name")
