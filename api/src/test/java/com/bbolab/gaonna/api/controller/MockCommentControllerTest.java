@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateUpdateRequestDto;
+import com.bbolab.gaonna.api.v1.dto.comment.CommentListResponseDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -16,10 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
@@ -31,6 +31,29 @@ public class MockCommentControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Test
+    @DisplayName("[Get] 게시글 댓글 조회 - 성공")
+    void getAllCommentSuccess() throws Exception {
+        // given
+        String articleId = UUID.randomUUID().toString();
+        String url = String.format("/v1/article/%s/comment", articleId);
+
+        // when
+        MvcResult result = mockMvc.perform(get(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        String content = result.getResponse().getContentAsString();
+        CommentListResponseDto dto = objectMapper.readValue(content, CommentListResponseDto.class);
+
+        assertEquals(dto.getArticleId(), articleId);
+        assertNotNull(dto.getCommentLists());
+        assertNotNull(dto.getCommentLists().get(0).getContent());
+    }
 
     @Test
     @DisplayName("[Create] 댓글 추가 - 성공")
