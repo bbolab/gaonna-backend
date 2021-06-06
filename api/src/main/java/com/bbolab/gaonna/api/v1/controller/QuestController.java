@@ -46,7 +46,7 @@ public class QuestController {
         return ResponseEntity.ok().body(dto);
     }
 
-    @ApiOperation(value = "Searching quest")
+    @ApiOperation(value = "Searching quest", notes = "Search for quests inside a selected area on the map. You should pass top-right and bottom-left coordinates for searching.")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestListResponseDto.class)})
     @GetMapping
     public ResponseEntity<?> list(@RequestParam double topLongitude, @RequestParam double topLatitude,
