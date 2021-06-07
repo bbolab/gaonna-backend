@@ -1,5 +1,6 @@
 package com.bbolab.gaonna.api.controller;
 
+import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @MockMvcTest
-public class MockQuestControllerTest {
+public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Autowired
     private MockMvc mockMvc;

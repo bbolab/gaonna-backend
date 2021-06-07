@@ -1,5 +1,6 @@
 package com.bbolab.gaonna.api.controller;
 
+import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentListResponseDto;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @MockMvcTest
-public class MockCommentControllerTest {
+public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
     @Autowired
     private MockMvc mockMvc;
