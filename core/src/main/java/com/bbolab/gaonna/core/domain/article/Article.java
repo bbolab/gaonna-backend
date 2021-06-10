@@ -15,6 +15,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -60,6 +62,9 @@ public class Article {
 
     @Column
     private long commentCount;
+
+    @Enumerated(EnumType.STRING)
+    private BoardType boardType;
 
     @Builder.Default
     @OneToMany(mappedBy = "article")
