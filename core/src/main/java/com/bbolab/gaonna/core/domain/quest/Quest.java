@@ -62,7 +62,7 @@ public class Quest {
 
     @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
-    private List<CategoryValue> categoryValueList = new LinkedList<>();
+    private List<QuestCategoryValue> questCategoryValues = new LinkedList<>();
 
     public boolean addMemberQuest(MemberQuest memberQuest) {
         if(this.memberQuest.contains(memberQuest)){
@@ -88,11 +88,11 @@ public class Quest {
         return this.questRegionL3s.add(regionL3);
     }
 
-    public boolean addCategoryValue(CategoryValue categoryValue) {
-        if (this.categoryValueList.contains(categoryValue)) {
+    public boolean addCategoryValue(QuestCategoryValue categoryValue) {
+        if (this.questCategoryValues.contains(categoryValue)) {
             return false;
         }
         categoryValue.setQuest(this);
-        return categoryValueList.add(categoryValue);
+        return questCategoryValues.add(categoryValue);
     }
 }
