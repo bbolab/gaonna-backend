@@ -1,7 +1,5 @@
 package com.bbolab.gaonna.api.v1.controller;
 
-import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
-import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
@@ -24,10 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.UUID;
+
+import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyQuestResponseDto;
 
 @RestController
 @RequestMapping("/v1/quest")
@@ -39,7 +36,7 @@ public class QuestController {
     @ApiOperation(value = "Searching quest with Quest UUID")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestDetailResponseDto.class)})
     @GetMapping("{questId}")
-    public ResponseEntity<?> get(@ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String questId) {
+    public ResponseEntity<QuestDetailResponseDto> get(@ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String questId) {
         // find Quest by questId
         QuestDetailResponseDto dto = createDummyQuestResponseDto();
         dto.setQuestId(questId);
@@ -49,7 +46,7 @@ public class QuestController {
     @ApiOperation(value = "Searching quest", notes = "Search for quests inside a selected area on the map. You should pass top-right and bottom-left coordinates for searching.")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestListResponseDto.class)})
     @GetMapping
-    public ResponseEntity<?> list(@RequestParam double topLongitude, @RequestParam double topLatitude,
+    public ResponseEntity<QuestListResponseDto> list(@RequestParam double topLongitude, @RequestParam double topLatitude,
                                   @RequestParam double bottomLongitude, @RequestParam double bottomLatitude) {
         QuestListResponseItemDto info = modelMapper.map(createDummyQuestResponseDto(), QuestListResponseItemDto.class);
 
@@ -66,7 +63,7 @@ public class QuestController {
     @ApiOperation(value = "Create new quest")
     @ApiResponses({@ApiResponse(code = 201, message = "Success", response = QuestDetailResponseDto.class)})
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody QuestCreateUpdateRequestDto requestDto) {
+    public ResponseEntity<QuestDetailResponseDto> create(@RequestBody QuestCreateUpdateRequestDto requestDto) {
 //        QuestResponseDto dto = questService.createQuest(requestDto);
         QuestDetailResponseDto dto = createDummyQuestResponseDto();
         modelMapper.map(requestDto, dto);
@@ -77,7 +74,7 @@ public class QuestController {
     @ApiOperation(value = "Update quest")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestDetailResponseDto.class)})
     @PutMapping("{questId}")
-    public ResponseEntity<?> update(@PathVariable String questId, @RequestBody QuestCreateUpdateRequestDto requestDto) {
+    public ResponseEntity<QuestDetailResponseDto> update(@PathVariable String questId, @RequestBody QuestCreateUpdateRequestDto requestDto) {
         // TODO : need quest owner checking
         QuestDetailResponseDto questDetailResponseDto = createDummyQuestResponseDto();
         modelMapper.map(requestDto, questDetailResponseDto);
@@ -88,30 +85,8 @@ public class QuestController {
     @ApiOperation(value = "Delete quest")
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @DeleteMapping("{questId}")
-    public ResponseEntity<?> delete() {
+    public ResponseEntity<Void> delete(@PathVariable String questId) {
         return ResponseEntity.ok().build();
     }
 
-    public static QuestDetailResponseDto createDummyQuestResponseDto() {
-        return QuestDetailResponseDto.builder()
-                .articleId(UUID.randomUUID().toString())
-                .title("test-title")
-                .content("test-content-with-html-format")
-                .updatedTime(LocalDateTime.now())
-                .likeCount(3)
-                .comments(Collections.singletonList(CommentResponseDto.builder()
-                        .commentId(UUID.randomUUID().toString())
-                        .memberId(UUID.randomUUID().toString())
-                        .memberName("test-member-name")
-                        .content("test-comment-content")
-                        .updatedTime(LocalDateTime.now()).build()))
-                .questId(UUID.randomUUID().toString())
-                .longitude(33.232323)
-                .latitude(121.121213)
-                .price(10000)
-                .deadline(LocalDateTime.now())
-                .tags(Arrays.asList("tag1", "tag2"))
-                .categories(Collections.singletonList(CategoryDto.builder().key("key").value("value").build()))
-                .build();
-    }
 }
