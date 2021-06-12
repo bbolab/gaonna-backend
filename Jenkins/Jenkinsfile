@@ -58,9 +58,6 @@ pipeline {
             }
         }
         stage('JIB Docker images'){
-            when{
-                expression{ env.GIT_STATE == 'deploy' }
-            }
             options{
                 retry(2)
             }
