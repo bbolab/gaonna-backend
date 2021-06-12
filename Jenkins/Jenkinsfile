@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Gradlew Build'){
             options{
-                retry(1)
+                retry(2)
             }
             steps{
                 script{
@@ -32,12 +32,13 @@ pipeline {
             post{
                 failure{
                     sh "./gradle --stop"
+                    error "Gradlew Build Fail"
                 }
             }
         }
         stage('Test'){
             options{
-                retry(1)
+                retry(2)
             }
             steps{
                 script{
@@ -52,6 +53,7 @@ pipeline {
             post{
                 failure{
                     sh "./gradle --stop"
+                    error "Test Fail"
                 }
             }
         }
@@ -60,7 +62,7 @@ pipeline {
                 expression{ env.GIT_STATE == 'deploy' }
             }
             options{
-                retry(1)
+                retry(2)
             }
             steps{
                 script{
@@ -75,6 +77,7 @@ pipeline {
             post{
                 failure{
                     sh "./gradle --stop"
+                    error "JIB Docker images"
                 }
             }
         }
