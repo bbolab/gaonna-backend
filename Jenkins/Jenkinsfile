@@ -18,6 +18,9 @@ pipeline {
             }
         }
         stage('Gradlew Build'){
+            options{
+                retry(1)
+            }
             steps{
                 script{
                     sh """
@@ -26,8 +29,16 @@ pipeline {
                     """
                 }
             }
+            post{
+                failure{
+                    sh "./gradle --stop"
+                }
+            }
         }
         stage('Test'){
+            options{
+                retry(1)
+            }
             steps{
                 script{
                     sh "./gradlew test"
@@ -38,10 +49,18 @@ pipeline {
                     sh "curl -s https://codecov.io/bash | bash"
                 }
             }
+            post{
+                failure{
+                    sh "./gradle --stop"
+                }
+            }
         }
         stage('JIB Docker images'){
             when{
                 expression{ env.GIT_STATE == 'deploy' }
+            }
+            options{
+                retry(1)
             }
             steps{
                 script{
@@ -51,6 +70,11 @@ pipeline {
                         """
                     }
 
+                }
+            }
+            post{
+                failure{
+                    sh "./gradle --stop"
                 }
             }
         }

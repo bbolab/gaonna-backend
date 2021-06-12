@@ -15,6 +15,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -56,10 +58,13 @@ public class Article {
     private LocalDateTime updatedTime;
 
     @Column
-    private long linkCount;
+    private long likeCount;
 
     @Column
     private long commentCount;
+
+    @Enumerated(EnumType.STRING)
+    private BoardType boardType;
 
     @Builder.Default
     @OneToMany(mappedBy = "article")
@@ -73,6 +78,7 @@ public class Article {
         if (comments.contains(memberArticleComment)) {
             return false;
         }
+        // TODO : add commentCount increment
         memberArticleComment.setArticle(this);
         return comments.add(memberArticleComment);
     }
@@ -81,7 +87,15 @@ public class Article {
         if (articleLikeMembers.contains(memberArticleLike)) {
             return false;
         }
+        this.likeCount++;
         memberArticleLike.setArticle(this);
         return articleLikeMembers.add(memberArticleLike);
+    }
+
+    public void removeMemberArticleLike(MemberArticleLike memberArticleLike) {
+        if (this.articleLikeMembers.contains(memberArticleLike)) {
+            this.likeCount--;
+            this.articleLikeMembers.remove(memberArticleLike);
+        }
     }
 }
