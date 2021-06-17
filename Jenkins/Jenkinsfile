@@ -3,7 +3,7 @@
 pipeline {
     agent any
     environment {
-        GIT_STATE = "${env.GIT_BRANCH == 'master' && env.CHANGE_ID == null ? 'deploy' : 'else'}"
+        GIT_STATE = "${env.JOB_NAME == 'gaonna-backend-deploy' ? 'deploy' : 'else'}"
     }
     tools {
         jdk 'openjdk-11'
@@ -13,13 +13,14 @@ pipeline {
             steps{
                 script{
                     env.GIT_COMMIT = checkout scm
+                    env.GIT_TAG = sh(script: "git name-rev --tags --name-only ${env.GIT_COMMIT}", returnStdout: true)?.trim()
                     sh "echo ${env.GIT_STATE} GIT_COMMIT : ${env.GIT_COMMIT}"
                 }
             }
         }
         stage('Gradlew Build'){
             options{
-                retry(1)
+                retry(2)
             }
             steps{
                 script{
@@ -32,12 +33,13 @@ pipeline {
             post{
                 failure{
                     sh "./gradle --stop"
+                    error "Gradlew Build Fail"
                 }
             }
         }
         stage('Test'){
             options{
-                retry(1)
+                retry(2)
             }
             steps{
                 script{
@@ -52,15 +54,13 @@ pipeline {
             post{
                 failure{
                     sh "./gradle --stop"
+                    error "Test Fail"
                 }
             }
         }
         stage('JIB Docker images'){
-            when{
-                expression{ env.GIT_STATE == 'deploy' }
-            }
             options{
-                retry(1)
+                retry(2)
             }
             steps{
                 script{
@@ -75,6 +75,7 @@ pipeline {
             post{
                 failure{
                     sh "./gradle --stop"
+                    error "JIB Docker images"
                 }
             }
         }
@@ -88,6 +89,37 @@ pipeline {
                         docker.image('gaonna_platform/admin:latest').push("${env.GIT_COMMIT}")
                         docker.image('gaonna_platform/api:latest').push("${env.GIT_COMMIT}")
                     }
+                }
+            }
+        }
+        stage('Update Manifest'){
+            when{
+                expression{ env.GIT_STATE == 'deploy'}
+            }
+            steps{
+                dir('gaonna-manifest'){
+                    git branch: 'main', credentialsId: 'gaonna-sa', url: 'https://github.com/bbolab/gaonna-manifest'
+                    dir('kustomize/admin/overlays/alpha'){
+                        sh "kustomize edit set image admin=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
+                    }
+                    dir('kustomize/api/overlays/alpha'){
+                        sh "kustomize edit set image api=harbor.gaonna.tech/gaonna_platform/api:$GIT_COMMIT"
+                    }
+                    script{
+                        sh "echo $env.GIT_TAG"
+                        if(env.GIT_TAG == 'real'){
+                            dir('kustomize/admin/overlays/real'){
+                                sh "kustomize edit set image admin=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
+                            }
+                            dir('kustomize/api/overlays/real'){
+                                sh "kustomize edit set image api=harbor.gaonna.tech/gaonna_platform/api:$GIT_COMMIT"
+                            }
+                        }
+                    }
+                    sh """
+                    git add -A
+                    git commit -m "$GIT_COMMIT" && git push -u origin main
+                    """
                 }
             }
         }
