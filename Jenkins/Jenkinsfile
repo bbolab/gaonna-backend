@@ -117,8 +117,7 @@ pipeline {
                         }
                     }
                     sh """
-                    git add -A
-                    git commit -m "$GIT_COMMIT" && git push -u origin main
+                    if git status | grep -q "nothing to commit"; then echo "there is no change"; else git add -A && git commit -m '$GIT_COMMIT' && git push -u origin main; fi
                     """
                 }
             }
