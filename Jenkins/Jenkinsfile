@@ -32,7 +32,7 @@ pipeline {
             }
             post{
                 failure{
-                    sh "./gradle --stop"
+                    sh "./gradlew --stop"
                     error "Gradlew Build Fail"
                 }
             }
@@ -53,7 +53,7 @@ pipeline {
             }
             post{
                 failure{
-                    sh "./gradle --stop"
+                    sh "./gradlew --stop"
                     error "Test Fail"
                 }
             }
@@ -74,7 +74,7 @@ pipeline {
             }
             post{
                 failure{
-                    sh "./gradle --stop"
+                    sh "./gradlew --stop"
                     error "JIB Docker images"
                 }
             }
