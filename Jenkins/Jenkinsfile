@@ -50,7 +50,7 @@ pipeline {
                     sh "echo 'send it to codecov'"
                     codecov_stdout = sh(script:"curl -s https://codecov.io/bash | bash", returnStdout: true)
                     echo codecov_stdout
-                    if((codecov_stdout =~ /(.*)404(.*)/).find(0)){
+                    if((codecov_stdout =~ /(.*)\n404\n(.*)/).find(0)){
                         error "Codecov report publish fail(404)"
                     }
                 }
