@@ -1,5 +1,6 @@
 package com.bbolab.gaonna.core.service;
 
+import com.bbolab.gaonna.core.config.FileServiceConfig;
 import com.bbolab.gaonna.core.domain.File;
 import com.bbolab.gaonna.core.exception.FileServiceException;
 import com.bbolab.gaonna.core.exception.NoSuchEntityException;
@@ -18,10 +19,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileService {
     private final FileRepository fileRepository;
+    private final FileServiceConfig fileServiceConfig;
 
     @Transactional
     public File create(byte[] bytes) {
-        String filename = UUID.randomUUID().toString();
+        String filename = String.format("%s/%s", fileServiceConfig.getFileStorageRoot(), UUID.randomUUID());
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             fileOutputStream.write(bytes);
