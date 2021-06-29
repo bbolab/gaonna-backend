@@ -55,6 +55,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testCompile "org.testcontainers:mysql:1.15.3"
 
+    // jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+
     // project dependency
     implementation project(":core")
 }

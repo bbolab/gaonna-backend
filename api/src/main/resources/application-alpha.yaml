@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: ENC(kjTdWiAZqGMAPc+Rb4Y6nar1nYJwdJcQBaOzDAAziA7cKuBPZAJQMGKSqXdxaAfA)
+    username: ENC(j3UQH7kUdtWZIXmTVjne+w==)
+    password: ENC(x85w7DgqcrAzrxin6f0IoPrxixumt9WwstmvG1asrZT+zssgga/mQM56smIBjTnC)
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+    generate-ddl: true
+    database: mysql
+    database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+jasypt:
+  encryptor:
+    password: ${GAONNA_KEY}
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
