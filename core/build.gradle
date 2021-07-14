@@ -12,6 +12,9 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // geo
+    implementation group: 'org.geotools', name: 'gt-shapefile', version: '25.0'
+
     // test
     testImplementation 'org.mockito:mockito-junit-jupiter:3.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
