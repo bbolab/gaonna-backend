@@ -17,6 +17,7 @@ allprojects {
         maven {url "https://repo.osgeo.org/repository/release/"}
         mavenLocal()
         mavenCentral()
+        jcenter()
     }
 }
 
