@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,14 +31,22 @@ public class RegionL2 {
 
     @ManyToOne
     @JoinColumn
-    private RegionL3 regionL3;
+    private RegionL1 regionL1;
 
+    @Builder.Default
     @OneToMany(mappedBy = "regionL2")
-    private List<RegionL1> regionL1s;
+    private List<RegionL3> regionL3s = new LinkedList<>();
 
     private String admCode;
 
     private String name;
 
     private String version;
+
+    public void addRegionL3(RegionL3 regionL3) {
+        if (!regionL3s.contains(regionL3)) {
+            regionL3s.add(regionL3);
+            regionL3.setRegionL2(this);
+        }
+    }
 }

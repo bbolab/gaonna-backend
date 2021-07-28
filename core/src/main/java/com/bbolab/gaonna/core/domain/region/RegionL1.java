@@ -11,8 +11,9 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -26,13 +27,20 @@ public class RegionL1 {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn
-    private RegionL2 regionL2;
+    @Builder.Default
+    @OneToMany(mappedBy = "regionL1")
+    private List<RegionL2> regionL2s = new LinkedList<>();
 
     private String admCode;
 
     private String name;
 
     private String version;
+
+    public void addRegionL2(RegionL2 regionL2) {
+        if (!regionL2s.contains(regionL2)) {
+            regionL2s.add(regionL2);
+            regionL2.setRegionL1(this);
+        }
+    }
 }

@@ -13,8 +13,8 @@ import org.locationtech.jts.geom.Point;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Builder
@@ -28,8 +28,9 @@ public class RegionL3 {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @OneToMany(mappedBy = "regionL3")
-    private List<RegionL2> regionL2s;
+    @ManyToOne
+    @JoinColumn
+    private RegionL2 regionL2;
 
     private String admCode;
 
