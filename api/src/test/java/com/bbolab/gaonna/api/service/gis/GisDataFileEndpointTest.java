@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.service.geo;
+package com.bbolab.gaonna.api.service.gis;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import org.junit.jupiter.api.DisplayName;

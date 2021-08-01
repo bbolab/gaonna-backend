@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.service.geo;
+package com.bbolab.gaonna.api.service.gis;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.springframework.stereotype.Service;

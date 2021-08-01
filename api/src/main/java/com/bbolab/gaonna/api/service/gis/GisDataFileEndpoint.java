@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.service.geo;
+package com.bbolab.gaonna.api.service.gis;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;

@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.service.geo;
+package com.bbolab.gaonna.api.service.gis;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.exception.GeoDataFileHandlingException;
