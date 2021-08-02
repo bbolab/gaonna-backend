@@ -9,4 +9,12 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 100
 
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACEs

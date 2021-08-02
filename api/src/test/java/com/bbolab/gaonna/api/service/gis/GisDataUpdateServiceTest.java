@@ -13,6 +13,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -99,25 +101,32 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
         gisDataUpdateService.updateEmd();
 
         // when
-        List<RegionL3> regionL3s = regionL3Repository.findAll();
+        int page = 0, checked = 0;
+        Page<RegionL3> regionL3s;
+
+        while (true) {
+            regionL3s = regionL3Repository.findAll(PageRequest.of(page, 100));
+            if(regionL3s.isEmpty()){
+                break;
+            }
+
+            // then
+            for (RegionL3 region : regionL3s) {
+                assertNotNull(region.getName());
+                assertNotNull(region.getAdmCode());
+                assertNotNull(region.getVersion());
+                assertNotNull(region.getGeoPolygon());
+
+                RegionL2 regionL2 = region.getRegionL2();
+                assertNotNull(regionL2);
+                assertTrue(regionL2.getRegionL3s().contains(region));
+                checked += 1;
+            }
+            page += 1;
+        }
 
         // then
-        assertEquals(regionL3s.size(), GisDataFileEndpointTest.EMD_LENGTH);
-        for (RegionL3 region : regionL3s) {
-            assertNotNull(region.getName());
-            assertNotNull(region.getAdmCode());
-            assertNotNull(region.getVersion());
-            assertNotNull(region.getGeoPolygon());
-
-            RegionL2 regionL2 = region.getRegionL2();
-            assertNotNull(regionL2);
-            assertTrue(regionL2.getRegionL3s().contains(region));
-//            List<RegionL2> regionL2s = region.getRegionL2s();
-//            assertNotEquals(regionL2s.size(), 0);
-//            for (RegionL2 l2 : regionL2s) {
-//                assertEquals(l2.getRegionL3().getId(), region.getId());
-//            }
-        }
+        assertEquals(checked, GisDataFileEndpointTest.EMD_LENGTH);
     }
 
     @DisplayName("[GIS] 읍면동 업데이트 요청 - 실패(시도, 시군구 업데이트가 먼저 수행되지 않았을 때)")
