@@ -54,7 +54,7 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
         List<RegionL1> regionL1s = regionL1Repository.findAll();
 
         // then
-        assertEquals(regionL1s.size(), GisDataFileEndpointTest.SD_LENGTH);
+        assertEquals(regionL1s.size(), GisFileFeatureProviderTest.SD_LENGTH);
         for (RegionL1 region : regionL1s) {
             assertNotNull(region.getName());
             assertNotNull(region.getAdmCode());
@@ -73,7 +73,7 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
         List<RegionL2> regionL2s = regionL2Repository.findAll();
 
         // then
-        assertEquals(regionL2s.size(), GisDataFileEndpointTest.SGG_LENGTH);
+        assertEquals(regionL2s.size(), GisFileFeatureProviderTest.SGG_LENGTH);
         regionL2s.forEach(region -> {
             assertNotNull(region.getName());
             assertNotNull(region.getAdmCode());
@@ -126,7 +126,7 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
         }
 
         // then
-        assertEquals(checked, GisDataFileEndpointTest.EMD_LENGTH);
+        assertEquals(checked, GisFileFeatureProviderTest.EMD_LENGTH);
     }
 
     @DisplayName("[GIS] 읍면동 업데이트 요청 - 실패(시도, 시군구 업데이트가 먼저 수행되지 않았을 때)")

@@ -1,5 +1,7 @@
-package com.bbolab.gaonna.api.service.gis;
+package com.bbolab.gaonna.api.service.gis.feature;
 
+import com.bbolab.gaonna.api.service.gis.endpoint.GisDataFileEndpoint;
+import lombok.RequiredArgsConstructor;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -18,24 +20,27 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class GisDataFileEndpoint implements GisDataEndpoint {
+@RequiredArgsConstructor
+public class GisFileFeatureProvider implements GisFeatureProvider {
+
+    private final GisDataFileEndpoint gisDataFileEndpoint;
 
     @Override
     public Set<SimpleFeature> getSdFeatures() {
-        String fileName = "src/main/resources/Z_SOP_BND_SIDO_PG/Z_SOP_BND_SIDO_PG.shp";
-        return getFeaturesFromFile(fileName);
+        String filepath = gisDataFileEndpoint.getSdFilepath();
+        return getFeaturesFromFile(filepath);
     }
 
     @Override
     public Set<SimpleFeature> getSggFeatures() {
-        String fileName = "src/main/resources/Z_SOP_BND_SIGUNGU_PG 2/Z_SOP_BND_SIGUNGU_PG.shp";
-        return getFeaturesFromFile(fileName);
+        String filepath = gisDataFileEndpoint.getSggFilepath();
+        return getFeaturesFromFile(filepath);
     }
 
     @Override
     public Set<SimpleFeature> getEmdFeatures() {
-        String fileName = "src/main/resources/Z_SOP_BND_ADM_DONG_PG 2/Z_SOP_BND_ADM_DONG_PG.shp";
-        return getFeaturesFromFile(fileName);
+        String filepath = gisDataFileEndpoint.getEmdFilepath();
+        return getFeaturesFromFile(filepath);
     }
 
     public Set<SimpleFeature> getFeaturesFromFile(String fileName) {
@@ -61,9 +66,9 @@ public class GisDataFileEndpoint implements GisDataEndpoint {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(features != null) features.close();
-            if(dataStore != null) dataStore.dispose();
+        } finally {
+            if (features != null) features.close();
+            if (dataStore != null) dataStore.dispose();
         }
         return result;
     }

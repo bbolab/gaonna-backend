@@ -1,6 +1,7 @@
 package com.bbolab.gaonna.api.service.gis;
 
 import com.bbolab.gaonna.api.exception.GeoDataFileHandlingException;
+import com.bbolab.gaonna.api.service.gis.feature.GisFeatureProvider;
 import com.bbolab.gaonna.core.domain.region.RegionL1;
 import com.bbolab.gaonna.core.domain.region.RegionL2;
 import com.bbolab.gaonna.core.domain.region.RegionL3;
@@ -19,14 +20,14 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class GisDataUpdateService {
 
-    private final GisDataEndpoint gisDataEndpoint;
+    private final GisFeatureProvider gisFeatureProvider;
     private final RegionL1Repository regionL1Repository;
     private final RegionL2Repository regionL2Repository;
     private final RegionL3Repository regionL3Repository;
 
     @Transactional
     public void updateSido() {
-        Set<SimpleFeature> features = gisDataEndpoint.getSdFeatures();
+        Set<SimpleFeature> features = gisFeatureProvider.getSdFeatures();
         for(SimpleFeature feature : features) {
             String admCode = (String) feature.getAttribute("SIDO_CD");
             String name = (String) feature.getAttribute("SIDO_NM");
@@ -42,7 +43,7 @@ public class GisDataUpdateService {
 
     @Transactional
     public void updateSgg() {
-        Set<SimpleFeature> features = gisDataEndpoint.getSggFeatures();
+        Set<SimpleFeature> features = gisFeatureProvider.getSggFeatures();
         for (SimpleFeature feature : features) {
             String admCode = (String) feature.getAttribute("SIGUNGU_CD");
             String name = (String) feature.getAttribute("SIGUNGU_NM");
@@ -66,7 +67,7 @@ public class GisDataUpdateService {
 
     @Transactional
     public void updateEmd() {
-        Set<SimpleFeature> features = gisDataEndpoint.getEmdFeatures();
+        Set<SimpleFeature> features = gisFeatureProvider.getEmdFeatures();
         for (SimpleFeature feature : features) {
             String admCode = (String) feature.getAttribute("ADM_DR_CD");
             String name = (String) feature.getAttribute("ADM_DR_NM");

@@ -1,6 +1,7 @@
 package com.bbolab.gaonna.api.service.gis;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
+import com.bbolab.gaonna.api.service.gis.feature.GisFeatureProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.opengis.feature.simple.SimpleFeature;
@@ -13,20 +14,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-class GisDataFileEndpointTest extends AbstractContainerBaseTest {
+class GisFileFeatureProviderTest extends AbstractContainerBaseTest {
 
     public static int SD_LENGTH = 17;
     public static int SGG_LENGTH = 250;
     public static int EMD_LENGTH = 3493;
 
     @Autowired
-    public GisDataEndpoint gisDataEndpoint;
+    public GisFeatureProvider gisFeatureProvider;
 
     @DisplayName("[File] 시도 Features request")
     @Test
     public void sdRequest() {
         // given & when
-        Set<SimpleFeature> features = gisDataEndpoint.getSdFeatures();
+        Set<SimpleFeature> features = gisFeatureProvider.getSdFeatures();
 
         // then
         assertEquals(features.size(), SD_LENGTH);
@@ -41,7 +42,7 @@ class GisDataFileEndpointTest extends AbstractContainerBaseTest {
     @DisplayName("[File] 시군구 Features request")
     @Test
     public void sggRequest() {
-         Set<SimpleFeature> features = gisDataEndpoint.getSggFeatures();
+         Set<SimpleFeature> features = gisFeatureProvider.getSggFeatures();
         assertEquals(features.size(), SGG_LENGTH);
         features.forEach(f -> {
             assertNotNull(f.getAttribute("the_geom"));
@@ -54,7 +55,7 @@ class GisDataFileEndpointTest extends AbstractContainerBaseTest {
     @DisplayName("[File] 읍면동 Features request")
     @Test
     public void emdRequest() {
-        Set<SimpleFeature> features = gisDataEndpoint.getEmdFeatures();
+        Set<SimpleFeature> features = gisFeatureProvider.getEmdFeatures();
         assertEquals(features.size(), EMD_LENGTH);
         features.forEach(f -> {
             assertNotNull(f.getAttribute("the_geom"));
