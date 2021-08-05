@@ -87,7 +87,7 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
 
     @DisplayName("[GIS] 시군구 업데이트 요청 - 실패(시도 업데이트가 먼저 수행되지 않았을 때)")
     @Test
-    void updateSgg_fail() {
+    void updateSggFail() {
         // given
         assertThrows(GeoDataFileHandlingException.class, () -> gisDataUpdateService.updateSgg());
     }
@@ -101,7 +101,8 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
         gisDataUpdateService.updateEmd();
 
         // when
-        int page = 0, checked = 0;
+        int page = 0;
+        int checked = 0;
         Page<RegionL3> regionL3s;
 
         while (true) {
@@ -131,7 +132,7 @@ class GisDataUpdateServiceTest extends AbstractContainerBaseTest {
 
     @DisplayName("[GIS] 읍면동 업데이트 요청 - 실패(시도, 시군구 업데이트가 먼저 수행되지 않았을 때)")
     @Test
-    void updateEmd_fail() {
+    void updateEmdFail() {
         // given
         assertThrows(GeoDataFileHandlingException.class, () -> gisDataUpdateService.updateEmd());
     }
