@@ -1,2 +1,0 @@
-*.psd filter=lfs diff=lfs merge=lfs -text
-api/src/main/resources/Z_SOP_BND_ADM_DONG_PG/[[:space:]]2/Z_SOP_BND_ADM_DONG_PG.shp filter=lfs diff=lfs merge=lfs -text
