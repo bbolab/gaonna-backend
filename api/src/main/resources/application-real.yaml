@@ -2,7 +2,7 @@ spring:
   datasource:
     url: ENC(j2kYv3PPxmqE5P7fWoPOLnUOl0XAy6nQyErmbOOhPiVckV1lARbdU2Xg+0CnIsCG)
     username: ENC(zi/h8lhp032KDZsjn4u/vg==)
-    password: ENC(V9KsgC6+ur5Udc419y+VyecaGIWXB6oKRjWsO7VEcCUyFI0Y+S5qJJUXBHP6m2Ch)
+    password: ENC(nmwjNDwdJrkRhKF0hMB3n2TkdI2cX4ZaAPnRF/vawY9m44ciOqJ9lVUUxi01ETsb)
   jpa:
     properties:
       hibernate:
