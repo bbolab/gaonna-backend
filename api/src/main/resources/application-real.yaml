@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ENC(UhgbcqG/9hAI1V+ZdgopcQTSmGj6JYFvsZOWCRP2K0D/DzFpk1D9FQ==)
+    url: ENC(j2kYv3PPxmqE5P7fWoPOLnUOl0XAy6nQyErmbOOhPiVckV1lARbdU2Xg+0CnIsCG)
     username: ENC(zi/h8lhp032KDZsjn4u/vg==)
     password: ENC(V9KsgC6+ur5Udc419y+VyecaGIWXB6oKRjWsO7VEcCUyFI0Y+S5qJJUXBHP6m2Ch)
   jpa:
