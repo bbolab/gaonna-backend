@@ -1,0 +1,12 @@
+server:
+  port: 9300
+spring:
+  datasource:
+    url: ENC(kjTdWiAZqGMAPc+Rb4Y6nar1nYJwdJcQBaOzDAAziA7cKuBPZAJQMGKSqXdxaAfA)
+    username: ENC(j3UQH7kUdtWZIXmTVjne+w==)
+    password: ENC(qa8Ir8x2zAUzQ86x/l1jvm2F1Jylwjh7yGdw4oUsTF9Vl0SWj3xvIACzutaWCFYq)
+jasypt:
+  encryptor:
+    password: ${GAONNA_KEY}
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
