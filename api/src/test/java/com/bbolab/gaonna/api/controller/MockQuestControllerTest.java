@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
+import com.bbolab.gaonna.api.v1.controller.validator.BboxConstraintValidator;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -89,15 +91,15 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
     @DisplayName("[Read] 리스트 퀘스트 조회 - 성공")
     public void readQuestListTest() throws Exception {
         // given
-        double topLongitude = 33.222211;
-        double topLatitude = 121.22313;
-        double bottomLongitude = 30.112123;
-        double bottomLatitude = 100.121232;
+        Double topLatitude = 37.2796836;
+        Double topLongitude = 127.04645333;
+        Double bottomLatitude = 37.2746168;
+        Double bottomLongitude = 127.0403165;
 
         // when
         MvcResult result = mockMvc.perform(get(
-                String.format("/v1/quest?topLongitude=%f&topLatitude=%f&bottomLongitude=%f&bottomLatitude=%f",
-                        topLongitude, topLatitude, bottomLongitude, bottomLatitude))
+                String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]]",
+                        bottomLongitude, bottomLatitude, topLongitude, topLatitude))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())
@@ -106,8 +108,62 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         String content = result.getResponse().getContentAsString();
         QuestListResponseDto dto = objectMapper.readValue(content, QuestListResponseDto.class);
         assertEquals(dto.getQuests().size(), 1);
-        assertEquals(dto.getQuests().get(0).getLongitude(), Math.abs(topLongitude - bottomLongitude) / 2);
-        assertEquals(dto.getQuests().get(0).getLatitude(), Math.abs(topLatitude - bottomLatitude) / 2);
+        assertNotNull(dto.getQuests().get(0).getLongitude());
+        assertNotNull(dto.getQuests().get(0).getLatitude());
+    }
+
+    @Test
+    @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (wrong format)")
+    public void readQuestListFailTest() throws Exception {
+        // given
+        Double topLatitude = 37.2796836;
+        Double topLongitude = 127.04645333;
+        Double bottomLatitude = 37.2746168;
+        Double bottomLongitude = 127.0403165;
+
+        // when
+        MvcResult result = mockMvc.perform(get(
+                        String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]",
+                                bottomLongitude, bottomLatitude, topLongitude, topLatitude))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertEquals(content, BboxConstraintValidator.wrongFormatExceptionMsg);
+    }
+
+    @Test
+    @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (bbox wrong range)")
+    public void readQuestListFailTest2() throws Exception {
+        // given
+        Double bottomLatitude = 32.2796836;
+        Double bottomLongitude = 127.04645333;
+        Double topLatitude = 37.2746168;
+        Double topLongitude = 127.0403165;
+
+        // when
+        MvcResult result = mockMvc.perform(get(
+                        String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]]",
+                                bottomLongitude, bottomLatitude, topLongitude, topLatitude))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertEquals(content, BboxConstraintValidator.wrongBboxRangeExceptionMsg);
+    }
+
+    @Test
+    @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (bbox 좌하단, 우상단 조건 불만족")
+    public void readQuestListFailTest3() throws Exception {
+        Double topLatitude = 37.2796836;
+        Double topLongitude = 127.04645333;
+        Double bottomLatitude = 37.2746168;
+        Double bottomLongitude = 127.0403165;
+
     }
 
     @Test
@@ -157,7 +213,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
-        // TODO : Validator test
+    // TODO : Validator test
 
     public static QuestCreateUpdateRequestDto createDummyQuestRequestDto() {
         return QuestCreateUpdateRequestDto.builder()
