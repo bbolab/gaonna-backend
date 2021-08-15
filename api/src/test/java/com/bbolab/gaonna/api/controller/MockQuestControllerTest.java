@@ -138,10 +138,10 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
     @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (bbox wrong range)")
     public void readQuestListFailTest2() throws Exception {
         // given
-        Double bottomLatitude = 32.2796836;
-        Double bottomLongitude = 127.04645333;
-        Double topLatitude = 37.2746168;
-        Double topLongitude = 127.0403165;
+        Double topLatitude = 37.2796836;
+        Double topLongitude = 127.04645333;
+        Double bottomLatitude = 32.2746168;
+        Double bottomLongitude = 127.0403165;
 
         // when
         MvcResult result = mockMvc.perform(get(
@@ -159,11 +159,21 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (bbox 좌하단, 우상단 조건 불만족")
     public void readQuestListFailTest3() throws Exception {
-        Double topLatitude = 37.2796836;
-        Double topLongitude = 127.04645333;
-        Double bottomLatitude = 37.2746168;
-        Double bottomLongitude = 127.0403165;
+        Double bottomLatitude = 37.2796836;
+        Double bottomLongitude = 127.04645333;
+        Double topLatitude = 37.2746168;
+        Double topLongitude = 127.0403165;
+        // when
+        MvcResult result = mockMvc.perform(get(
+                        String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]]",
+                                bottomLongitude, bottomLatitude, topLongitude, topLatitude))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andReturn();
 
+        String content = result.getResponse().getContentAsString();
+        assertEquals(content, BboxConstraintValidator.wrongCoordinatesExceptionMsg);
     }
 
     @Test
