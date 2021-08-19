@@ -74,7 +74,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         String uuid = UUID.randomUUID().toString();
 
         // when
-        MvcResult result = mockMvc.perform(get(String.format("/v1/quest/%s", uuid))
+        MvcResult result = mockMvc.perform(get(String.format("/v1/quest/detail/%s", uuid))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
                 .andExpect(status().isOk())
@@ -98,7 +98,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
         // when
         MvcResult result = mockMvc.perform(get(
-                String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]]",
+                String.format("/v1/quest/list?bbox=[[%f,%f],[%f,%f]]",
                         bottomLongitude, bottomLatitude, topLongitude, topLatitude))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf()))
@@ -108,8 +108,8 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         String content = result.getResponse().getContentAsString();
         QuestListResponseDto dto = objectMapper.readValue(content, QuestListResponseDto.class);
         assertEquals(dto.getQuests().size(), 1);
-        assertNotNull(dto.getQuests().get(0).getLongitude());
-        assertNotNull(dto.getQuests().get(0).getLatitude());
+        assertNotNull(dto.getQuests().get(0).getLocation().get(0));
+        assertNotNull(dto.getQuests().get(0).getLocation().get(1));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
         // when
         MvcResult result = mockMvc.perform(get(
-                        String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]",
+                        String.format("/v1/quest/list?bbox=[[%f,%f],[%f,%f]",
                                 bottomLongitude, bottomLatitude, topLongitude, topLatitude))
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(csrf()))
@@ -145,7 +145,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
         // when
         MvcResult result = mockMvc.perform(get(
-                        String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]]",
+                        String.format("/v1/quest/list?bbox=[[%f,%f],[%f,%f]]",
                                 bottomLongitude, bottomLatitude, topLongitude, topLatitude))
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(csrf()))
@@ -165,7 +165,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         Double topLongitude = 127.0403165;
         // when
         MvcResult result = mockMvc.perform(get(
-                        String.format("/v1/quest?bbox=[[%f,%f],[%f,%f]]",
+                        String.format("/v1/quest/list?bbox=[[%f,%f],[%f,%f]]",
                                 bottomLongitude, bottomLatitude, topLongitude, topLatitude))
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(csrf()))

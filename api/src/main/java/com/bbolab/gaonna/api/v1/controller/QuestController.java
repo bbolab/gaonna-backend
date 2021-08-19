@@ -34,12 +34,11 @@ import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyQue
 @RequestMapping("/v1/quest")
 @RequiredArgsConstructor
 public class QuestController {
-    // TODO : Validator
     private final ModelMapper modelMapper;
 
     @ApiOperation(value = "Searching quest with Quest UUID")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestDetailResponseDto.class)})
-    @GetMapping("{questId}")
+    @GetMapping("/detail/{questId}")
     public ResponseEntity<QuestDetailResponseDto> get(@ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String questId) {
         // find Quest by questId
         QuestDetailResponseDto dto = createDummyQuestResponseDto();
@@ -50,8 +49,8 @@ public class QuestController {
     @ApiOperation(value = "Searching quest", notes = "Search for quests inside a selected area on the map. You should pass bbox coordinates for searching.")
     @ApiImplicitParam(name = "bbox", required = true, paramType = "query", value = "선택 영역 좌표 - [[좌하단경도,좌하단위도],[우상단경도,우상단위도]]", example = "[[127.0403165,37.2746168],[127.04645333,37.2796836]]")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestListResponseDto.class)})
-    @GetMapping
-    public ResponseEntity<?> list(@BboxConstraint String bbox) {
+    @GetMapping("/list")
+    public ResponseEntity<QuestListResponseDto> list(@BboxConstraint String bbox) {
         Double[][] bboxArr = BboxConstraintValidator.parseBboxStringToDoubleArray(bbox);
         Double minX = bboxArr[0][0];
         Double minY = bboxArr[0][1];
@@ -62,14 +61,10 @@ public class QuestController {
 
         QuestListResponseDto dto = QuestListResponseDto.builder().build();
         dto.setQuests(Collections.singletonList(info));
-        dto.getQuests().forEach(d -> {
-            d.setLongitude(Math.abs(maxX - minX) / 2);
-            d.setLatitude(Math.abs(maxY - minY) / 2);
-        });
+        dto.getQuests().forEach(d -> {d.coordinateToList(Math.abs(maxX - minX) / 2, Math.abs(maxY - minY) / 2);});
         return ResponseEntity.ok().body(dto);
     }
 
-    // TODO : Create 성공 이후 반환 데이터 정의 필요 : created(201)랑 URI만 반환할지, 생성된 데이터 DTO도 함께 반환할지
     @ApiOperation(value = "Create new quest")
     @ApiResponses({@ApiResponse(code = 201, message = "Success", response = QuestDetailResponseDto.class)})
     @PostMapping
@@ -80,7 +75,6 @@ public class QuestController {
         return ResponseEntity.created(URI.create("/v1/quest/" + dto.getQuestId())).body(dto);
     }
 
-    // TODO : Update 성공 이후 반환 데이터 정의 필요 : ok(200)만 반환할지, 수정된 데이터 DTO도 함께 반환할지
     @ApiOperation(value = "Update quest")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = QuestDetailResponseDto.class)})
     @PutMapping("{questId}")

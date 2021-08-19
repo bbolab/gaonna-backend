@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,9 +24,7 @@ public class QuestListResponseItemDto {
     // Quest infromation
     private String questId;
 
-    private double longitude;
-
-    private double latitude;
+    private List<Double> location = new ArrayList<>();
 
     private int price;
 
@@ -36,4 +35,10 @@ public class QuestListResponseItemDto {
     private List<CategoryDto> categories;
 
     private List<RegionDto> regions;
+
+    public void coordinateToList(double longitude, double latitude) {
+        location.clear();
+        location.add(longitude);
+        location.add(latitude);
+    }
 }
