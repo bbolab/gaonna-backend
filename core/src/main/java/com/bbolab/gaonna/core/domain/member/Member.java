@@ -1,5 +1,7 @@
 package com.bbolab.gaonna.core.domain.member;
 
+import com.bbolab.gaonna.core.domain.quest.MemberQuestPerformer;
+import com.bbolab.gaonna.core.domain.quest.MemberQuestRequester;
 import com.bbolab.gaonna.core.domain.quest.Quest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,10 +60,10 @@ public class Member {
 
     @Builder.Default
     @OneToMany(mappedBy = "performer", cascade = CascadeType.ALL)
-    private List<Quest> performerQuest = new LinkedList<>();
+    private List<MemberQuestPerformer> performerQuest = new LinkedList<>();
 
     @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL)
-    private List<Quest> requesterQuest = new LinkedList<>();
+    private List<MemberQuestRequester> requesterQuest = new LinkedList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

@@ -50,10 +50,10 @@ public class Quest {
     private Integer price;
 
     @ManyToOne
-    private Member requester;
+    private MemberQuestRequester requester;
 
     @ManyToOne
-    private Member performer;
+    private MemberQuestPerformer performer;
 
     @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
