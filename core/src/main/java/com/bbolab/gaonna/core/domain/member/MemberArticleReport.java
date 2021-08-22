@@ -20,7 +20,7 @@ import java.util.UUID;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class MemberArticleLike {
+public class MemberArticleReport {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -32,6 +32,5 @@ public class MemberArticleLike {
     @ManyToOne
     private Member member;
 
-    // TODO : how to check undo "like" - soft or hard delete?
-    private boolean liked;
+    private boolean reported;
 }

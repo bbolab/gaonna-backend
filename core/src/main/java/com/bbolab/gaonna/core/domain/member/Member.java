@@ -72,6 +72,10 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberArticleLike> memberArticleLikes = new LinkedList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MemberArticleReport> memberArticleReports = new LinkedList<>();
+
     public boolean addMemberQuest(MemberQuest memberQuest) {
         if(this.memberQuest.contains(memberQuest)) {
             return false;
@@ -104,4 +108,11 @@ public class Member {
         return this.memberArticleLikes.add(articleLike);
     }
 
+    public boolean addMemberArticleReport(MemberArticleReport report) {
+        if (this.memberArticleReports.contains(report)) {
+            return false;
+        }
+        report.setMember(this);
+        return this.memberArticleReports.add(report);
+    }
 }
