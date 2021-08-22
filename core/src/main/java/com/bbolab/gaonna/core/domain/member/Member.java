@@ -1,6 +1,6 @@
 package com.bbolab.gaonna.core.domain.member;
 
-import com.bbolab.gaonna.core.domain.quest.MemberQuest;
+import com.bbolab.gaonna.core.domain.quest.Quest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -57,8 +57,11 @@ public class Member {
     private String profileImage;
 
     @Builder.Default
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<MemberQuest> memberQuest = new LinkedList<>();
+    @OneToMany(mappedBy = "performer", cascade = CascadeType.ALL)
+    private List<Quest> performerQuest = new LinkedList<>();
+
+    @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL)
+    private List<Quest> requesterQuest = new LinkedList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -75,14 +78,6 @@ public class Member {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberArticleReport> memberArticleReports = new LinkedList<>();
-
-    public boolean addMemberQuest(MemberQuest memberQuest) {
-        if(this.memberQuest.contains(memberQuest)) {
-            return false;
-        }
-        memberQuest.setMember(this);
-        return this.memberQuest.add(memberQuest);
-    }
 
     public boolean addProfiles(Profile profile) {
         if(this.profiles.contains(profile)) {
