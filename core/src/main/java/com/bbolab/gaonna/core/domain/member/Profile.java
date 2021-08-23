@@ -1,5 +1,7 @@
 package com.bbolab.gaonna.core.domain.member;
 
+import com.bbolab.gaonna.core.domain.quest.MemberQuestPerformer;
+import com.bbolab.gaonna.core.domain.report.QuestReview;
 import com.bbolab.gaonna.core.domain.tag.ProfileTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,5 +40,11 @@ public class Profile {
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private List<ProfileTag> profileTags;
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    private List<MemberQuestPerformer> peformQuests;
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    private List<QuestReview> reviewList;
 }
 

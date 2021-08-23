@@ -1,7 +1,6 @@
 package com.bbolab.gaonna.core.domain.quest;
 
 import com.bbolab.gaonna.core.domain.article.Article;
-import com.bbolab.gaonna.core.domain.member.Member;
 import com.bbolab.gaonna.core.domain.tag.QuestTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,7 @@
-package com.bbolab.gaonna.core.domain.quest;
+package com.bbolab.gaonna.core.domain.report;
 
 import com.bbolab.gaonna.core.domain.member.Member;
+import com.bbolab.gaonna.core.domain.member.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -9,12 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.util.UUID;
 
 @Builder
@@ -22,17 +22,21 @@ import java.util.UUID;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-public class MemberQuestRequester {
+public class QuestReview {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     private UUID id;
 
     @ManyToOne
-    @JoinColumn
-    private Member requester;
+    private Member reviewer;
 
-    @OneToOne
-    @JoinColumn
-    private Quest quest;
+    @ManyToOne
+    private Profile profile;
+
+    @Column(columnDefinition = "TEXT")
+    private String text;
+
+    @Column
+    private Double point;
 }

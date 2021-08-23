@@ -31,7 +31,7 @@ public class MemberQuestPerformer {
 
     @ManyToOne
     @JoinColumn
-    private Member member;
+    private Member performer;
 
     @OneToOne
     @JoinColumn
