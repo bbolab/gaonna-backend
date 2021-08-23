@@ -2,10 +2,9 @@ package com.bbolab.gaonna.core.domain.member;
 
 import com.bbolab.gaonna.core.domain.quest.MemberQuestPerformer;
 import com.bbolab.gaonna.core.domain.quest.MemberQuestRequester;
-import com.bbolab.gaonna.core.domain.quest.Quest;
 import com.bbolab.gaonna.core.domain.report.ArticleReport;
 import com.bbolab.gaonna.core.domain.report.MemberBlockReport;
-import com.bbolab.gaonna.core.domain.report.QuestReview;
+import com.bbolab.gaonna.core.domain.quest.QuestReview;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -81,8 +80,8 @@ public class Member {
     private List<MemberArticleLike> memberArticleLikes = new LinkedList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<MemberArticleReport> memberArticleReports = new LinkedList<>();
+    @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL)        // 해당 멤버가 신고한 다른 게시글
+    private List<ArticleReport> articleReports = new LinkedList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL)
@@ -122,13 +121,5 @@ public class Member {
         }
         articleLike.setMember(this);
         return this.memberArticleLikes.add(articleLike);
-    }
-
-    public boolean addMemberArticleReport(MemberArticleReport report) {
-        if (this.memberArticleReports.contains(report)) {
-            return false;
-        }
-        report.setMember(this);
-        return this.memberArticleReports.add(report);
     }
 }

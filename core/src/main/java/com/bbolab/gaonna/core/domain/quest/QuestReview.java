@@ -1,6 +1,7 @@
-package com.bbolab.gaonna.core.domain.member;
+package com.bbolab.gaonna.core.domain.quest;
 
-import com.bbolab.gaonna.core.domain.article.Article;
+import com.bbolab.gaonna.core.domain.member.Member;
+import com.bbolab.gaonna.core.domain.member.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,18 +21,22 @@ import java.util.UUID;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class MemberArticleReport {
+@EqualsAndHashCode(of = {"id"})
+public class QuestReview {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     private UUID id;
 
     @ManyToOne
-    private Article article;
+    private Member reviewer;
 
     @ManyToOne
-    private Member member;
+    private Profile profile;
 
-    private boolean reported;
+    @Column(columnDefinition = "TEXT")
+    private String text;
+
+    @Column
+    private Double point;
 }

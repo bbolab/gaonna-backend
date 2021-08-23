@@ -1,7 +1,7 @@
 package com.bbolab.gaonna.core.domain.member;
 
 import com.bbolab.gaonna.core.domain.quest.MemberQuestPerformer;
-import com.bbolab.gaonna.core.domain.report.QuestReview;
+import com.bbolab.gaonna.core.domain.quest.QuestReview;
 import com.bbolab.gaonna.core.domain.tag.ProfileTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
