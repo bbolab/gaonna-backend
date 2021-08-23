@@ -69,7 +69,6 @@ public class QuestTest extends AbstractContainerBaseTest {
     void builderDefault() {
         Quest quest = Quest.builder().build();
         assertNotNull(quest.getQuestTags());
-        assertNotNull(quest.getMemberQuest());
         assertNotNull(quest.getQuestRegionL3s());
         assertNotNull(quest.getQuestCategoryValues());
     }
