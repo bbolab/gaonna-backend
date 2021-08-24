@@ -42,7 +42,7 @@ public class Profile {
     private List<ProfileTag> profileTags;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
-    private List<MemberQuestPerformer> peformQuests;
+    private List<MemberQuestPerformer> performQuests;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private List<QuestReview> reviewList;

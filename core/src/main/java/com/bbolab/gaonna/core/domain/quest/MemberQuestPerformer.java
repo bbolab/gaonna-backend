@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -40,4 +41,7 @@ public class MemberQuestPerformer {
     @ManyToOne
     @JoinColumn
     private Profile profile;
+
+    @Column
+    private Boolean selected; // 해당 수행 요청이 수락이 됐는지 여부
 }
