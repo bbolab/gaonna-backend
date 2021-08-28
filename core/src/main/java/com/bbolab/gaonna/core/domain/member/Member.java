@@ -1,6 +1,10 @@
 package com.bbolab.gaonna.core.domain.member;
 
-import com.bbolab.gaonna.core.domain.quest.MemberQuest;
+import com.bbolab.gaonna.core.domain.quest.MemberQuestPerformer;
+import com.bbolab.gaonna.core.domain.quest.MemberQuestRequester;
+import com.bbolab.gaonna.core.domain.report.ArticleReport;
+import com.bbolab.gaonna.core.domain.report.MemberBlockReport;
+import com.bbolab.gaonna.core.domain.quest.QuestReview;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -57,8 +61,11 @@ public class Member {
     private String profileImage;
 
     @Builder.Default
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<MemberQuest> memberQuest = new LinkedList<>();
+    @OneToMany(mappedBy = "performer", cascade = CascadeType.ALL)
+    private List<MemberQuestPerformer> performerQuest = new LinkedList<>();
+
+    @OneToMany(mappedBy = "requester", cascade = CascadeType.ALL)
+    private List<MemberQuestRequester> requesterQuest = new LinkedList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -72,13 +79,25 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberArticleLike> memberArticleLikes = new LinkedList<>();
 
-    public boolean addMemberQuest(MemberQuest memberQuest) {
-        if(this.memberQuest.contains(memberQuest)) {
-            return false;
-        }
-        memberQuest.setMember(this);
-        return this.memberQuest.add(memberQuest);
-    }
+    @Builder.Default
+    @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL)        // 해당 멤버가 신고한 다른 게시글
+    private List<ArticleReport> articleReports = new LinkedList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL)
+    private List<MemberBlockReport> reportedMember = new LinkedList<>(); // 해당 멤버가 차단한 다른 멤버들
+
+    @Builder.Default
+    @OneToMany(mappedBy = "targetMember", cascade = CascadeType.ALL)
+    private List<MemberBlockReport> blockedMember = new LinkedList<>(); // 해당 멤버를 차단한 다른 멤버들
+
+    @Builder.Default
+    @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL)
+    private List<ArticleReport> reportedArticles = new LinkedList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
+    private List<QuestReview> reviewedQuests = new LinkedList<>();
 
     public boolean addProfiles(Profile profile) {
         if(this.profiles.contains(profile)) {
@@ -103,5 +122,4 @@ public class Member {
         articleLike.setMember(this);
         return this.memberArticleLikes.add(articleLike);
     }
-
 }

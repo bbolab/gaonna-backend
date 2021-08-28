@@ -32,7 +32,7 @@ pipeline {
             }
             post{
                 failure{
-                    sh "./gradle --stop"
+                    sh "./gradlew --stop"
                     error "Gradlew Build Fail"
                 }
             }
@@ -48,12 +48,16 @@ pipeline {
                     sh "echo 'generating coverage report'"
                     sh "./gradlew codeCoverageReport"
                     sh "echo 'send it to codecov'"
-                    sh "curl -s https://codecov.io/bash | bash"
+                    codecov_stdout = sh(script:"curl -s https://codecov.io/bash | bash", returnStdout: true)
+                    echo codecov_stdout
+                    if((codecov_stdout =~ /(.*)\n404\n(.*)/).find(0)){
+                        error "Codecov report publish fail(404)"
+                    }
                 }
             }
             post{
                 failure{
-                    sh "./gradle --stop"
+                    sh "./gradlew --stop"
                     error "Test Fail"
                 }
             }
@@ -74,7 +78,7 @@ pipeline {
             }
             post{
                 failure{
-                    sh "./gradle --stop"
+                    sh "./gradlew --stop"
                     error "JIB Docker images"
                 }
             }
@@ -117,8 +121,7 @@ pipeline {
                         }
                     }
                     sh """
-                    git add -A
-                    git commit -m "$GIT_COMMIT" && git push -u origin main
+                    if git status | grep -q "nothing to commit"; then echo "there is no change"; else git add -A && git commit -m '$GIT_COMMIT' && git push -u origin main; fi
                     """
                 }
             }

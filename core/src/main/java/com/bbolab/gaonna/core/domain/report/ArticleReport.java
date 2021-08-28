@@ -1,6 +1,7 @@
-package com.bbolab.gaonna.core.domain.member;
+package com.bbolab.gaonna.core.domain.report;
 
 import com.bbolab.gaonna.core.domain.article.Article;
+import com.bbolab.gaonna.core.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -9,9 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.UUID;
 
@@ -20,18 +23,20 @@ import java.util.UUID;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class MemberArticleLike {
+public class ArticleReport {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     private UUID id;
 
     @ManyToOne
-    private Article article;
+    @JoinColumn
+    private Member reporter;
 
     @ManyToOne
-    private Member member;
+    @JoinColumn
+    private Article article;
 
-    // TODO : how to check undo "like" - soft or hard delete?
-    private boolean liked;
+    @Column
+    private Boolean active;
 }

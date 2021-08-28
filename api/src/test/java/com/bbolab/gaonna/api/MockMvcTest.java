@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.controller;
+package com.bbolab.gaonna.api;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,4 +18,3 @@ import java.lang.annotation.Target;
 @AutoConfigureMockMvc
 public @interface MockMvcTest {
 }
-
