@@ -1,5 +1,6 @@
-package com.bbolab.gaonna.core.domain.region;
+package com.bbolab.gaonna.core.domain.report;
 
+import com.bbolab.gaonna.core.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -13,9 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -23,7 +21,7 @@ import java.util.UUID;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class RegionL2 {
+public class MemberBlockReport {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -31,22 +29,9 @@ public class RegionL2 {
 
     @ManyToOne
     @JoinColumn
-    private RegionL1 regionL1;
+    private Member reporter;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "regionL2")
-    private List<RegionL3> regionL3s = new LinkedList<>();
-
-    private String admCode;
-
-    private String name;
-
-    private String version;
-
-    public void addRegionL3(RegionL3 regionL3) {
-        if (!regionL3s.contains(regionL3)) {
-            regionL3s.add(regionL3);
-            regionL3.setRegionL2(this);
-        }
-    }
+    @ManyToOne
+    @JoinColumn
+    private Member targetMember;
 }

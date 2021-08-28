@@ -1,7 +1,6 @@
 package com.bbolab.gaonna.core.domain.quest;
 
 import com.bbolab.gaonna.core.domain.article.Article;
-import com.bbolab.gaonna.core.domain.category.CategoryValue;
 import com.bbolab.gaonna.core.domain.tag.QuestTag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +16,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
@@ -48,9 +48,11 @@ public class Quest {
     @Column(nullable = false)
     private Integer price;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
-    private List<MemberQuest> memberQuest = new LinkedList<>();
+    @ManyToOne
+    private MemberQuestRequester requester;
+
+    @ManyToOne
+    private MemberQuestPerformer performer;
 
     @Builder.Default
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
@@ -64,13 +66,6 @@ public class Quest {
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL)
     private List<QuestCategoryValue> questCategoryValues = new LinkedList<>();
 
-    public boolean addMemberQuest(MemberQuest memberQuest) {
-        if(this.memberQuest.contains(memberQuest)){
-            return false;
-        }
-        memberQuest.setQuest(this);
-        return this.memberQuest.add(memberQuest);
-    }
 
     public boolean addQuestTag(QuestTag questTag) {
         if (this.questTags.contains(questTag)) {

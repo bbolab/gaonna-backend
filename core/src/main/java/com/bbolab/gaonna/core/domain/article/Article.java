@@ -2,8 +2,8 @@ package com.bbolab.gaonna.core.domain.article;
 
 import com.bbolab.gaonna.core.domain.member.MemberArticleComment;
 import com.bbolab.gaonna.core.domain.member.MemberArticleLike;
-import com.bbolab.gaonna.core.domain.member.MemberArticleReport;
 import com.bbolab.gaonna.core.domain.quest.Quest;
+import com.bbolab.gaonna.core.domain.report.ArticleReport;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -77,7 +77,7 @@ public class Article {
 
     @Builder.Default
     @OneToMany(mappedBy = "article")
-    private List<MemberArticleReport> reports = new LinkedList<>();
+    private List<ArticleReport> reports = new LinkedList<>();
 
     public boolean addMemberArticleComment(MemberArticleComment memberArticleComment) {
         if (comments.contains(memberArticleComment)) {
