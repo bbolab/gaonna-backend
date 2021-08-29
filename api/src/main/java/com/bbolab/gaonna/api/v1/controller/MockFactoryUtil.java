@@ -10,6 +10,7 @@ import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestPerformerDto;
 import com.bbolab.gaonna.api.v1.dto.region.RegionDto;
+import com.bbolab.gaonna.api.v1.dto.reserve.ReserveQuestResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -121,6 +122,17 @@ public class MockFactoryUtil {
                 .profileName("baemin rider")
                 .description("i can do everything with my bike.")
                 .score(3.5)
+                .build();
+    }
+
+    public static ReserveQuestResponseDto createDummyReserveQuestResponseDto() {
+        return ReserveQuestResponseDto.builder()
+                .memberId(UUID.randomUUID().toString())
+                .nickname("memberA")
+                .reserveId(UUID.randomUUID().toString())
+                .questId(UUID.randomUUID().toString())
+                .profileId(UUID.randomUUID().toString())
+                .isAccepted(false)
                 .build();
     }
 }
