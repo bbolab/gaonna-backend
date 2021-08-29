@@ -5,20 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentResponseDto {
-    private String commentId;
 
-    private String memberId;
+    private CommentDto comment;
 
-    private String memberName;
-
-    private String content;
-
-    private LocalDateTime updatedTime;
+    private List<CommentDto> subComments = new ArrayList<>();
 }

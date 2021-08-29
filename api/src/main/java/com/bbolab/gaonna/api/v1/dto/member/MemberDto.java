@@ -9,4 +9,5 @@ public class MemberDto {
     private String memberId;
     private String nickname;
     private String imgUri;
+    private Double score;
 }
