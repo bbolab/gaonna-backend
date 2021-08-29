@@ -12,5 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestListResponseDto {
+    private Integer n;
     private List<QuestListResponseItemDto> quests;
 }

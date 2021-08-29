@@ -1,6 +1,7 @@
 package com.bbolab.gaonna.api.v1.dto.quest;
 
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
+import com.bbolab.gaonna.api.v1.dto.member.MemberDto;
 import com.bbolab.gaonna.api.v1.dto.region.RegionDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,19 +17,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestListResponseItemDto {
-    // Article information
-    private String articleId;
+    private MemberDto requester;
+
+    private String questId;
 
     private String title;
 
-    // Quest infromation
-    private String questId;
+    private Integer price;
 
-    private List<Double> location = new ArrayList<>();
-
-    private int price;
+    private LocalDateTime lastModifiedDate;
 
     private LocalDateTime deadline;
+
+    private List<Double> location = new ArrayList<>();
 
     private List<String> tags;
 

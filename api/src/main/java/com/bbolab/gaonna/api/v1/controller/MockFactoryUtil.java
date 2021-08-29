@@ -3,7 +3,9 @@ package com.bbolab.gaonna.api.v1.controller;
 import com.bbolab.gaonna.api.v1.dto.article.ArticleResponseDto;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
+import com.bbolab.gaonna.api.v1.dto.member.MemberDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -46,7 +48,6 @@ public class MockFactoryUtil {
 
     public static QuestDetailResponseDto createDummyQuestResponseDto() {
         return QuestDetailResponseDto.builder()
-                .articleId(UUID.randomUUID().toString())
                 .title("test-title")
                 .content("test-content-with-html-format")
                 .updatedTime(LocalDateTime.now())
@@ -62,6 +63,25 @@ public class MockFactoryUtil {
                 .latitude(121.121213)
                 .price(10000)
                 .deadline(LocalDateTime.now())
+                .tags(Arrays.asList("tag1", "tag2"))
+                .categories(Collections.singletonList(CategoryDto.builder().key("key").value("value").build()))
+                .build();
+    }
+
+    public static QuestListResponseItemDto createDummyQuestListItemDto() {
+        MemberDto requester = MemberDto.builder()
+                .memberId(UUID.randomUUID().toString())
+                .nickname("nickname")
+                .imgUri("user's profile uri")
+                .build();
+        return QuestListResponseItemDto.builder()
+                .requester(requester)
+                .questId(UUID.randomUUID().toString())
+                .title("test-title")
+                .price(10000)
+                .lastModifiedDate(LocalDateTime.now())
+                .deadline(LocalDateTime.now())
+                .location(Arrays.asList(127.0403165, 37.2746168))
                 .tags(Arrays.asList("tag1", "tag2"))
                 .categories(Collections.singletonList(CategoryDto.builder().key("key").value("value").build()))
                 .build();
