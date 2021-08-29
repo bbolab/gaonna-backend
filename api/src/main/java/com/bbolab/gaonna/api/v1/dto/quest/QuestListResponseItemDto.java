@@ -19,6 +19,8 @@ import java.util.List;
 public class QuestListResponseItemDto {
     private MemberDto requester;
 
+    private String articleId;
+
     private String questId;
 
     private String title;

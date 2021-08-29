@@ -10,5 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentCreateUpdateRequestDto {
+    private Boolean isSubComment;
+
+    private String parentId; // if "isSubComment", parentId should exist
+
     private String content;
 }

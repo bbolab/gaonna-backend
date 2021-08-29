@@ -1,7 +1,11 @@
 package com.bbolab.gaonna.api.v1.dto.quest;
 
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDto;
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@Builder
 public class QuestPerformerDto {
     private String memberId;
 

@@ -20,6 +20,8 @@ import java.util.List;
 public class QuestDetailResponseDto {
     private MemberDto requester;
 
+    private String articleId;
+
     private String questId;
 
     private String title;
@@ -48,13 +50,13 @@ public class QuestDetailResponseDto {
 
     private List<String> imageIds;
 
-    private List<RegionDto> regions;
-
     private Boolean isReported; // 본인이 해당 퀘스트를 신고했는지
 
     private Boolean isReserved;
 
     private Boolean isMyQuest; // 해당 퀘스트의 요청자가 본인인지
+
+    private Integer nPerformRequest;
 
     private List<QuestPerformerDto> performRequests = new ArrayList<>(); // only has values if "isMyQuest" is true
 }

@@ -59,8 +59,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
         assertEquals(responseDto.getTitle(), requestDto.getTitle());
         assertEquals(responseDto.getContent(), requestDto.getContent());
-        assertEquals(responseDto.getLatitude(), requestDto.getLatitude());
-        assertEquals(responseDto.getLongitude(), requestDto.getLongitude());
+        assertEquals(responseDto.getLocation().size(), 2);
         assertEquals(responseDto.getPrice(), requestDto.getPrice());
         assertEquals(responseDto.getDeadline(), requestDto.getDeadline());
         assertEquals(requestDto.getTags(), responseDto.getTags());
@@ -107,7 +106,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         // then
         String content = result.getResponse().getContentAsString();
         QuestListResponseDto dto = objectMapper.readValue(content, QuestListResponseDto.class);
-        assertEquals(dto.getQuests().size(), 1);
+        assertEquals(dto.getQuests().size(), 2);
         assertNotNull(dto.getQuests().get(0).getLocation().get(0));
         assertNotNull(dto.getQuests().get(0).getLocation().get(1));
     }
@@ -198,8 +197,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         assertEquals(responseDto.getQuestId(), questId);
         assertEquals(responseDto.getTitle(), requestDto.getTitle());
         assertEquals(responseDto.getContent(), requestDto.getContent());
-        assertEquals(responseDto.getLatitude(), requestDto.getLatitude());
-        assertEquals(responseDto.getLongitude(), requestDto.getLongitude());
+        assertEquals(responseDto.getLocation().size(), 2);
         assertEquals(responseDto.getPrice(), requestDto.getPrice());
         assertEquals(responseDto.getDeadline(), requestDto.getDeadline());
         assertEquals(requestDto.getTags(), responseDto.getTags());

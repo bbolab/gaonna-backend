@@ -4,7 +4,6 @@ import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateUpdateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentListResponseDto;
-import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +55,7 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
         assertEquals(dto.getArticleId(), articleId);
         assertNotNull(dto.getCommentLists());
-        assertNotNull(dto.getCommentLists().get(0).getContent());
+        assertNotNull(dto.getCommentLists().get(0).getComment());
     }
 
     @Test
@@ -76,9 +75,6 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
                 .andReturn();
 
         // then
-        String content = result.getResponse().getContentAsString();
-        CommentResponseDto dto = objectMapper.readValue(content, CommentResponseDto.class);
-        assertEquals(dto.getContent(), requestDto.getContent());
     }
 
     @Test
@@ -99,9 +95,6 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
                 .andReturn();
 
         // then
-        String content = result.getResponse().getContentAsString();
-        CommentResponseDto dto = objectMapper.readValue(content, CommentResponseDto.class);
-        assertEquals(dto.getContent(), requestDto.getContent());
     }
 
     @Test
@@ -125,6 +118,8 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
     public static CommentCreateUpdateRequestDto createCommentCreateRequestDto() {
         return CommentCreateUpdateRequestDto.builder()
+                .isSubComment(false)
+                .parentId(null)
                 .content("test-comment-content").build();
     }
 

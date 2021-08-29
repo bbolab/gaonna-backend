@@ -13,5 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentListResponseDto {
     private String articleId;
+    private Integer nComments;
     private List<CommentResponseDto> commentLists;
 }

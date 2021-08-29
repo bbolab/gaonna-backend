@@ -13,8 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentResponseDto {
+    private String articleId;
 
     private CommentDto comment;
+
+    private Integer nSubComment;
 
     private List<CommentDto> subComments = new ArrayList<>();
 }
