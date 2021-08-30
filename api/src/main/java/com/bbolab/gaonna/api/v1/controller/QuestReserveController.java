@@ -28,7 +28,6 @@ import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.*;
 public class QuestReserveController {
 
     @ApiOperation(value = "Get reservation status through reservation Id")
-
     @GetMapping("{questId}/{reserveId}")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = ReserveQuestResponseDto.class)})
     public ResponseEntity<ReserveQuestResponseDto> get(@PathVariable String questId, @PathVariable String reserveId) {
@@ -55,9 +54,22 @@ public class QuestReserveController {
     }
 
     @ApiOperation(value = "Cancel the reservation request. If reservation is accepted from the requester, the request fails.")
-    @ApiResponses({@ApiResponse(code = 200, message = "Success")})
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 406, message = "Cancel request not acceptable.")
+    })
     @DeleteMapping("{questId}/{reserveId}")
     public ResponseEntity<?> cancel(@PathVariable String questId, @PathVariable String reserveId) {
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "Accept the reservation request.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 406, message = "Accept request not acceptable.")
+    })
+    @PostMapping("accept/{reserveId}")
+    public ResponseEntity<?> accept(@PathVariable String reserveId) {
         return ResponseEntity.ok().build();
     }
 }
