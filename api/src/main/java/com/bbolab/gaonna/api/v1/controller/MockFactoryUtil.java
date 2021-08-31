@@ -12,7 +12,6 @@ import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListItemDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestPerformerDto;
-import com.bbolab.gaonna.api.v1.dto.region.RegionDto;
 import com.bbolab.gaonna.api.v1.dto.reserve.ReserveQuestResponseDto;
 import com.bbolab.gaonna.api.v1.dto.review.ReviewListItemDto;
 
