@@ -5,12 +5,15 @@ import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import com.bbolab.gaonna.api.v1.dto.member.MemberDto;
+import com.bbolab.gaonna.api.v1.dto.member.MemberInfoDto;
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestListItemDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseItemDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestPerformerDto;
 import com.bbolab.gaonna.api.v1.dto.region.RegionDto;
 import com.bbolab.gaonna.api.v1.dto.reserve.ReserveQuestResponseDto;
+import com.bbolab.gaonna.api.v1.dto.review.ReviewListItemDto;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -115,7 +118,7 @@ public class MockFactoryUtil {
                 .build();
     }
 
-    public static ProfileDto createDummyProfileDto() {
+    private static ProfileDto createDummyProfileDto() {
         return ProfileDto.builder()
                 .profileId(UUID.randomUUID().toString())
                 .profileImageId(UUID.randomUUID().toString())
@@ -133,6 +136,40 @@ public class MockFactoryUtil {
                 .questId(UUID.randomUUID().toString())
                 .profileId(UUID.randomUUID().toString())
                 .isAccepted(false)
+                .build();
+    }
+
+    public static MemberInfoDto createDummyMemberInfoDto(String memberId) {
+        return MemberInfoDto.builder()
+                .memberId(memberId)
+                .nickname("nickname test")
+                .joinDate(LocalDateTime.now())
+                .requestedQuestCount(1)
+                .requestedQuest(Collections.singletonList(createDummyQuestListItem()))
+                .performedQuestCount(1)
+                .performedQuest(Collections.singletonList(createDummyQuestListItem()))
+                .profilesCount(1)
+                .profiles(Collections.singletonList(createDummyProfileDto()))
+                .reviewCount(1)
+                .reviews(Collections.singletonList(createDummyReview()))
+                .build();
+    }
+
+    private static QuestListItemDto createDummyQuestListItem() {
+        return QuestListItemDto.builder()
+                .questId(UUID.randomUUID().toString())
+                .title("test quest title")
+                .createdTime(LocalDateTime.now())
+                .deadline(LocalDateTime.now())
+                .build();
+    }
+
+    private static ReviewListItemDto createDummyReview() {
+        return ReviewListItemDto.builder()
+                .reviewId(UUID.randomUUID().toString())
+                .reviewer(createDummyMemberDto())
+                .score(3.5)
+                .content("performance was good")
                 .build();
     }
 }

@@ -12,5 +12,4 @@ public class ReserveQuestResponseDto {
     private String questId;
     private String profileId;
     private Boolean isAccepted;
-
 }
