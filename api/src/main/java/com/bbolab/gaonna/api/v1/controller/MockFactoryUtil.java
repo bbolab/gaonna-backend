@@ -176,8 +176,6 @@ public class MockFactoryUtil {
     }
 
     public static ProfileDetailDto createDummyProfileDetailDto(String profileId) {
-        QuestListItemDto questListItem = createDummyQuestListItem();
-
         return ProfileDetailDto.builder()
                 .profileId(profileId)
                 .profileName("test profile name")

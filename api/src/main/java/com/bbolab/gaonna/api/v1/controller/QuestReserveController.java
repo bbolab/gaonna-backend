@@ -49,7 +49,6 @@ public class QuestReserveController {
         ReserveQuestResponseDto dto = createDummyReserveQuestResponseDto();
         dto.setQuestId(questId);
         dto.setProfileId(requestDto.getProfileId());
-        String memberPerformerId = UUID.randomUUID().toString();
         return ResponseEntity.created(URI.create("/v1/reserve/quest/" + questId + "/" + dto.getReserveId())).build();
     }
 
