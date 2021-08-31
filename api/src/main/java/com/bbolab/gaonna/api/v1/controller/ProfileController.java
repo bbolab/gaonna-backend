@@ -42,7 +42,7 @@ public class ProfileController {
     @ApiOperation(value = "Getting user's all profiles.")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = ProfileDetailListDto.class)})
     @GetMapping("/all")
-    public ResponseEntity<ProfileDetailListDto> getall() {
+    public ResponseEntity<ProfileDetailListDto> getAll() {
         ProfileDetailDto profile1 = createDummyProfileDetailDto(UUID.randomUUID().toString());
         ProfileDetailDto profile2 = createDummyProfileDetailDto(UUID.randomUUID().toString());
         ProfileDetailListDto build = ProfileDetailListDto.builder()

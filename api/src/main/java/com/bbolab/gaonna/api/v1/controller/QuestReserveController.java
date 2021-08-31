@@ -40,7 +40,7 @@ public class QuestReserveController {
     @ApiOperation(value = "Add reservation request to the quest. Reservation completed if the requester accept the requests.")
     @ApiResponses({@ApiResponse(code = 201, message = "Success", response = ReserveQuestResponseDto.class)})
     @PostMapping("{questId}")
-    public ResponseEntity<ReserveQuestResponseDto> reservate(@PathVariable String questId, @RequestBody ReserveQuestRequestDto profileId){
+    public ResponseEntity<?> reserve(@PathVariable String questId, @RequestBody ReserveQuestRequestDto requestDto){
         // TODO : 1. check if profile Id belongs to requested member
         // TODO : 2. check if member already requested reservation as performer to the {quest Id}
         // TODO :   2.1 drop request if member already requested reservation to the {quest Id}
@@ -48,9 +48,9 @@ public class QuestReserveController {
 
         ReserveQuestResponseDto dto = createDummyReserveQuestResponseDto();
         dto.setQuestId(questId);
-        dto.setProfileId(profileId.getProfileId());
+        dto.setProfileId(requestDto.getProfileId());
         String memberPerformerId = UUID.randomUUID().toString();
-        return ResponseEntity.created(URI.create("/v1/reserve/quest/" + questId + "/" + dto.getReserveId())).body(dto);
+        return ResponseEntity.created(URI.create("/v1/reserve/quest/" + questId + "/" + dto.getReserveId())).build();
     }
 
     @ApiOperation(value = "Cancel the reservation request. If reservation is accepted from the requester, the request fails.")
