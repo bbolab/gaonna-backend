@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,14 +18,14 @@ public class MemberInfoDto {
     private LocalDateTime joinDate;
 
     private Integer requestedQuestCount;
-    private List<QuestListItemDto> requestedQuest;
+    private List<QuestListItemDto> requestedQuest = new ArrayList<>();
 
     private Integer performedQuestCount;
-    private List<QuestListItemDto> performedQuest;
+    private List<QuestListItemDto> performedQuest = new ArrayList<>();
 
     private Integer profilesCount;
-    private List<ProfileDto> profiles;
+    private List<ProfileDto> profiles = new ArrayList<>();
 
     private Integer reviewCount;
-    private List<ReviewListItemDto> reviews;
+    private List<ReviewListItemDto> reviews = new ArrayList<>();
 }

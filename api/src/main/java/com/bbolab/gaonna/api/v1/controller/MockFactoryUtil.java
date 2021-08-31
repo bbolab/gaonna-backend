@@ -6,6 +6,7 @@ import com.bbolab.gaonna.api.v1.dto.comment.CommentDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import com.bbolab.gaonna.api.v1.dto.member.MemberDto;
 import com.bbolab.gaonna.api.v1.dto.member.MemberInfoDto;
+import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDetailDto;
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListItemDto;
@@ -161,6 +162,7 @@ public class MockFactoryUtil {
                 .title("test quest title")
                 .createdTime(LocalDateTime.now())
                 .deadline(LocalDateTime.now())
+                .finished(false)
                 .build();
     }
 
@@ -172,4 +174,23 @@ public class MockFactoryUtil {
                 .content("performance was good")
                 .build();
     }
+
+    public static ProfileDetailDto createDummyProfileDetailDto(String profileId) {
+        QuestListItemDto questListItem = createDummyQuestListItem();
+
+        return ProfileDetailDto.builder()
+                .profileId(profileId)
+                .profileName("test profile name")
+                .description("i can do everything")
+                .member(createDummyMemberDto())
+                .profileQuestCount(1)
+                .profileQuests(Collections.singletonList(createDummyQuestListItem()))
+                .score(3.5)
+                .profileImageId(UUID.randomUUID().toString())
+                .reviewCount(1)
+                .reviews(Collections.singletonList(createDummyReview()))
+                .build();
+    }
+
+
 }

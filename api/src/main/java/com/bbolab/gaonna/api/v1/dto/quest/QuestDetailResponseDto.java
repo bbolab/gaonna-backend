@@ -42,13 +42,13 @@ public class QuestDetailResponseDto {
 
     private Integer commentCount;
 
-    private List<CommentResponseDto> comments;
+    private List<CommentResponseDto> comments = new ArrayList<>();
 
-    private List<String> tags;
+    private List<String> tags = new ArrayList<>();
 
-    private List<CategoryDto> categories;
+    private List<CategoryDto> categories = new ArrayList<>();
 
-    private List<String> imageIds;
+    private List<String> imageIds = new ArrayList<>();
 
     private Boolean isReported; // 본인이 해당 퀘스트를 신고했는지
 

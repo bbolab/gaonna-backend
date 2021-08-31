@@ -12,4 +12,5 @@ public class QuestListItemDto {
     private String title;
     private LocalDateTime createdTime;
     private LocalDateTime deadline;
+    private Boolean finished;
 }
