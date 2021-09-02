@@ -127,4 +127,13 @@ pipeline {
             }
         }
     }
+    post{
+        failure {
+            script {
+                if (env.GIT_STATE == 'deploy') {
+                    slackSend(channel: '#pj_gaonna_ci_noti', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
+    }
 }
