@@ -102,7 +102,7 @@ pipeline {
             }
             steps{
                 dir('gaonna-manifest'){
-                    git branch: 'main', credentialsId: 'gaonna-sa', url: 'https://github.com/bbolab/gaonna-manifest'
+                    git branch: 'main', credentialsId: 'uwp-gaonna-sa-secret-text', url: 'https://github.com/bbolab/gaonna-manifest'
                     dir('kustomize/admin/overlays/alpha'){
                         sh "kustomize edit set image admin=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
                     }
