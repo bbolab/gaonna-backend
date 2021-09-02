@@ -25,8 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.Collections;
+import java.util.Arrays;
 
+import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyQuestListItemDto;
 import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyQuestResponseDto;
 
 @Validated
@@ -57,11 +58,12 @@ public class QuestController {
         Double maxX = bboxArr[1][0];
         Double maxY = bboxArr[1][1];
 
-        QuestListResponseItemDto info = modelMapper.map(createDummyQuestResponseDto(), QuestListResponseItemDto.class);
+        QuestListResponseItemDto info1 = modelMapper.map(createDummyQuestListItemDto(), QuestListResponseItemDto.class);
+        QuestListResponseItemDto info2 = modelMapper.map(createDummyQuestListItemDto(), QuestListResponseItemDto.class);
 
         QuestListResponseDto dto = QuestListResponseDto.builder().build();
-        dto.setQuests(Collections.singletonList(info));
-        dto.getQuests().forEach(d -> {d.coordinateToList(Math.abs(maxX - minX) / 2, Math.abs(maxY - minY) / 2);});
+        dto.setN(2);
+        dto.setQuests(Arrays.asList(info1, info2));
         return ResponseEntity.ok().body(dto);
     }
 

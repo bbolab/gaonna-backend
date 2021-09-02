@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.Collections;
 
-import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyComment;
+import java.util.Arrays;
+
 import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyCommentResponseDto;
 
 @Api(value = "comment")
@@ -36,10 +36,12 @@ public class CommentController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = CommentListResponseDto.class)})
     @GetMapping
     public ResponseEntity<CommentListResponseDto> getAll(@ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String articleId) {
-        CommentResponseDto comment = createDummyComment();
+        CommentResponseDto comment1 = createDummyCommentResponseDto();
+        CommentResponseDto comment2 = createDummyCommentResponseDto();
         CommentListResponseDto dto = CommentListResponseDto.builder()
-                .commentLists(Collections.singletonList(comment))
                 .articleId(articleId)
+                .nComments(comment1.getNSubComment() + comment2.getNSubComment())
+                .commentLists(Arrays.asList(comment1, comment2))
                 .build();
         return ResponseEntity.ok().body(dto);
     }
@@ -48,10 +50,7 @@ public class CommentController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = CommentResponseDto.class)})
     @PutMapping("{commentId}")
     public ResponseEntity<CommentResponseDto>  updateComment(@PathVariable String articleId, @PathVariable String commentId, @RequestBody CommentCreateUpdateRequestDto requestDto) {
-        CommentResponseDto dto = createDummyComment();
-        modelMapper.map(requestDto, dto);
-        dto.setCommentId(commentId);
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "Create comment on article")
@@ -59,7 +58,11 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentResponseDto> createComment(@PathVariable String articleId, @RequestBody CommentCreateUpdateRequestDto requestDto) {
         CommentResponseDto dto = createDummyCommentResponseDto();
-        modelMapper.map(requestDto, dto);
+        dto.setArticleId(articleId);
+        if(requestDto.getIsSubComment()) {
+            dto.getSubComments().clear();
+            dto.setNSubComment(0);
+        }
         return ResponseEntity.ok().body(dto);
     }
 

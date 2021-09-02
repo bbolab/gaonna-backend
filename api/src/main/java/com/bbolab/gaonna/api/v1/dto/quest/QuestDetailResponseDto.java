@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.v1.dto.quest;
 
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
+import com.bbolab.gaonna.api.v1.dto.member.MemberDto;
 import com.bbolab.gaonna.api.v1.dto.region.RegionDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,9 +18,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestDetailResponseDto {
+    private MemberDto requester;
 
-    // Article information
     private String articleId;
+
+    private String questId;
 
     private String title;
 
@@ -26,24 +30,33 @@ public class QuestDetailResponseDto {
 
     private LocalDateTime updatedTime;
 
-    private long likeCount;
-
-    private List<CommentResponseDto> comments;
-
-    // Quest information
-    private String questId;
-
-    private double longitude;
-
-    private double latitude;
-
-    private int price;
-
     private LocalDateTime deadline;
 
-    private List<String> tags;
+    private Integer price;
 
-    private List<CategoryDto> categories;
+    private List<Double> location = new ArrayList<>();
 
-    private List<RegionDto> regions;
+    private Integer likeCount;
+
+    private Boolean isLiked;  // 본인이 해당 퀘스트에 좋아요를 눌렀는지
+
+    private Integer commentCount;
+
+    private List<CommentResponseDto> comments = new ArrayList<>();
+
+    private List<String> tags = new ArrayList<>();
+
+    private List<CategoryDto> categories = new ArrayList<>();
+
+    private List<String> imageIds = new ArrayList<>();
+
+    private Boolean isReported; // 본인이 해당 퀘스트를 신고했는지
+
+    private Boolean isReserved;
+
+    private Boolean isMyQuest; // 해당 퀘스트의 요청자가 본인인지
+
+    private Integer nPerformRequest;
+
+    private List<QuestPerformerDto> performRequests = new ArrayList<>(); // only has values if "isMyQuest" is true
 }
