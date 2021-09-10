@@ -104,19 +104,19 @@ pipeline {
                 dir('gaonna-manifest'){
                     git branch: 'main', credentialsId: 'uwp-gaonna-sa-secret-text', url: 'https://github.com/bbolab/gaonna-manifest'
                     dir('kustomize/admin/overlays/alpha'){
-                        sh "kustomize edit set image admin=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
+                        sh "kustomize edit set image admin-api-image=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
                     }
                     dir('kustomize/api/overlays/alpha'){
-                        sh "kustomize edit set image api=harbor.gaonna.tech/gaonna_platform/api:$GIT_COMMIT"
+                        sh "kustomize edit set image api-image=harbor.gaonna.tech/gaonna_platform/api:$GIT_COMMIT"
                     }
                     script{
                         sh "echo $env.GIT_TAG"
                         if(env.GIT_TAG == 'real'){
                             dir('kustomize/admin/overlays/real'){
-                                sh "kustomize edit set image admin=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
+                                sh "kustomize edit set image admin-api-image=harbor.gaonna.tech/gaonna_platform/admin:$GIT_COMMIT"
                             }
                             dir('kustomize/api/overlays/real'){
-                                sh "kustomize edit set image api=harbor.gaonna.tech/gaonna_platform/api:$GIT_COMMIT"
+                                sh "kustomize edit set image api-image=harbor.gaonna.tech/gaonna_platform/api:$GIT_COMMIT"
                             }
                         }
                     }
