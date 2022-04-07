@@ -41,12 +41,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // spring cloud
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.2'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config:3.0.3'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config:3.1.1'
 
     // spring swagger2
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    // spring security oauth2.0
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
     // for Geometry type
     compile group: 'org.locationtech.jts', name: 'jts-core', version: '1.15.1'
@@ -59,18 +63,21 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // model mapper
-    implementation 'org.modelmapper:modelmapper:2.4.3'
+    implementation 'org.modelmapper:modelmapper:3.0.0'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testCompile "org.testcontainers:mysql:1.15.3"
+    testCompile "org.testcontainers:mysql:1.16.3"
 
     // jasypt
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
     // project dependency
     implementation project(":core")
+
+    // for annotation processor
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 dependencyManagement {
