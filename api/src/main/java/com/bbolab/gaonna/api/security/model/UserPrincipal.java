@@ -27,7 +27,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public static UserPrincipal create(Member user) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
-        Role role = user.getRole();
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
