@@ -1,10 +1,11 @@
-package com.bbolab.gaonna.api.security;
+package com.bbolab.gaonna.api.security.oauth2;
 
 import com.bbolab.gaonna.api.security.exception.OAuth2ProviderNotMatchingException;
+import com.bbolab.gaonna.api.security.model.UserPrincipal;
 import com.bbolab.gaonna.core.domain.member.AuthProvider;
-import com.bbolab.gaonna.api.security.provider.OAuth2UserInfo;
-import com.bbolab.gaonna.api.security.provider.OAuth2UserInfoFactory;
-import com.bbolab.gaonna.api.v1.controller.exception.OAuth2AuthenticationProcessingException;
+import com.bbolab.gaonna.api.security.model.provider.OAuth2UserInfo;
+import com.bbolab.gaonna.api.security.model.provider.OAuth2UserInfoFactory;
+import com.bbolab.gaonna.api.exception.OAuth2AuthenticationProcessingException;
 import com.bbolab.gaonna.core.domain.member.Member;
 import com.bbolab.gaonna.core.domain.member.Role;
 import com.bbolab.gaonna.core.repository.MemberRepository;
@@ -69,7 +70,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .email(userInfo.getEmail())
                 .profileImage(userInfo.getImageUrl())
                 .provider(AuthProvider.valueOf(userRequest.getClientRegistration().getRegistrationId()))
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build());
     }
 

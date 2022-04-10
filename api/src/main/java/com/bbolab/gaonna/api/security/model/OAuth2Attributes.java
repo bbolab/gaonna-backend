@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.security;
+package com.bbolab.gaonna.api.security.model;
 
 import com.bbolab.gaonna.core.domain.member.Member;
 import com.bbolab.gaonna.core.domain.member.Role;
@@ -67,7 +67,7 @@ public class OAuth2Attributes {
                 .name(name)
                 .email(email)
                 .profileImage(picture)
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
         // TODO : profile image is currently url type, we should change it to local resource link
     }

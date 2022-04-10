@@ -1,6 +1,7 @@
-package com.bbolab.gaonna.api.security;
+package com.bbolab.gaonna.api.security.model;
 
 import com.bbolab.gaonna.core.domain.member.Member;
+import com.bbolab.gaonna.core.domain.member.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +25,9 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
 
     public static UserPrincipal create(Member user) {
-        List<GrantedAuthority> authorities = Collections.
-                singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        Role role = user.getRole();
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
