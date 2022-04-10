@@ -12,6 +12,7 @@ public enum ErrorCode {
     UNSUPPORTED_TOKEN(1003, "변조된 토큰입니다."),
     ACCESS_DENIED(1005, "권한이 없습니다."),
     NEED_AUTHENTICATION(1006, "인증이 필요한 요청입니다. 토큰을 확인하세요."),
+    ALREADY_JOINED_EMAIL(1007, "해당 Email 주소로 이미 가입된 다른 소셜 계정이 있습니다."),
     UNKNOWN_ERROR(9999, "확인되지 않은 에러입니다.. 연락주세요 ㅜㅜ");
 
     private int code;
