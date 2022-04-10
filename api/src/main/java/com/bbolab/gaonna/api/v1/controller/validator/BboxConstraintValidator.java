@@ -1,5 +1,5 @@
 package com.bbolab.gaonna.api.v1.controller.validator;
-import com.bbolab.gaonna.api.v1.controller.exception.validator.BboxConstraintException;
+import com.bbolab.gaonna.api.exception.validator.BboxConstraintException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 

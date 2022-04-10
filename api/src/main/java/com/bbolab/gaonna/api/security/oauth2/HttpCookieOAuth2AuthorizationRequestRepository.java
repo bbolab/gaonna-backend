@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.security;
+package com.bbolab.gaonna.api.security.oauth2;
 
 import com.bbolab.gaonna.api.util.CookieUtils;
 import com.nimbusds.oauth2.sdk.util.StringUtils;

@@ -1,8 +1,7 @@
-package com.bbolab.gaonna.api.security;
+package com.bbolab.gaonna.api.security.oauth2;
 
 import com.bbolab.gaonna.api.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;

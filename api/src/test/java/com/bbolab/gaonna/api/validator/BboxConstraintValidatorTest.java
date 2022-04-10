@@ -1,6 +1,6 @@
 package com.bbolab.gaonna.api.validator;
 
-import com.bbolab.gaonna.api.v1.controller.exception.validator.BboxConstraintException;
+import com.bbolab.gaonna.api.exception.validator.BboxConstraintException;
 import com.bbolab.gaonna.api.v1.controller.validator.BboxConstraintValidator;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

@@ -1,6 +1,6 @@
-package com.bbolab.gaonna.api.security.provider;
+package com.bbolab.gaonna.api.security.model.provider;
 
-import com.bbolab.gaonna.api.v1.controller.exception.OAuth2AuthenticationProcessingException;
+import com.bbolab.gaonna.api.exception.OAuth2AuthenticationProcessingException;
 import com.bbolab.gaonna.core.domain.member.AuthProvider;
 
 import java.util.Map;

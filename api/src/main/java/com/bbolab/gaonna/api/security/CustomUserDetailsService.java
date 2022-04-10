@@ -1,5 +1,6 @@
 package com.bbolab.gaonna.api.security;
 
+import com.bbolab.gaonna.api.security.model.UserPrincipal;
 import com.bbolab.gaonna.core.domain.member.Member;
 import com.bbolab.gaonna.core.exception.ResourceNotFoundException;
 import com.bbolab.gaonna.core.repository.MemberRepository;
@@ -21,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Member member = memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username + "로 된 사용자를 찾을 수 없습니다.")
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다.")
                 );
 
         return UserPrincipal.create(member);

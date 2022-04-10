@@ -1,10 +1,12 @@
-package com.bbolab.gaonna.api.security;
+package com.bbolab.gaonna.api.security.jwt;
 
 import com.bbolab.gaonna.api.config.SecurityProperties;
+import com.bbolab.gaonna.api.security.model.JwtToken;
+import com.bbolab.gaonna.api.security.model.UserPrincipal;
 import io.jsonwebtoken.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -19,10 +21,20 @@ public class JwtTokenProvider {
 
     private final SecurityProperties securityProperties;
     private final UserDetailsService userDetailsService;
+    private final JwtRefreshTokenRepository refreshTokenRepository;
 
-    public String createAccessToken(Authentication authentication) {
+    public JwtToken generateJwtToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
+        String accessToken = createAccessToken(userPrincipal);
+        String refreshToken = createRefreshToken(userPrincipal);
+
+        refreshTokenRepository.saveRefreshToken(userPrincipal.getUuid(), refreshToken);
+
+        return new JwtToken(accessToken, refreshToken);
+    }
+
+    private String createAccessToken(UserPrincipal userPrincipal) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + securityProperties.getAuth().getAccessTokenExpireTime());
 
@@ -36,9 +48,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createRefreshToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-
+    private String createRefreshToken(UserPrincipal userPrincipal) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + securityProperties.getAuth().getRefreshTokenExpireTime());
 
@@ -60,24 +70,12 @@ public class JwtTokenProvider {
         return UUID.fromString(claims.getSubject());
     }
 
-    public boolean validateToken(String authToken) {
-        try {
+    public boolean validateToken(String authToken) throws JwtException {
+
             Jwts.parser().setSigningKey(securityProperties.getAuth().getTokenSecret()).parseClaimsJws(authToken);
             return true;
-        } catch (SignatureException ex) {
-            log.error("Invalid JWT signature");
-        } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token");
-        } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
-        } catch (NullPointerException ex){
-            log.error("JWT RefreshToken is empty");
-        }
-        return false;
+
+//        return false;
     }
 
 }
