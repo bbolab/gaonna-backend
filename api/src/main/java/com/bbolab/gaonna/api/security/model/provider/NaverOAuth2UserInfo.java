@@ -1,4 +1,4 @@
-package com.bbolab.gaonna.api.security.provider;
+package com.bbolab.gaonna.api.security.model.provider;
 
 import java.util.Map;
 
