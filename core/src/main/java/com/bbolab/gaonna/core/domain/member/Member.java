@@ -135,7 +135,7 @@ public class Member {
         return this.memberArticleLikes.add(articleLike);
     }
 
-    public Member update(String name, String picture) {
+    public Member update(String name, String nickname, String picture) {
         this.name = name;
         this.profileImage = picture;
         return this;
