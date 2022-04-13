@@ -48,6 +48,10 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
+    // spring security oauth2.0
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
     // for Geometry type
     compile group: 'org.locationtech.jts', name: 'jts-core', version: '1.15.1'
 
@@ -68,6 +72,9 @@ dependencies {
 
     // jasypt
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+
+    // for annotation processor
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     // project dependency
     implementation project(":core")

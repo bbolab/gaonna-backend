@@ -1,7 +1,7 @@
-package com.bbolab.gaonna.api.v1.controller.exception;
+package com.bbolab.gaonna.api.exception;
 
+import com.bbolab.gaonna.api.exception.validator.BboxConstraintException;
 import com.bbolab.gaonna.api.v1.controller.QuestController;
-import com.bbolab.gaonna.api.v1.controller.exception.validator.BboxConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

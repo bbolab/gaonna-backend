@@ -5,6 +5,7 @@ import com.bbolab.gaonna.core.domain.quest.MemberQuestRequester;
 import com.bbolab.gaonna.core.domain.report.ArticleReport;
 import com.bbolab.gaonna.core.domain.report.MemberBlockReport;
 import com.bbolab.gaonna.core.domain.quest.QuestReview;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,16 +36,17 @@ import java.util.UUID;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "firstname", "lastname", "nickname"})
+@EqualsAndHashCode(of = {"id", "name", "nickname", "email"})
 public class Member {
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
     private UUID id;
 
-    private String firstname;
+    private String name;
 
-    private String lastname;
+    @Column(unique = true)
+    private String email;
 
     @Column(unique = true)
     private String nickname;
@@ -59,6 +63,14 @@ public class Member {
     @Lob
     @Basic(fetch = FetchType.EAGER)  // TODO : Should link data source
     private String profileImage;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
 
     @Builder.Default
     @OneToMany(mappedBy = "performer", cascade = CascadeType.ALL)
@@ -121,5 +133,11 @@ public class Member {
         }
         articleLike.setMember(this);
         return this.memberArticleLikes.add(articleLike);
+    }
+
+    public Member update(String name, String picture) {
+        this.name = name;
+        this.profileImage = picture;
+        return this;
     }
 }
