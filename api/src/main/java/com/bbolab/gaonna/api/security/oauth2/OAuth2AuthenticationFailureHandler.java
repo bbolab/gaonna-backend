@@ -23,14 +23,12 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        // TODO: blupine, set error status http code and msg, and return json format not redirect
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         if (exception instanceof OAuth2ProviderNotMatchingException) {
             setResponse(response, ErrorCode.ALREADY_JOINED_EMAIL);
         }
         else {
-
             setResponse(response, ErrorCode.UNKNOWN_ERROR);
             log.error("================================================");
             log.error("OAuth2AuthenticationFailureHandler - Unknown 예외 발생");
