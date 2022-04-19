@@ -24,7 +24,6 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         if (exception instanceof OAuth2ProviderNotMatchingException) {
             setResponse(response, ErrorCode.ALREADY_JOINED_EMAIL);
         }
@@ -44,8 +43,10 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         JSONObject responseJson = new JSONObject();
+
+        response.setStatus(errorCode.getStatusCode());
         responseJson.put("message", errorCode.getMessage());
-        responseJson.put("code", errorCode.getCode());
+        responseJson.put("code", errorCode.getErrorCode());
 
         response.getWriter().print(responseJson);
     }

@@ -137,3 +137,5 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+all,gradle
 .DS_Store
+
+.run/ApiApplication.run.xml
