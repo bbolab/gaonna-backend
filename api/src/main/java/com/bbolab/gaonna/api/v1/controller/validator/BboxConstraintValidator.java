@@ -1,5 +1,6 @@
 package com.bbolab.gaonna.api.v1.controller.validator;
-import com.bbolab.gaonna.api.v1.controller.exception.validator.BboxConstraintException;
+
+import com.bbolab.gaonna.api.exception.validator.BboxConstraintException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 
@@ -22,7 +23,7 @@ public class BboxConstraintValidator implements ConstraintValidator<BboxConstrai
         return true;
     }
 
-    public static Double[][] parseBboxStringToDoubleArray(String bbox) throws BboxConstraintException{
+    public static Double[][] parseBboxStringToDoubleArray(String bbox) throws BboxConstraintException {
         JSONArray rows = (JSONArray) JSONValue.parse(bbox);
         if(rows == null || rows.size() != 2 || ((JSONArray)rows.get(0)).size() != 2 || ((JSONArray)rows.get(1)).size() != 2 ) {
             throw new BboxConstraintException(wrongFormatExceptionMsg);
