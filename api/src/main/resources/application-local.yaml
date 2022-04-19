@@ -24,8 +24,8 @@ spring:
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             authorization-grant-type: authorization_code
           kakao:
-            clientId: c1991c38f4f71873ec0e76c9106348af
-            clientSecret: V6pHGRoDBWDTSIKqFrGyORfvgAt4KCNz
+            clientId: ENC(/lYI/JjIcww4vWCb4eSwf4NaoFvDcu54JwdQ9d7Sbm6LBzsT00B+Ss3IY1XrGlzT)
+            clientSecret: ENC(9tkLShVL20j/Mjfoe2hYPXSC8LkK0EXhTCaqn+VFlxb6AEcChFSP6QcABHiUJFqJ)
             client-authentication-method: post
             client-name: Kakao
             scope: 'account_email,profile_image,profile_nickname'
