@@ -43,6 +43,7 @@ public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationF
 
     private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         JSONObject responseJson = new JSONObject();
+
         response.setStatus(errorCode.getStatusCode());
         responseJson.put("message", errorCode.getMessage());
         responseJson.put("code", errorCode.getErrorCode());

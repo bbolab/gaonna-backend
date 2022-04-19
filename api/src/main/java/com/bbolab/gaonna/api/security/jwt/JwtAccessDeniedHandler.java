@@ -29,7 +29,6 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         JSONObject responseJson = new JSONObject();
         responseJson.put("message", ErrorCode.ACCESS_DENIED.getMessage());
         responseJson.put("code", ErrorCode.ACCESS_DENIED.getErrorCode());
-
         response.getWriter().print(responseJson);
     }
 }
