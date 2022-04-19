@@ -25,16 +25,16 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        String exception = (String) request.getAttribute("exception");
 
-        if (exception != null) {
-            if (exception.equals(ErrorCode.WRONG_TYPE_TOKEN.getCode() + "")) {
+        Integer code = (Integer) request.getAttribute("exception");
+
+        if (code != null) {
+            if (code == ErrorCode.WRONG_TYPE_TOKEN.getErrorCode()) {
                 setResponse(response, ErrorCode.WRONG_TYPE_TOKEN);
-            } else if (exception.equals(ErrorCode.EXPIRED_TOKEN.getCode() + "")) {
+            } else if (code == ErrorCode.EXPIRED_TOKEN.getErrorCode()) {
                 setResponse(response, ErrorCode.EXPIRED_TOKEN);
-            } else if (exception.equals(ErrorCode.UNSUPPORTED_TOKEN.getCode() + "")) {
+            } else if (code == ErrorCode.UNSUPPORTED_TOKEN.getErrorCode()) {
                 setResponse(response, ErrorCode.UNSUPPORTED_TOKEN);
             } else {
                 setResponse(response, ErrorCode.ACCESS_DENIED);
@@ -58,8 +58,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         JSONObject responseJson = new JSONObject();
+        response.setStatus(errorCode.getStatusCode());
         responseJson.put("message", errorCode.getMessage());
-        responseJson.put("code", errorCode.getCode());
+        responseJson.put("code", errorCode.getErrorCode());
 
         response.getWriter().print(responseJson);
     }

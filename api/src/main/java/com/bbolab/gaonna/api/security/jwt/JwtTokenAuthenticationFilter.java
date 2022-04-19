@@ -48,19 +48,19 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (SignatureException | MalformedJwtException ex) {
-            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getCode());
+            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getErrorCode());
         } catch (ExpiredJwtException ex) {
-            request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN.getCode());
+            request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN.getErrorCode());
         } catch (UnsupportedJwtException ex) {
-            request.setAttribute("exception", ErrorCode.UNSUPPORTED_TOKEN.getCode());
+            request.setAttribute("exception", ErrorCode.UNSUPPORTED_TOKEN.getErrorCode());
         } catch (IllegalArgumentException ex) {
-            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getCode());
+            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getErrorCode());
             log.error("JWT claims string is empty.");
         } catch (NullPointerException ex){
-            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getCode());
+            request.setAttribute("exception", ErrorCode.WRONG_TYPE_TOKEN.getErrorCode());
             log.error("JWT RefreshToken is empty");
         } catch (Exception ex) {
-            request.setAttribute("exception", ErrorCode.UNKNOWN_ERROR.getCode());
+            request.setAttribute("exception", ErrorCode.UNKNOWN_ERROR.getErrorCode());
             log.error("================================================");
             log.error("JwtTokenAuthenticationFilter - doFilterInternal() 오류발생");
             log.error("token : {}", jwt);

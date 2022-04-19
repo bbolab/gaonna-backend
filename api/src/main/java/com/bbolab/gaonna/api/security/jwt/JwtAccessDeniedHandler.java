@@ -25,10 +25,10 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         log.warn("JwtAccessDeniedHandler : User가 ADMIN 권한에 접근 시도");
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(ErrorCode.ACCESS_DENIED.getStatusCode());
         JSONObject responseJson = new JSONObject();
         responseJson.put("message", ErrorCode.ACCESS_DENIED.getMessage());
-        responseJson.put("code", ErrorCode.ACCESS_DENIED.getCode());
+        responseJson.put("code", ErrorCode.ACCESS_DENIED.getErrorCode());
 
         response.getWriter().print(responseJson);
     }
