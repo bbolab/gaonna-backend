@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
+import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,13 +32,13 @@ public class RegionL3 {
     @JoinColumn
     private RegionL2 regionL2;
 
-    private String admCode; // TODO : type?
+    private String admCode;
 
     private String name;
 
-    private Polygon geoPolygon;
+    private MultiPolygon geoPolygon;
 
-    private Point centerPosition;
+    private Point centerPosition;   // TODO : what?
 
     private String version;
 }

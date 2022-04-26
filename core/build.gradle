@@ -6,7 +6,9 @@ dependencies {
 
     // database
     runtimeOnly 'mysql:mysql-connector-java'
-    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.4.31.Final'
+    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
+    implementation group: 'org.geolatte', name: 'geolatte-geom', version: '1.8.2'
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.5.4.Final'
     implementation 'commons-io:commons-io:2.8.0'
 
     // lombok
