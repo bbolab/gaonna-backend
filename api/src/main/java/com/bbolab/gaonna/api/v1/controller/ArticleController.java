@@ -39,7 +39,7 @@ public class ArticleController {
     @ApiOperation(value = "Searching article")
     @ApiResponses({@ApiResponse(code = 200, message = "Success", response = ArticleResponseDto.class)})
     @GetMapping("{articleId}")
-    public ResponseEntity<ArticleResponseDto> get(@ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String articleId) {
+    public ResponseEntity<ArticleResponseDto> get(@CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String articleId) {
         ArticleResponseDto dto = articleService.searchArticleById(UUID.fromString(articleId));
         if (dto == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
