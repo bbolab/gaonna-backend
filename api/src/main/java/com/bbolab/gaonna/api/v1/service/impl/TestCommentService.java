@@ -3,12 +3,14 @@ package com.bbolab.gaonna.api.v1.service.impl;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentListResponseDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentResponseDto;
 import com.bbolab.gaonna.api.v1.service.CommentService;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.UUID;
 
 import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyCommentResponseDto;
 
+@Service
 public class TestCommentService implements CommentService {
     @Override
     public CommentListResponseDto getAllArticleComments(UUID userId, UUID articleId) {
