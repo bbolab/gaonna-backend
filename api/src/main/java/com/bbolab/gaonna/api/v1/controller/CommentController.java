@@ -51,8 +51,6 @@ public class CommentController {
     @PutMapping("{commentId}")
     public ResponseEntity<CommentResponseDto>  updateComment(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId, @PathVariable String commentId, @RequestBody CommentUpdateRequestDto requestDto) {
         CommentResponseDto dto = commentService.updateComment(userPrincipal.getUuid(), UUID.fromString(commentId), requestDto.getContent());
-        if (dto == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         return ResponseEntity.ok(dto);
     }
 
@@ -61,8 +59,6 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentResponseDto> createComment(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId, @RequestBody CommentCreateRequestDto requestDto) {
         CommentResponseDto dto = commentService.createComment(userPrincipal.getUuid(), UUID.fromString(articleId), UUID.fromString(requestDto.getParentId()), requestDto.getContent());
-        if (dto == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         return ResponseEntity.ok(dto);
     }
 
@@ -71,8 +67,6 @@ public class CommentController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     public ResponseEntity<Void> deleteComment(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId, @PathVariable String commentId) {
         boolean result = commentService.deleteComment(userPrincipal.getUuid(), UUID.fromString(commentId));
-        if (result)
-            return ResponseEntity.ok().build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok().build();
     }
 }

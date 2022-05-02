@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +40,6 @@ public class ArticleController {
     @GetMapping("{articleId}")
     public ResponseEntity<ArticleResponseDto> get(@CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "ex) 72f92a8b-1866-4f08-bdf1-5c4826d0378b", required = true) @PathVariable String articleId) {
         ArticleResponseDto dto = articleService.searchArticleById(UUID.fromString(articleId));
-        if (dto == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(dto);
     }
 
@@ -59,8 +56,6 @@ public class ArticleController {
     @PutMapping("{articleId}")
     public ResponseEntity<ArticleResponseDto> update(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId, @RequestBody ArticleUpdateRequestDto requestDto) {
         ArticleResponseDto dto = articleService.updateArticleById(userPrincipal.getUuid(), UUID.fromString(articleId), requestDto);
-        if (dto == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(dto);
     }
 
@@ -71,9 +66,7 @@ public class ArticleController {
     @DeleteMapping("{articleId}")
     public ResponseEntity<Void> delete(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId){
         boolean result = articleService.deleteArticleById(userPrincipal.getUuid(), UUID.fromString(articleId));
-        if (result)
-            return ResponseEntity.ok().build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "User add like to article")
@@ -81,9 +74,7 @@ public class ArticleController {
     @PostMapping("/like/{articleId}")
     public ResponseEntity<Void> addLike(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId) {
         boolean result = articleService.addLikeToArticle(userPrincipal.getUuid(), UUID.fromString(articleId));
-        if (result)
-            ResponseEntity.ok().build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "User cancel like to article")
@@ -91,8 +82,6 @@ public class ArticleController {
     @DeleteMapping("/like/{articleId}")
     public ResponseEntity<Void> deleteLike(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId) {
         boolean result = articleService.deleteArticleById(userPrincipal.getUuid(), UUID.fromString(articleId));
-        if (result)
-            ResponseEntity.ok().build();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok().build();
     }
 }
