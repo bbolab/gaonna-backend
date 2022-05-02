@@ -4,7 +4,7 @@ import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
 import com.bbolab.gaonna.api.v1.controller.validator.BboxConstraintValidator;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestRequestDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
     @DisplayName("[Create] 퀘스트 생성 - 성공")
     void createQuestSuccess() throws Exception {
         // given
-        QuestCreateUpdateRequestDto requestDto = createDummyQuestRequestDto();
+        QuestRequestDto requestDto = createDummyQuestRequestDto();
         // when
         MvcResult mvcResult = mockMvc.perform(post("/v1/quest")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -180,7 +180,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
     public void updateQuestTest() throws Exception {
         // given
         String questId = UUID.randomUUID().toString();
-        QuestCreateUpdateRequestDto requestDto = createDummyQuestRequestDto();
+        QuestRequestDto requestDto = createDummyQuestRequestDto();
 
         // when
         MvcResult result = mockMvc.perform(put("/v1/quest/" + questId)
@@ -223,8 +223,8 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     // TODO : Validator test
 
-    public static QuestCreateUpdateRequestDto createDummyQuestRequestDto() {
-        return QuestCreateUpdateRequestDto.builder()
+    public static QuestRequestDto createDummyQuestRequestDto() {
+        return QuestRequestDto.builder()
                 .title("test-title")
                 .content("test-content")
                 .latitude(35.332211)

@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestCreateUpdateRequestDto {
+public class QuestRequestDto {
     // Article information
     private String title;
 
