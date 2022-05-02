@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentCreateUpdateRequestDto {
-    private Boolean isSubComment;
-
-    private String parentId; // if "isSubComment", parentId should exist
+public class CommentCreateRequestDto {
+    private String parentId; // if comment has no parent, parentId should be null
 
     private String content;
 }

@@ -2,7 +2,7 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
-import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateUpdateRequestDto;
+import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentListResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -63,7 +63,7 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
     void createCommentSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
-        CommentCreateUpdateRequestDto requestDto = createCommentCreateRequestDto();
+        CommentCreateRequestDto requestDto = createCommentCreateRequestDto();
         String url = String.format("/v1/article/%s/comment", articleId);
 
         // when
@@ -83,7 +83,7 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
         // given
         String articleId = UUID.randomUUID().toString();
         String commentId = UUID.randomUUID().toString();
-        CommentCreateUpdateRequestDto requestDto = createCommentCreateRequestDto();
+        CommentCreateRequestDto requestDto = createCommentCreateRequestDto();
         String url = String.format("/v1/article/%s/comment/%s", articleId, commentId);
 
         // when
@@ -116,8 +116,8 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
         assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
-    public static CommentCreateUpdateRequestDto createCommentCreateRequestDto() {
-        return CommentCreateUpdateRequestDto.builder()
+    public static CommentCreateRequestDto createCommentCreateRequestDto() {
+        return CommentCreateRequestDto.builder()
                 .isSubComment(false)
                 .parentId(null)
                 .content("test-comment-content").build();

@@ -20,4 +20,6 @@ public class CommentResponseDto {
     private Integer nSubComment;
 
     private List<CommentDto> subComments = new ArrayList<>();
+
+    private boolean isMine;
 }
