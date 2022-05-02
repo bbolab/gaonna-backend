@@ -28,4 +28,6 @@ public class MemberController {
         MemberInfoDto dto = memberService.getMemberInfo(UUID.fromString(memberId));
         return ResponseEntity.ok(dto);
     }
+
+    // TODO : my info api 추가
 }
