@@ -32,10 +32,10 @@ public class TestQuestService implements QuestService {
     @Override
     public List<QuestListResponseItemDto> getQuestsInBboxString(UUID memberId, String bbox) {
         Double[][] bboxArr = BboxConstraintValidator.parseBboxStringToDoubleArray(bbox);
-        Double minX = bboxArr[0][0];
-        Double minY = bboxArr[0][1];
-        Double maxX = bboxArr[1][0];
-        Double maxY = bboxArr[1][1];
+//        Double minX = bboxArr[0][0];
+//        Double minY = bboxArr[0][1];
+//        Double maxX = bboxArr[1][0];
+//        Double maxY = bboxArr[1][1];
 
         QuestListResponseItemDto info1 = modelMapper.map(createDummyQuestListItemDto(), QuestListResponseItemDto.class);
         QuestListResponseItemDto info2 = modelMapper.map(createDummyQuestListItemDto(), QuestListResponseItemDto.class);

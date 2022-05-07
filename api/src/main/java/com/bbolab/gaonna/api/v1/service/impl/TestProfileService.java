@@ -2,13 +2,11 @@ package com.bbolab.gaonna.api.v1.service.impl;
 
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileCreateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDetailDto;
-import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDetailListDto;
 import com.bbolab.gaonna.api.v1.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +22,7 @@ public class TestProfileService implements ProfileService {
     @Override
     public ProfileDetailDto getProfile(UUID profileId) {
         ProfileDetailDto dto = createDummyProfileDetailDto(profileId.toString());
-        return null;
+        return dto;
     }
 
     @Override

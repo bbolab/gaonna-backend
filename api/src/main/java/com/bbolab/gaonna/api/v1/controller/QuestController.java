@@ -80,7 +80,7 @@ public class QuestController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @DeleteMapping("{questId}")
     public ResponseEntity<Void> delete(@CurrentUser UserPrincipal userPrincipal, @PathVariable String questId) {
-        boolean result = questService.deleteQuest(userPrincipal.getUuid(), UUID.fromString(questId));
+        questService.deleteQuest(userPrincipal.getUuid(), UUID.fromString(questId));
         return ResponseEntity.ok().build();
     }
 

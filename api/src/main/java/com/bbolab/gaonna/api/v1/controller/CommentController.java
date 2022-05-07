@@ -14,7 +14,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
-
-import static com.bbolab.gaonna.api.v1.controller.MockFactoryUtil.createDummyCommentResponseDto;
 
 @Api(value = "comment")
 @Controller
@@ -66,7 +63,7 @@ public class CommentController {
     @DeleteMapping("{commentId}")
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     public ResponseEntity<Void> deleteComment(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId, @PathVariable String commentId) {
-        boolean result = commentService.deleteComment(userPrincipal.getUuid(), UUID.fromString(commentId));
+        commentService.deleteComment(userPrincipal.getUuid(), UUID.fromString(commentId));
         return ResponseEntity.ok().build();
     }
 }

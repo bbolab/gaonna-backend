@@ -82,7 +82,7 @@ public class ProfileController {
     })
     @DeleteMapping("{profileId}")
     public ResponseEntity<?> delete(@CurrentUser UserPrincipal userPrincipal, @PathVariable String profileId) {
-        boolean result = profileService.deleteProfile(userPrincipal.getUuid(), UUID.fromString(profileId));
+        profileService.deleteProfile(userPrincipal.getUuid(), UUID.fromString(profileId));
         return ResponseEntity.ok().build();
     }
 }

@@ -65,7 +65,7 @@ public class ArticleController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @DeleteMapping("{articleId}")
     public ResponseEntity<Void> delete(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId){
-        boolean result = articleService.deleteArticleById(userPrincipal.getUuid(), UUID.fromString(articleId));
+        articleService.deleteArticleById(userPrincipal.getUuid(), UUID.fromString(articleId));
         return ResponseEntity.ok().build();
     }
 
@@ -73,7 +73,7 @@ public class ArticleController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @PostMapping("/like/{articleId}")
     public ResponseEntity<Void> addLike(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId) {
-        boolean result = articleService.addLikeToArticle(userPrincipal.getUuid(), UUID.fromString(articleId));
+        articleService.addLikeToArticle(userPrincipal.getUuid(), UUID.fromString(articleId));
         return ResponseEntity.ok().build();
     }
 
@@ -81,7 +81,7 @@ public class ArticleController {
     @ApiResponses({@ApiResponse(code = 200, message = "Success")})
     @DeleteMapping("/like/{articleId}")
     public ResponseEntity<Void> deleteLike(@CurrentUser UserPrincipal userPrincipal, @PathVariable String articleId) {
-        boolean result = articleService.deleteArticleById(userPrincipal.getUuid(), UUID.fromString(articleId));
+        articleService.deleteArticleById(userPrincipal.getUuid(), UUID.fromString(articleId));
         return ResponseEntity.ok().build();
     }
 }
