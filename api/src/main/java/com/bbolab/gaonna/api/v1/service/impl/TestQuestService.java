@@ -57,9 +57,14 @@ public class TestQuestService implements QuestService {
     @Override
     public QuestDetailResponseDto updateQuest(UUID memberId, UUID questId, QuestRequestDto questInfo) {
         QuestDetailResponseDto questDetailResponseDto = createDummyQuestResponseDto();
-        modelMapper.map(questInfo, questDetailResponseDto);
         questDetailResponseDto.setQuestId(questId.toString());
-        return null;
+        questDetailResponseDto.setTitle(questInfo.getTitle());
+        questDetailResponseDto.setContent(questInfo.getContent());
+        questDetailResponseDto.setPrice(questInfo.getPrice());
+        questDetailResponseDto.setDeadline(questInfo.getDeadline());
+        questDetailResponseDto.setTags(questInfo.getTags());
+        questDetailResponseDto.setCategories(questInfo.getCategories());
+        return questDetailResponseDto;
     }
 
     @Override

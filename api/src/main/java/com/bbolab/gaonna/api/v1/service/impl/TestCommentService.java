@@ -36,8 +36,8 @@ public class TestCommentService implements CommentService {
         CommentResponseDto dto = createDummyCommentResponseDto();
         dto.setArticleId(articleId.toString());
         if(parentId != null) {
-            dto.getSubComments().clear();
             dto.setNSubComment(0);
+            return dto;
         }
         return null;
     }
