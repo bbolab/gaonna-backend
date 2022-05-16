@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
+import com.bbolab.gaonna.api.WithAccount;
 import com.bbolab.gaonna.api.v1.dto.article.ArticleCreateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.article.ArticleResponseDto;
 import com.bbolab.gaonna.api.v1.dto.article.ArticleUpdateRequestDto;
@@ -35,6 +36,7 @@ public class MockArticleControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Create] 게시물 생성 - 성공")
+    @WithAccount("bbobbi")
     void createArticleSuccess() throws Exception {
         // given
         ArticleCreateRequestDto requestDto = createDummyArticleCreateQuestDto();
@@ -55,6 +57,7 @@ public class MockArticleControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Read] 게시물 조회 - 성공")
+    @WithAccount("bbobbi")
     void readArticleSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
@@ -74,6 +77,7 @@ public class MockArticleControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Update] 게시물 업데이트 - 성공")
+    @WithAccount("bbobbi")
     void updateArticleSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
@@ -97,6 +101,7 @@ public class MockArticleControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Delete] 게시물 삭제 - 성공")
+    @WithAccount("bbobbi")
     void deleteArticleSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
@@ -114,6 +119,7 @@ public class MockArticleControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Create] 좋아요 추가 - 성공")
+    @WithAccount("bbobbi")
     void createLikeSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
@@ -130,6 +136,7 @@ public class MockArticleControllerTest extends AbstractContainerBaseTest {
     }
     @Test
     @DisplayName("[Delete] 좋아요 삭제 - 성공")
+    @WithAccount("bbobbi")
     void deleteLikeSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();

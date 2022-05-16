@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.v1.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
+import com.bbolab.gaonna.api.WithAccount;
 import com.bbolab.gaonna.api.v1.dto.member.MemberInfoDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ class MockMemberControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Get] 사용자 정보 조회")
+    @WithAccount("bbobbi") 
     void getUserInfo() throws Exception {
         String memberId = UUID.randomUUID().toString();
         MvcResult result = mockMvc.perform(get("/v1/member/info/" + memberId)

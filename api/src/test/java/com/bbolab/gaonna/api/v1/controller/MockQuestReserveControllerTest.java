@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.v1.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
+import com.bbolab.gaonna.api.WithAccount;
 import com.bbolab.gaonna.api.v1.dto.reserve.ReserveQuestRequestDto;
 import com.bbolab.gaonna.api.v1.dto.reserve.ReserveQuestResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +34,7 @@ class MockQuestReserveControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Get] 퀘스트 예약 조회")
+    @WithAccount("bbobbi")
     void getQuest() throws Exception {
         String questId = UUID.randomUUID().toString();
         String reserveId = UUID.randomUUID().toString();
@@ -54,6 +56,7 @@ class MockQuestReserveControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Post] 퀘스트 예약 요청")
+    @WithAccount("bbobbi")
     void reserve() throws Exception {
         String questId = UUID.randomUUID().toString();
         String profileId = UUID.randomUUID().toString();
@@ -71,6 +74,7 @@ class MockQuestReserveControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Cancel] 퀘스트 취소")
+    @WithAccount("bbobbi")
     void cancel() throws Exception {
         String questId = UUID.randomUUID().toString();
         String reserveId = UUID.randomUUID().toString();
@@ -84,6 +88,7 @@ class MockQuestReserveControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Accept] 퀘스트 수락")
+    @WithAccount("bbobbi")
     void accept() throws Exception {
         String reserveId = UUID.randomUUID().toString();
         MvcResult result = mockMvc.perform(post("/v1/reserve/quest/accept/" + reserveId)
