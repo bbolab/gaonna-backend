@@ -2,9 +2,10 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
+import com.bbolab.gaonna.api.WithAccount;
 import com.bbolab.gaonna.api.v1.controller.validator.BboxConstraintValidator;
 import com.bbolab.gaonna.api.v1.dto.category.CategoryDto;
-import com.bbolab.gaonna.api.v1.dto.quest.QuestCreateUpdateRequestDto;
+import com.bbolab.gaonna.api.v1.dto.quest.QuestRequestDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestDetailResponseDto;
 import com.bbolab.gaonna.api.v1.dto.quest.QuestListResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,9 +43,10 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Create] 퀘스트 생성 - 성공")
+    @WithAccount("bbobbi")
     void createQuestSuccess() throws Exception {
         // given
-        QuestCreateUpdateRequestDto requestDto = createDummyQuestRequestDto();
+        QuestRequestDto requestDto = createDummyQuestRequestDto();
         // when
         MvcResult mvcResult = mockMvc.perform(post("/v1/quest")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,6 +70,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Read] 단일 퀘스트 조회 - 성공")
+    @WithAccount("bbobbi")
     public void readQuestTest() throws Exception {
         // given
         String uuid = UUID.randomUUID().toString();
@@ -88,6 +91,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Read] 리스트 퀘스트 조회 - 성공")
+    @WithAccount("bbobbi")
     public void readQuestListTest() throws Exception {
         // given
         Double topLatitude = 37.2796836;
@@ -113,6 +117,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (wrong format)")
+    @WithAccount("bbobbi")
     public void readQuestListFailTest() throws Exception {
         // given
         Double topLatitude = 37.2796836;
@@ -135,6 +140,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (bbox wrong range)")
+    @WithAccount("bbobbi")
     public void readQuestListFailTest2() throws Exception {
         // given
         Double topLatitude = 37.2796836;
@@ -157,6 +163,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Read] 리스트 퀘스트 조회 - 실패 (bbox 좌하단, 우상단 조건 불만족")
+    @WithAccount("bbobbi")
     public void readQuestListFailTest3() throws Exception {
         Double bottomLatitude = 37.2796836;
         Double bottomLongitude = 127.04645333;
@@ -177,10 +184,11 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Update] 퀘스트 수정 - 성공")
+    @WithAccount("bbobbi")
     public void updateQuestTest() throws Exception {
         // given
         String questId = UUID.randomUUID().toString();
-        QuestCreateUpdateRequestDto requestDto = createDummyQuestRequestDto();
+        QuestRequestDto requestDto = createDummyQuestRequestDto();
 
         // when
         MvcResult result = mockMvc.perform(put("/v1/quest/" + questId)
@@ -197,7 +205,6 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
         assertEquals(responseDto.getQuestId(), questId);
         assertEquals(responseDto.getTitle(), requestDto.getTitle());
         assertEquals(responseDto.getContent(), requestDto.getContent());
-        assertEquals(responseDto.getLocation().size(), 2);
         assertEquals(responseDto.getPrice(), requestDto.getPrice());
         assertEquals(responseDto.getDeadline(), requestDto.getDeadline());
         assertEquals(requestDto.getTags(), responseDto.getTags());
@@ -206,6 +213,7 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Delete] 퀘스트 삭제 - 성공")
+    @WithAccount("bbobbi")
     public void deleteQuestTest() throws Exception {
         // given
         String uuid = UUID.randomUUID().toString();
@@ -223,8 +231,8 @@ public class MockQuestControllerTest extends AbstractContainerBaseTest {
 
     // TODO : Validator test
 
-    public static QuestCreateUpdateRequestDto createDummyQuestRequestDto() {
-        return QuestCreateUpdateRequestDto.builder()
+    public static QuestRequestDto createDummyQuestRequestDto() {
+        return QuestRequestDto.builder()
                 .title("test-title")
                 .content("test-content")
                 .latitude(35.332211)

@@ -2,6 +2,7 @@ package com.bbolab.gaonna.api.v1.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
+import com.bbolab.gaonna.api.WithAccount;
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileCreateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDetailDto;
 import com.bbolab.gaonna.api.v1.dto.member.profile.ProfileDetailListDto;
@@ -32,6 +33,7 @@ class MockProfileControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Get] 프로필 조회")
+    @WithAccount("bbobbi")
     void getProfile() throws Exception {
         String profileId = UUID.randomUUID().toString();
 
@@ -56,6 +58,7 @@ class MockProfileControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Get] 프로필 모두 조회")
+    @WithAccount("bbobbi")
     void getAllProfile() throws Exception {
         MvcResult result = mockMvc.perform(get("/v1/profile/all")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -71,6 +74,7 @@ class MockProfileControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Post] 프로필 생성")
+    @WithAccount("bbobbi")
     void postProfile() throws Exception {
         ProfileCreateRequestDto requestDto = ProfileCreateRequestDto.builder()
                 .profileName("testName")
@@ -90,6 +94,7 @@ class MockProfileControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Put] 프로필 수정")
+    @WithAccount("bbobbi")
     void putProfile() throws Exception{
         String profileId = UUID.randomUUID().toString();
         ProfileCreateRequestDto requestDto = ProfileCreateRequestDto.builder()
@@ -109,6 +114,7 @@ class MockProfileControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Delete] 프로필 삭제")
+    @WithAccount("bbobbi")
     void deleteProfile() throws Exception {
         String profileId = UUID.randomUUID().toString();
 

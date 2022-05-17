@@ -2,7 +2,8 @@ package com.bbolab.gaonna.api.controller;
 
 import com.bbolab.gaonna.api.AbstractContainerBaseTest;
 import com.bbolab.gaonna.api.MockMvcTest;
-import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateUpdateRequestDto;
+import com.bbolab.gaonna.api.WithAccount;
+import com.bbolab.gaonna.api.v1.dto.comment.CommentCreateRequestDto;
 import com.bbolab.gaonna.api.v1.dto.comment.CommentListResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +38,7 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Get] 게시글 댓글 조회 - 성공")
+    @WithAccount("bbobbi")
     void getAllCommentSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
@@ -60,10 +62,11 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Create] 댓글 추가 - 성공")
+    @WithAccount("bbobbi")
     void createCommentSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
-        CommentCreateUpdateRequestDto requestDto = createCommentCreateRequestDto();
+        CommentCreateRequestDto requestDto = createCommentCreateRequestDto();
         String url = String.format("/v1/article/%s/comment", articleId);
 
         // when
@@ -79,11 +82,12 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Update] 댓글 수정 - 성공")
+    @WithAccount("bbobbi")
     void updateCommentSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
         String commentId = UUID.randomUUID().toString();
-        CommentCreateUpdateRequestDto requestDto = createCommentCreateRequestDto();
+        CommentCreateRequestDto requestDto = createCommentCreateRequestDto();
         String url = String.format("/v1/article/%s/comment/%s", articleId, commentId);
 
         // when
@@ -99,6 +103,7 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName("[Delete] 댓글 삭제 - 성공")
+    @WithAccount("bbobbi")
     void deleteCommentSuccess() throws Exception {
         // given
         String articleId = UUID.randomUUID().toString();
@@ -116,10 +121,9 @@ public class MockCommentControllerTest extends AbstractContainerBaseTest {
         assertEquals(result.getResponse().getStatus(), HttpServletResponse.SC_OK);
     }
 
-    public static CommentCreateUpdateRequestDto createCommentCreateRequestDto() {
-        return CommentCreateUpdateRequestDto.builder()
-                .isSubComment(false)
-                .parentId(null)
+    public static CommentCreateRequestDto createCommentCreateRequestDto() {
+        return CommentCreateRequestDto.builder()
+                .parentId(UUID.randomUUID().toString())
                 .content("test-comment-content").build();
     }
 
