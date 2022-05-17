@@ -23,6 +23,10 @@ dependencies {
     testCompile "org.testcontainers:junit-jupiter:1.15.3"
     testCompile "org.testcontainers:mysql:1.15.3"
     testCompile 'mysql:mysql-connector-java:8.0.23'
+
+    // selenium
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:3.141.59'
 }
 
 test {
